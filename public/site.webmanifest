@@ -1,0 +1,18 @@
+{
+  "name": "Саня Груз",
+  "short_name": "Саня Груз",
+  "lang": "uk",
+  "description": "Вантажні перевезення Україною та до Європи. Розрахунок за заявкою або телефоном.",
+  "start_url": "/#zapyt",
+  "display": "browser",
+  "background_color": "#f3eee4",
+  "theme_color": "#16140f",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
