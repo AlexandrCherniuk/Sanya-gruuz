@@ -2,71 +2,37 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { absUrl, asset, brand, contacts, defaultLang, languages, links, SITE_URL, url } from './site/config'
 import { buildRoutes, content, langsForPath, servicePath, type Route } from './site/routes'
-import type { LangContent } from './content/types'
+import type { LangContent, Vehicle } from './content/types'
 import {
+  Chips,
   Crumbs,
+  Directions,
   FaqBlock,
   FinalCta,
   Footer,
+  Head,
   Header,
   Hero,
-  IntlCards,
   Messengers,
   MobileBar,
-  ServiceTiles,
+  PriceCard,
+  PriceRows,
+  Routes,
+  SectionsBlock,
+  ServiceCards,
   Steps,
   Transport,
   Why,
   type Ctx,
 } from './components/Layout'
-import { Arrow, MessengerGlyph } from './components/Icon'
+import { MessengerGlyph } from './components/Icon'
 
 export const routes = buildRoutes()
 export { SITE_URL, defaultLang }
 export { BASE } from './site/config'
 
-function Home({ ctx }: { ctx: Ctx }) {
-  const { c, lang } = ctx
-  const ukr = c.services.filter((s) => s.group === 'ukraine')
-  const intl = c.services.filter((s) => s.group === 'international')
-  return (
-    <>
-      <Hero
-        ctx={ctx}
-        chips={c.ui.heroChips}
-        title={
-          <>
-            {c.home.h1} <em>{c.home.h1Accent}</em> {c.home.h1After}
-          </>
-        }
-        lead={c.home.lead}
-        bullets={c.home.bullets}
-      />
-      <section className="s" aria-labelledby="services-h">
-        <div className="wrap">
-          <h2 id="services-h">{c.ui.sections.services}</h2>
-          <p className="sub">{c.ui.sections.servicesSub}</p>
-          <h3 className="group-h">
-            <a href={url(lang, 'ukraine/')}>
-              {c.ui.sections.tabUkraine} <Arrow size={16} />
-            </a>
-          </h3>
-          <ServiceTiles lang={lang} services={ukr} />
-          <h3 className="group-h">
-            <a href={url(lang, 'international/')}>
-              {c.ui.sections.tabInternational} <Arrow size={16} />
-            </a>
-          </h3>
-          <IntlCards lang={lang} services={intl} more={c.ui.more} />
-        </div>
-      </section>
-      <Steps c={c} />
-      <Transport c={c} vehicles={c.vehicles} id="transport" />
-      <Why c={c} />
-      <FaqBlock c={c} faq={c.home.faq} />
-      <FinalCta c={c} quoteHref={ctx.quoteHref} />
-    </>
-  )
+function pickVehicles(c: LangContent, ids: string[]): Vehicle[] {
+  return ids.map((id) => c.vehicles.find((v) => v.id === id)).filter((v): v is Vehicle => Boolean(v))
 }
 
 function crumbsFor(ctx: Ctx, trail: { href?: string; label: string }[]) {
@@ -77,71 +43,94 @@ function hubLabel(c: LangContent, slug: 'ukraine' | 'international') {
   return slug === 'ukraine' ? c.ui.nav.ukraine : c.ui.nav.international
 }
 
-function Hub({ ctx, route }: { ctx: Ctx; route: Extract<Route, { kind: 'hub' }> }) {
-  const { c, lang } = ctx
-  const hub = route.hub
-  const list = c.services.filter((s) => s.group === hub.slug)
+function Home({ ctx }: { ctx: Ctx }) {
+  const { c } = ctx
   return (
     <>
-      <Hero ctx={ctx} crumbs={crumbsFor(ctx, [{ label: hubLabel(c, hub.slug) }])} title={hub.h1} lead={hub.lead} bullets={[]} />
-      <section className="s">
-        <div className="wrap">
-          {hub.slug === 'ukraine' ? <ServiceTiles lang={lang} services={list} /> : <IntlCards lang={lang} services={list} more={c.ui.more} />}
-        </div>
-      </section>
-      <Blocks blocks={hub.blocks} />
+      <Hero
+        ctx={ctx}
+        home
+        eyebrow={c.home.eyebrow}
+        title={
+          <>
+            {c.home.h1} <span className="accent">{c.home.h1Accent}</span>
+          </>
+        }
+        lead={c.home.lead}
+        bullets={c.home.bullets}
+      />
+      <Directions ctx={ctx} />
+      <Transport c={c} vehicles={c.vehicles.filter((v) => v.id !== 'crane')} quoteHref={ctx.quoteHref} tinted />
       <Steps c={c} />
-      <Transport c={c} vehicles={c.vehicles} />
+      <Why c={c} tinted />
+      <Routes c={c} />
+      <FaqBlock c={c} faq={c.home.faq} tinted />
       <FinalCta c={c} quoteHref={ctx.quoteHref} />
     </>
   )
 }
 
-function Blocks({ blocks }: { blocks: LangContent['services'][number]['blocks'] }) {
-  if (!blocks.length) return null
+function Hub({ ctx, route }: { ctx: Ctx; route: Extract<Route, { kind: 'hub' }> }) {
+  const { c, lang } = ctx
+  const hub = route.hub
+  const list = c.services.filter((s) => s.group === hub.slug)
+  const vehicles = hub.slug === 'ukraine' ? c.vehicles : pickVehicles(c, ['bus', 'fura', 'carrier', 'lowbed'])
   return (
-    <section className="s">
-      <div className="wrap blocks">
-        {blocks.map((b) => (
-          <div key={b.title} className="block">
-            <h2>{b.title}</h2>
-            {b.text ? <p>{b.text}</p> : null}
-            {b.items ? (
-              <ul className="dots">
-                {b.items.map((i) => (
-                  <li key={i}>{i}</li>
-                ))}
-              </ul>
-            ) : null}
-          </div>
-        ))}
-      </div>
-    </section>
+    <>
+      <Hero ctx={ctx} crumbs={crumbsFor(ctx, [{ label: hubLabel(c, hub.slug) }])} title={hub.h1} lead={hub.lead} bullets={hub.bullets} />
+      <section className="s">
+        <div className="wrap">
+          <ServiceCards lang={lang} services={list} />
+        </div>
+      </section>
+      <section className="s s--tint">
+        <div className="wrap">
+          <SectionsBlock sections={hub.sections} />
+        </div>
+      </section>
+      <Transport c={c} vehicles={vehicles} quoteHref={ctx.quoteHref} />
+      {hub.slug === 'ukraine' ? <Routes c={c} /> : null}
+      <Steps c={c} tinted />
+      <Why c={c} />
+      <FaqBlock c={c} faq={hub.faq} tinted />
+      <FinalCta c={c} quoteHref={ctx.quoteHref} />
+    </>
   )
 }
 
 function Service({ ctx, route }: { ctx: Ctx; route: Extract<Route, { kind: 'service' }> }) {
   const { c, lang } = ctx
   const s = route.service
-  const vehicles = s.vehicles.map((id) => c.vehicles.find((v) => v.id === id)).filter((v) => v !== undefined)
-  const related = c.services.filter((x) => x.group === s.group && x.slug !== s.slug).slice(0, 8)
+  const related = c.services.filter((x) => x.group === s.group && x.slug !== s.slug)
   return (
     <>
       <Hero
         ctx={ctx}
-        crumbs={crumbsFor(ctx, [{ href: url(lang, `${s.group}/`), label: hubLabel(c, s.group) }, { label: s.tile.title }])}
+        crumbs={crumbsFor(ctx, [{ href: url(lang, `${s.group}/`), label: hubLabel(c, s.group) }, { label: s.card.title }])}
         title={s.h1}
         lead={s.lead}
         bullets={s.bullets}
+        price={s.priceFrom}
       />
-      <Blocks blocks={s.blocks} />
-      <Transport c={c} vehicles={vehicles} />
-      <Steps c={c} />
-      <FaqBlock c={c} faq={s.faq} />
       <section className="s">
+        <div className="wrap svc-grid">
+          <div>
+            {s.cargo ? <Chips title={s.cargo.title} items={s.cargo.items} /> : null}
+            <SectionsBlock sections={s.sections} />
+          </div>
+          {s.prices ? (
+            <PriceCard title={s.prices.title} rows={s.prices.rows} note={s.prices.note} cta={c.ui.cta} quoteHref={ctx.quoteHref} />
+          ) : null}
+        </div>
+      </section>
+      <Transport c={c} vehicles={pickVehicles(c, s.vehicles)} quoteHref={ctx.quoteHref} tinted />
+      <Steps c={c} />
+      <Why c={c} tinted />
+      <FaqBlock c={c} faq={s.faq} />
+      <section className="s s--tint" aria-labelledby="rel-h">
         <div className="wrap">
-          <h2>{c.ui.sections.related}</h2>
-          {s.group === 'ukraine' ? <ServiceTiles lang={lang} services={related} /> : <IntlCards lang={lang} services={related} more={c.ui.more} />}
+          <Head title={c.blocks.related} id="rel-h" />
+          <ServiceCards lang={lang} services={related} compact />
         </div>
       </section>
       <FinalCta c={c} quoteHref={ctx.quoteHref} />
@@ -149,50 +138,42 @@ function Service({ ctx, route }: { ctx: Ctx; route: Extract<Route, { kind: 'serv
   )
 }
 
-function Simple({ ctx, route }: { ctx: Ctx; route: Extract<Route, { kind: 'page' }> }) {
+function Prices({ ctx }: { ctx: Ctx }) {
   const { c } = ctx
-  const p = route.page
-  if (p.slug === 'thanks') {
-    return (
-      <>
-        <section className="hero hero--plain" aria-labelledby="h1">
-          <div className="wrap">
-            <Crumbs items={crumbsFor(ctx, [{ label: p.h1 }])} />
-            <h1 id="h1">{p.h1}</h1>
-            <p className="lead">{p.lead}</p>
-            <div className="contact-big">
-              <a className="btn btn--acc" href={links.tel}>
-                <MessengerGlyph kind="phone" />
-                {contacts.phoneDisplay}
-              </a>
-              <a className="btn btn--ghost" href={links.email}>
-                <MessengerGlyph kind="email" />
-                {contacts.email}
-              </a>
-            </div>
-            <Messengers c={c} />
-            <p className="hero-loc">
-              {c.ui.location}
-            </p>
-          </div>
-        </section>
-        <Blocks blocks={p.blocks} />
-        <Steps c={c} />
-      </>
-    )
-  }
+  const p = c.pricesPage
   return (
     <>
-      <Hero ctx={ctx} crumbs={crumbsFor(ctx, [{ label: p.h1 }])} title={p.h1} lead={p.lead} bullets={[]} />
-      {p.slug === 'contacts' ? <ContactCards c={c} /> : null}
-      <Blocks blocks={p.blocks} />
-      <Steps c={c} />
+      <Hero ctx={ctx} crumbs={crumbsFor(ctx, [{ label: c.ui.nav.prices }])} title={p.h1} lead={p.lead} bullets={[]} />
+      <section className="s">
+        <div className="wrap price-cols">
+          <div className="price-box">
+            <h2>{p.ukraineTitle}</h2>
+            <PriceRows rows={p.ukraineRows} />
+          </div>
+          <div className="price-box">
+            <h2>{p.extraTitle}</h2>
+            <PriceRows rows={p.extraRows} />
+            <h2 className="mt">{p.europeTitle}</h2>
+            <PriceRows rows={p.europeRows} />
+          </div>
+        </div>
+        <div className="wrap">
+          <p className="fine">{p.note}</p>
+        </div>
+      </section>
+      <section className="s s--tint">
+        <div className="wrap">
+          <SectionsBlock sections={[{ title: p.factorsTitle, items: p.factors }]} />
+        </div>
+      </section>
+      <Routes c={c} />
+      <FaqBlock c={c} faq={p.faq} tinted />
       <FinalCta c={c} quoteHref={ctx.quoteHref} />
     </>
   )
 }
 
-function ContactCards({ c }: { c: LangContent }) {
+function ContactList() {
   const items = [
     { href: links.tel, kind: 'phone' as const, label: contacts.phoneDisplay },
     { href: links.viber, kind: 'viber' as const, label: 'Viber' },
@@ -201,25 +182,69 @@ function ContactCards({ c }: { c: LangContent }) {
     { href: links.email, kind: 'email' as const, label: contacts.email },
   ]
   return (
-    <section className="s">
-      <div className="wrap">
-        <ul className="contacts">
-          {items.map((i) => (
-            <li key={i.kind}>
-              <a className={`contact contact--${i.kind}`} href={i.href}>
-                <MessengerGlyph kind={i.kind} />
-                {i.label}
-              </a>
-            </li>
-          ))}
-          <li>
-            <span className="contact contact--loc">
-              {c.ui.location}
-            </span>
-          </li>
-        </ul>
-      </div>
-    </section>
+    <ul className="contacts">
+      {items.map((i) => (
+        <li key={i.kind}>
+          <a className={`contact contact--${i.kind}`} href={i.href}>
+            <MessengerGlyph kind={i.kind} />
+            {i.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+function Contacts({ ctx }: { ctx: Ctx }) {
+  const { c } = ctx
+  const p = c.contactsPage
+  return (
+    <>
+      <Hero ctx={ctx} crumbs={crumbsFor(ctx, [{ label: c.ui.nav.contacts }])} title={p.h1} lead={p.lead} bullets={[]} />
+      <section className="s">
+        <div className="wrap svc-grid">
+          <div>
+            <ContactList />
+            <p className="fine">
+              {c.ui.location} · {p.hours}
+            </p>
+          </div>
+          <div className="prose">
+            <div className="prose-item">
+              <h2>{p.aboutTitle}</h2>
+              {p.about.map((t) => (
+                <p key={t}>{t}</p>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+      <Steps c={c} tinted />
+    </>
+  )
+}
+
+function Thanks({ ctx }: { ctx: Ctx }) {
+  const { c } = ctx
+  const p = c.thanksPage
+  return (
+    <>
+      <section className="hero hero--plain" aria-labelledby="h1">
+        <div className="wrap narrow">
+          <Crumbs items={crumbsFor(ctx, [{ label: p.h1 }])} />
+          <h1 id="h1">{p.h1}</h1>
+          <p className="lead">{p.lead}</p>
+          <div className="contact-big">
+            <a className="btn btn--acc" href={links.tel}>
+              <MessengerGlyph kind="phone" />
+              {contacts.phoneDisplay}
+            </a>
+          </div>
+          <Messengers c={c} />
+        </div>
+      </section>
+      <Steps c={c} tinted />
+    </>
   )
 }
 
@@ -244,16 +269,25 @@ function jsonLd(route: Route, c: LangContent) {
     const items = [{ name: c.ui.breadcrumbHome, item: absUrl(route.lang) }]
     if (route.kind === 'service') {
       items.push({ name: hubLabel(c, route.service.group), item: absUrl(route.lang, `${route.service.group}/`) })
-      items.push({ name: route.service.tile.title, item: pageUrl })
+      items.push({ name: route.service.card.title, item: pageUrl })
     } else {
-      items.push({ name: route.kind === 'hub' ? route.hub.h1 : route.page.h1, item: pageUrl })
+      items.push({ name: route.meta.title, item: pageUrl })
     }
     graph.push({
       '@type': 'BreadcrumbList',
       itemListElement: items.map((x, i) => ({ '@type': 'ListItem', position: i + 1, ...x })),
     })
   }
-  const faq = route.kind === 'home' ? c.home.faq : route.kind === 'service' ? route.service.faq : []
+  const faq =
+    route.kind === 'home'
+      ? c.home.faq
+      : route.kind === 'service'
+        ? route.service.faq
+        : route.kind === 'hub'
+          ? route.hub.faq
+          : route.kind === 'prices'
+            ? c.pricesPage.faq
+            : []
   if (faq.length) {
     graph.push({
       '@type': 'FAQPage',
@@ -270,7 +304,7 @@ function esc(s: string) {
 export function renderPage(route: Route, assets: { js: string; css: string[] }) {
   const c = content[route.lang]!
   const available = langsForPath(route.path, routes)
-  const hasForm = !(route.kind === 'page' && route.page.slug === 'thanks')
+  const hasForm = route.kind !== 'thanks'
   const ctx: Ctx = { lang: route.lang, c, path: route.path, available, quoteHref: hasForm ? '#zapyt' : `${url(route.lang)}#zapyt` }
   const info = languages.find((l) => l.code === route.lang)!
   const title = route.kind === 'home' ? route.meta.title : `${route.meta.title} | ${brand.name}`
@@ -279,7 +313,9 @@ export function renderPage(route: Route, assets: { js: string; css: string[] }) 
   if (route.kind === 'home') body = <Home ctx={ctx} />
   else if (route.kind === 'hub') body = <Hub ctx={ctx} route={route} />
   else if (route.kind === 'service') body = <Service ctx={ctx} route={route} />
-  else body = <Simple ctx={ctx} route={route} />
+  else if (route.kind === 'prices') body = <Prices ctx={ctx} />
+  else if (route.kind === 'contacts') body = <Contacts ctx={ctx} />
+  else body = <Thanks ctx={ctx} />
 
   const bodyHtml = renderToStaticMarkup(
     <>
@@ -307,7 +343,7 @@ export function renderPage(route: Route, assets: { js: string; css: string[] }) 
     <title>${esc(title)}</title>
     <meta name="description" content="${esc(route.meta.description)}">
     ${route.noindex ? '<meta name="robots" content="noindex, follow">' : `<link rel="canonical" href="${canonical}">\n    ${alternates}`}
-    <meta name="theme-color" content="#0B0D0E">
+    <meta name="theme-color" content="#FFFFFF">
     <meta name="format-detection" content="telephone=no">
     <link rel="icon" type="image/png" href="${asset('favicon.png')}">
     <link rel="apple-touch-icon" href="${asset('brand/apple-touch-icon.png')}">
@@ -353,8 +389,8 @@ export function renderRoot() {
     <link rel="icon" type="image/png" href="${asset('favicon.png')}">
     <script>location.replace(${JSON.stringify(target)} + location.search + location.hash)</script>
   </head>
-  <body style="font-family:system-ui,sans-serif;background:#0B0D0E;color:#fff;padding:24px">
-    <p>${ready.map((l) => `<a style="color:#04F69C" href="${url(l.code)}" hreflang="${l.hreflang}">${l.name}</a>`).join(' · ')}</p>
+  <body style="font-family:system-ui,sans-serif;padding:24px">
+    <p>${ready.map((l) => `<a style="color:#0B0D0E" href="${url(l.code)}" hreflang="${l.hreflang}">${l.name}</a>`).join(' · ')}</p>
   </body>
 </html>
 `
@@ -368,7 +404,7 @@ export function render404(assets: { js: string; css: string[] }) {
       <Header {...ctx} />
       <main>
         <section className="hero hero--plain">
-          <div className="wrap">
+          <div className="wrap narrow">
             <h1>{c.ui.notFound.title}</h1>
             <p className="lead">{c.ui.notFound.text}</p>
             <div className="contact-big">

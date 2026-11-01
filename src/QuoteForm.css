@@ -1,17 +1,104 @@
-/* Стили только для новых частей формы. Основной вид формы в index.css (команда дизайна). */
+/* Форма заявки */
+.quote-card {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 1px 2px rgb(11 13 14 / 4%), 0 18px 48px -18px rgb(11 13 14 / 18%);
+  display: grid;
+  gap: 14px;
+}
+.quote-card h2 {
+  font-size: 1.35rem;
+  margin: 0;
+}
+.quote-card .lead {
+  margin: -6px 0 2px;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+.quote-card label {
+  display: grid;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.quote-card input {
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--ink);
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1px solid var(--line-2);
+  border-radius: 12px;
+  background: var(--bg);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.quote-card input::placeholder {
+  color: #9aa3ab;
+}
+.quote-card input:focus {
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px var(--acc-soft);
+}
+.quote-card input[aria-invalid='true'] {
+  border-color: var(--err);
+}
+.quote-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.quote-error {
+  color: var(--err);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.quote-error--send {
+  margin: 0;
+  font-size: 0.9rem;
+}
 .quote-details summary {
   cursor: pointer;
-  font-weight: 700;
-  font-size: 0.92rem;
-  padding: 0.35rem 0;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--ink-2);
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
-
+.quote-details summary::-webkit-details-marker {
+  display: none;
+}
+.quote-details summary::before {
+  content: '+';
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--tint);
+  font-weight: 700;
+}
+.quote-details[open] summary::before {
+  content: '–';
+}
 .quote-details-body {
   display: grid;
-  gap: 0.9rem;
-  margin-top: 0.6rem;
+  gap: 12px;
+  margin-top: 12px;
 }
-
+.quote-privacy {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-align: center;
+}
 .quote-hp {
   position: absolute;
   left: -10000px;
@@ -19,13 +106,21 @@
   height: 1px;
   overflow: hidden;
 }
-
 .quote-error--send a {
   color: inherit;
   white-space: nowrap;
 }
-
 .quote-card button[disabled] {
   opacity: 0.7;
   cursor: progress;
+}
+.quote-success-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+@media (max-width: 420px) {
+  .quote-card {
+    padding: 20px 16px;
+  }
 }

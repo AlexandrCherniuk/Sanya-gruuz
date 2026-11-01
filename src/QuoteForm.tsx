@@ -1,6 +1,5 @@
 import { useEffect, useId, useState, type FormEvent } from 'react'
 import './QuoteForm.css'
-import { copy } from './content'
 import { formCopy, type FormCopy, type FormLang } from './formCopy'
 import { site } from './seo'
 import { initAnalytics, trackLead } from './analytics'
@@ -27,7 +26,7 @@ function validate(draft: QuoteDraft, t: FormCopy): Partial<Record<Field, string>
   return errors
 }
 
-export function QuoteForm({ id = copy.form.id, successUrl, lang = 'ua' }: Props) {
+export function QuoteForm({ id = 'zapyt', successUrl, lang = 'ua' }: Props) {
   const t = formCopy[lang] ?? formCopy.ua
   const uid = useId()
   const [draft, setDraft] = useState<QuoteDraft>(emptyDraft)
@@ -76,10 +75,10 @@ export function QuoteForm({ id = copy.form.id, successUrl, lang = 'ua' }: Props)
         <h2>{t.successTitle}</h2>
         <p className="lead">{t.successText}</p>
         <div className="quote-success-actions">
-          <a className="btn btn--ghost-dark" href={`tel:${site.phone}`}>
+          <a className="btn btn--ghost" href={`tel:${site.phone}`}>
             {t.call}
           </a>
-          <button className="btn btn--signal" type="button" onClick={() => setStatus('idle')}>
+          <button className="btn btn--acc" type="button" onClick={() => setStatus('idle')}>
             {t.again}
           </button>
         </div>
@@ -227,7 +226,7 @@ export function QuoteForm({ id = copy.form.id, successUrl, lang = 'ua' }: Props)
         </p>
       ) : null}
 
-      <button className="btn btn--signal btn--block" type="submit" disabled={status === 'sending'}>
+      <button className="btn btn--acc btn--block" type="submit" disabled={status === 'sending'}>
         {status === 'sending' ? t.sending : t.submit}
       </button>
       <p className="quote-privacy">{t.privacy}</p>

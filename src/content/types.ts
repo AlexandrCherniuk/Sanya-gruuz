@@ -1,139 +1,159 @@
-// Форма контента одного языка. Тексты пишет команда «Тексты и SEO»,
-// вёрстка берёт всё отсюда и ничего не хардкодит.
+// Модель контента сайта. Все тексты лежат в src/content/<язык>.ts и описаны этими типами.
 
 export type IconName =
   | 'bus'
-  | 'van'
   | 'truck'
   | 'trailer'
   | 'oversized'
-  | 'liquid'
-  | 'reefer'
-  | 'bulk'
-  | 'moving'
-  | 'equipment'
   | 'car'
   | 'manipulator'
   | 'crane'
+  | 'moving'
   | 'groupage'
+  | 'pallet'
   | 'europe'
-  | 'world'
-  | 'route'
+  | 'china'
+  | 'sea'
+  | 'air'
   | 'docs'
-  | 'business'
+  | 'shield'
+  | 'chat'
+  | 'route'
+  | 'contract'
+  | 'wallet'
   | 'clock'
   | 'check'
 
-export type Meta = {
-  /** <title>: до ~60 символов. */
-  title: string
-  /** <meta description>: до ~155 символов. */
-  description: string
-}
+export type Meta = { title: string; description: string }
 
 export type Faq = { q: string; a: string }
 
+export type VehicleId = 'bus' | 't5' | 't10' | 'fura' | 'coupler' | 'carrier' | 'lowbed' | 'manipulator' | 'crane'
+
 export type Vehicle = {
-  id: string
-  icon: IconName
+  id: VehicleId
   name: string
-  specs: string[]
-  /** Ставка вида «від 25 грн/км». Пусто = колонка не показывается. */
-  price?: string
+  /** Короткое назначение: для чего подходит. */
+  use: string
+  specs: { label: string; value: string }[]
+  /** «від 20 грн/км» или «за запитом». */
+  price: string
 }
 
-export type TextBlock = { title: string; text?: string; items?: string[] }
+export type Group = 'ukraine' | 'international'
+
+export type Card = { icon: IconName; title: string; text: string; price?: string }
+
+export type Section = { title: string; text?: string; items?: string[] }
+
+export type PriceRow = { label: string; value: string; note?: string }
 
 export type ServicePage = {
-  /** Часть адреса: /ua/<group>/<slug>/ */
   slug: string
-  group: 'ukraine' | 'international'
-  icon: IconName
-  /** Плитка на главной и в хабе. */
-  tile: { title: string; text: string }
+  group: Group
   meta: Meta
+  /** Карточка в списках услуг и пункт меню. */
+  card: Card
   h1: string
   lead: string
-  /** Короткие пункты под H1 (2–4 шт.). */
+  /** Три коротких тезиса под заголовком. */
   bullets: string[]
-  /** Блоки текста под первым экраном. */
-  blocks: TextBlock[]
-  /** id машин из vehicles, которые подходят под услугу. */
-  vehicles: string[]
+  /** Цена «від» в первом экране, если есть. */
+  priceFrom?: string
+  /** Что везём: список видов груза. */
+  cargo?: { title: string; items: string[] }
+  /** Блоки описания услуги. */
+  sections: Section[]
+  /** Таблица тарифов страницы. */
+  prices?: { title: string; rows: PriceRow[]; note: string }
+  vehicles: VehicleId[]
   faq: Faq[]
 }
 
 export type HubPage = {
-  slug: 'ukraine' | 'international'
+  slug: Group
   meta: Meta
   h1: string
   lead: string
-  blocks: TextBlock[]
+  bullets: string[]
+  sections: Section[]
+  faq: Faq[]
 }
 
-export type SimplePage = {
-  slug: string
-  meta: Meta
-  h1: string
-  lead: string
-  blocks: TextBlock[]
-  noindex?: boolean
-}
-
-export type Ui = {
-  skip: string
-  nav: { ukraine: string; international: string; transport: string; business: string; contacts: string }
-  menu: string
-  language: string
-  soon: string
-  ctaHeader: string
-  ctaQuote: string
-  ctaMessengers: string
-  call: string
-  more: string
-  breadcrumbHome: string
-  heroChips: string[]
-  sections: {
-    services: string
-    servicesSub: string
-    tabUkraine: string
-    tabInternational: string
-    transport: string
-    transportSub: string
-    transportNote: string
-    price: string
-    steps: string
-    faq: string
-    related: string
-    whyUs: string
-  }
-  final: { title: string; text: string }
-  footer: { tagline: string; ukraine: string; international: string; company: string; contacts: string; language: string; rights: string }
-  mobileBar: { quote: string }
-  /** «Київ · Словенія» на языке страницы. */
-  location: string
-  /** aria-label логотипа: «на головну». */
-  logoHome: string
-  notFound: { title: string; text: string }
-}
+export type Route = { from: string; to: string; km: number }
 
 export type LangContent = {
-  ui: Ui
+  /** Язык интерфейса: подписи, меню, кнопки. */
+  ui: {
+    skip: string
+    menu: string
+    nav: { ukraine: string; international: string; prices: string; contacts: string }
+    cta: string
+    ctaShort: string
+    call: string
+    write: string
+    breadcrumbHome: string
+    city: string
+    location: string
+    from: string
+    more: string
+    allServices: string
+    perKm: string
+    orderVehicle: string
+    footerAbout: string
+    footerNote: string
+    rights: string
+    notFound: { title: string; text: string }
+    routesHead: { route: string; km: string; bus: string; fura: string }
+  }
+  /** Общие блоки, которые повторяются на страницах. */
+  blocks: {
+    trustStrip: { title: string; text: string }[]
+    directions: { eyebrow: string; title: string; sub: string }
+    transport: { eyebrow: string; title: string; sub: string }
+    steps: { eyebrow: string; title: string; sub: string; items: { title: string; text: string }[]; note: string }
+    why: { eyebrow: string; title: string; sub: string; items: Card[] }
+    routes: { eyebrow: string; title: string; sub: string; note: string; list: Route[] }
+    faq: { eyebrow: string; title: string }
+    cta: { title: string; text: string; button: string; or: string }
+    related: string
+    cargoTitle: string
+    pricesTitle: string
+  }
   home: {
     meta: Meta
+    eyebrow: string
     h1: string
     h1Accent: string
-    h1After: string
     lead: string
     bullets: string[]
     faq: Faq[]
   }
-  steps: { title: string; text: string }[]
-  /** Короткие плюсы «Чому ми» (без выдуманных цифр). */
-  why: { icon: IconName; title: string; text: string }[]
   vehicles: Vehicle[]
   hubs: HubPage[]
   services: ServicePage[]
-  /** Для бізнесу, Про нас, Контакти, Дякуємо. */
-  pages: { business: SimplePage; about: SimplePage; contacts: SimplePage; thanks: SimplePage }
+  pricesPage: {
+    meta: Meta
+    h1: string
+    lead: string
+    ukraineTitle: string
+    ukraineRows: PriceRow[]
+    extraTitle: string
+    extraRows: PriceRow[]
+    europeTitle: string
+    europeRows: PriceRow[]
+    note: string
+    factorsTitle: string
+    factors: string[]
+    faq: Faq[]
+  }
+  contactsPage: {
+    meta: Meta
+    h1: string
+    lead: string
+    aboutTitle: string
+    about: string[]
+    hours: string
+  }
+  thanksPage: { meta: Meta; h1: string; lead: string; next: string }
 }

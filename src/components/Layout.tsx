@@ -1,302 +1,402 @@
+// Блоки страниц. Рендерятся в статический HTML при сборке; в браузере оживает только форма.
 import type { ReactNode } from 'react'
-import { renderToString } from 'react-dom/server'
-import { ChevronDown, Menu, X } from 'lucide-react'
+import { asset, contacts, languages, links, url, type Lang } from '../site/config'
+import type { Card, Faq, LangContent, PriceRow, Section, ServicePage, Vehicle } from '../content/types'
 import { QuoteForm } from '../QuoteForm'
-import { asset, brand, contacts, languages, links, url, type Lang } from '../site/config'
-import type { Faq, LangContent, ServicePage, Vehicle } from '../content/types'
-import { servicePath } from '../site/routes'
 import { Arrow, Icon, MessengerGlyph, Tick } from './Icon'
 
-type Ctx = { lang: Lang; c: LangContent; path: string; available: Lang[]; quoteHref: string }
+export type Ctx = {
+  lang: Lang
+  c: LangContent
+  path: string
+  available: Lang[]
+  quoteHref: string
+}
 
-export function Logo({ lang, height = 30, label }: { lang: Lang; height?: number; label: string }) {
+export const servicePath = (s: Pick<ServicePage, 'group' | 'slug'>) => `${s.group}/${s.slug}/`
+
+/* ——— Шапка ——— */
+
+function Logo({ lang }: { lang: Lang }) {
   return (
-    <a className="logo" href={url(lang)} aria-label={`${brand.name}: ${label}`}>
-      <img src={asset('brand/logo-cr.png')} alt={brand.name} width={Math.round(height * 2.42)} height={height} />
+    <a className="logo" href={url(lang)} aria-label="CR Logistics">
+      <span className="logo-mark">
+        <img src={asset('brand/logo-cr.png')} width="300" height="125" alt="" />
+      </span>
+      <span className="logo-text">Logistics</span>
     </a>
   )
 }
 
-function LangSwitch({ lang, path, available, c }: Ctx) {
-  const current = languages.find((l) => l.code === lang)!
+function LangSwitch({ lang, available, path }: { lang: Lang; available: Lang[]; path: string }) {
+  const ready = languages.filter((l) => l.ready)
   return (
-    <details className="lang">
-      <summary aria-label={c.ui.language}>
-        {current.label}
-        <ChevronDown size={14} strokeWidth={2.4} aria-hidden="true" />
-      </summary>
-      <ul className="lang-menu">
-        {languages.map((l) => {
-          const has = available.includes(l.code)
-          const href = has ? url(l.code, path) : l.ready ? url(l.code) : undefined
-          return (
-            <li key={l.code}>
-              {href ? (
-                <a href={href} hrefLang={l.hreflang} lang={l.hreflang} aria-current={l.code === lang ? 'true' : undefined}>
-                  {l.name}
-                  <small>{l.label}</small>
-                </a>
-              ) : (
-                <span className="is-off" lang={l.hreflang}>
-                  {l.name}
-                  <small>{c.ui.soon}</small>
-                </span>
-              )}
-            </li>
-          )
-        })}
-      </ul>
-    </details>
+    <div className="lang" role="group" aria-label="Мова / Язык">
+      {ready.map((l) => {
+        const href = available.includes(l.code) ? url(l.code, path) : url(l.code)
+        return l.code === lang ? (
+          <span key={l.code} className="lang-on" aria-current="true">
+            {l.label}
+          </span>
+        ) : (
+          <a key={l.code} href={href} hrefLang={l.hreflang} lang={l.hreflang}>
+            {l.label}
+          </a>
+        )
+      })}
+    </div>
   )
 }
 
-export function Header(ctx: Ctx) {
-  const { lang, c } = ctx
-  const nav = [
-    { href: url(lang, 'ukraine/'), label: c.ui.nav.ukraine },
-    { href: url(lang, 'international/'), label: c.ui.nav.international },
-    { href: `${url(lang)}#transport`, label: c.ui.nav.transport },
-    { href: url(lang, 'business/'), label: c.ui.nav.business },
-    { href: url(lang, 'contacts/'), label: c.ui.nav.contacts },
-  ]
+export function Header({ lang, c, path, available, quoteHref }: Ctx) {
+  const ukr = c.services.filter((s) => s.group === 'ukraine')
+  const intl = c.services.filter((s) => s.group === 'international')
+  const active = (p: string) => (path.startsWith(p) ? 'is-active' : undefined)
+  const drop = (items: ServicePage[]) => (
+    <div className="drop">
+      <ul>
+        {items.map((s) => (
+          <li key={s.slug}>
+            <a href={url(lang, servicePath(s))}>
+              <Icon name={s.card.icon} size={18} />
+              <span>{s.card.title}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
   return (
     <header className="hdr">
       <div className="wrap hdr-in">
-        <Logo lang={lang} label={c.ui.logoHome} />
+        <Logo lang={lang} />
         <nav className="nav" aria-label={c.ui.menu}>
-          {nav.map((n) => (
-            <a key={n.href} href={n.href}>
-              {n.label}
+          <div className="nav-item">
+            <a className={active('ukraine/')} href={url(lang, 'ukraine/')}>
+              {c.ui.nav.ukraine}
             </a>
-          ))}
+            {drop(ukr)}
+          </div>
+          <div className="nav-item">
+            <a className={active('international/')} href={url(lang, 'international/')}>
+              {c.ui.nav.international}
+            </a>
+            {drop(intl)}
+          </div>
+          <a className={active('prices/')} href={url(lang, 'prices/')}>
+            {c.ui.nav.prices}
+          </a>
+          <a className={active('contacts/')} href={url(lang, 'contacts/')}>
+            {c.ui.nav.contacts}
+          </a>
         </nav>
-        <div className="sp" />
-        <a className="hdr-phone" href={links.tel}>
-          {contacts.phoneDisplay}
-        </a>
-        <LangSwitch {...ctx} />
-        <a className="btn btn--acc btn--sm hdr-cta" href={ctx.quoteHref}>
-          {c.ui.ctaHeader}
-        </a>
-        <details className="burger">
-          <summary aria-label={c.ui.menu}>
-            <Menu className="i-open" size={22} aria-hidden="true" />
-            <X className="i-close" size={22} aria-hidden="true" />
-          </summary>
-          <nav className="burger-menu" aria-label={c.ui.menu}>
-            {nav.map((n) => (
-              <a key={n.href} href={n.href}>
-                {n.label}
+        <div className="hdr-right">
+          <a className="hdr-phone" href={links.tel}>
+            {contacts.phoneDisplay}
+          </a>
+          <LangSwitch lang={lang} available={available} path={path} />
+          <a className="btn btn--acc btn--sm hdr-cta" href={quoteHref}>
+            {c.ui.ctaShort}
+          </a>
+          <details className="burger">
+            <summary aria-label={c.ui.menu}>
+              <span />
+              <span />
+              <span />
+            </summary>
+            <div className="burger-menu">
+              <p className="burger-h">
+                <a href={url(lang, 'ukraine/')}>{c.ui.nav.ukraine}</a>
+              </p>
+              <ul>
+                {ukr.map((s) => (
+                  <li key={s.slug}>
+                    <a href={url(lang, servicePath(s))}>{s.card.title}</a>
+                  </li>
+                ))}
+              </ul>
+              <p className="burger-h">
+                <a href={url(lang, 'international/')}>{c.ui.nav.international}</a>
+              </p>
+              <ul>
+                {intl.map((s) => (
+                  <li key={s.slug}>
+                    <a href={url(lang, servicePath(s))}>{s.card.title}</a>
+                  </li>
+                ))}
+              </ul>
+              <p className="burger-h">
+                <a href={url(lang, 'prices/')}>{c.ui.nav.prices}</a>
+              </p>
+              <p className="burger-h">
+                <a href={url(lang, 'contacts/')}>{c.ui.nav.contacts}</a>
+              </p>
+              <a className="btn btn--dark btn--block" href={links.tel}>
+                <MessengerGlyph kind="phone" />
+                {contacts.phoneDisplay}
               </a>
-            ))}
-            <a className="burger-phone" href={links.tel}>
-              {contacts.phoneDisplay}
-            </a>
-          </nav>
-        </details>
+            </div>
+          </details>
+        </div>
       </div>
     </header>
   )
 }
 
-export function Messengers({ c, compact = false }: { c: LangContent; compact?: boolean }) {
-  return (
-    <div className={`msg${compact ? ' msg--compact' : ''}`} aria-label={c.ui.ctaMessengers}>
-      <a className="msg-viber" href={links.viber}>
-        <MessengerGlyph kind="viber" />
-        Viber
-      </a>
-      <a className="msg-tg" href={links.telegram} target="_blank" rel="noopener">
-        <MessengerGlyph kind="telegram" />
-        Telegram
-      </a>
-      <a className="msg-wa" href={links.whatsapp} target="_blank" rel="noopener">
-        <MessengerGlyph kind="whatsapp" />
-        WhatsApp
-      </a>
-    </div>
-  )
-}
-
-/** Форма заявки команды «Заявки»: рендерится на сервере и оживает в браузере (src/client.tsx). */
-export function QuoteIsland({ lang }: { lang: Lang }) {
-  const successUrl = url(lang, 'thanks/')
-  const formLang = lang === 'ru' ? 'ru' : 'ua'
-  const html = renderToString(<QuoteForm successUrl={successUrl} lang={formLang} />)
-  return (
-    <div
-      className="quote-slot"
-      data-island="quote"
-      data-success-url={successUrl}
-      data-lang={formLang}
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
-  )
-}
-
-export function Hero({
-  ctx,
-  title,
-  lead,
-  bullets,
-  chips,
-  crumbs,
-}: {
-  ctx: Ctx
-  title: ReactNode
-  lead: string
-  bullets: string[]
-  chips?: string[]
-  crumbs?: { href?: string; label: string }[]
-}) {
-  return (
-    <section className="hero" aria-labelledby="h1">
-      <div className="wrap hero-grid">
-        <div className="hero-copy">
-          {crumbs ? <Crumbs items={crumbs} /> : null}
-          {chips ? (
-            <ul className="chips">
-              {chips.map((t) => (
-                <li key={t}>{t}</li>
-              ))}
-            </ul>
-          ) : null}
-          <h1 id="h1">{title}</h1>
-          <p className="lead">{lead}</p>
-        </div>
-        <div className="hero-form">
-          <QuoteIsland lang={ctx.lang} />
-          <Messengers c={ctx.c} />
-        </div>
-        {bullets.length ? (
-          <ul className="ticks">
-            {bullets.map((b) => (
-              <li key={b}>
-                <Tick />
-                {b}
-              </li>
-            ))}
-          </ul>
-        ) : null}
-      </div>
-    </section>
-  )
-}
+/* ——— Первый экран ——— */
 
 export function Crumbs({ items }: { items: { href?: string; label: string }[] }) {
   return (
     <nav className="crumbs" aria-label="breadcrumbs">
       <ol>
-        {items.map((i) => (
-          <li key={i.label}>{i.href ? <a href={i.href}>{i.label}</a> : <span aria-current="page">{i.label}</span>}</li>
+        {items.map((i, n) => (
+          <li key={n}>{i.href ? <a href={i.href}>{i.label}</a> : <span aria-current="page">{i.label}</span>}</li>
         ))}
       </ol>
     </nav>
   )
 }
 
-export function ServiceTiles({ lang, services }: { lang: Lang; services: ServicePage[] }) {
+export function Messengers({ c, dark }: { c: LangContent; dark?: boolean }) {
+  const items = [
+    { href: links.viber, kind: 'viber' as const, label: 'Viber' },
+    { href: links.telegram, kind: 'telegram' as const, label: 'Telegram' },
+    { href: links.whatsapp, kind: 'whatsapp' as const, label: 'WhatsApp' },
+  ]
   return (
-    <div className="tiles">
+    <ul className={`msg${dark ? ' msg--dark' : ''}`} aria-label={c.ui.write}>
+      {items.map((i) => (
+        <li key={i.kind}>
+          <a className={`msg-${i.kind}`} href={i.href} target="_blank" rel="noopener">
+            <MessengerGlyph kind={i.kind} />
+            <span>{i.label}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+function FormIsland({ ctx }: { ctx: Ctx }) {
+  const successUrl = url(ctx.lang, 'thanks/')
+  const formLang = ctx.lang === 'ru' ? 'ru' : 'ua'
+  return (
+    <div className="hero-form" data-island="quote" data-lang={formLang} data-success-url={successUrl}>
+      <QuoteForm successUrl={successUrl} lang={formLang} />
+    </div>
+  )
+}
+
+export function Hero({
+  ctx,
+  crumbs,
+  eyebrow,
+  title,
+  lead,
+  bullets,
+  price,
+  home,
+}: {
+  ctx: Ctx
+  crumbs?: { href?: string; label: string }[]
+  eyebrow?: string
+  title: ReactNode
+  lead: string
+  bullets: string[]
+  price?: string
+  home?: boolean
+}) {
+  const { c } = ctx
+  return (
+    <section className={`hero${home ? ' hero--home' : ''}`} aria-labelledby="h1">
+      <div className="wrap hero-grid">
+        <div className="hero-text">
+          {crumbs ? <Crumbs items={crumbs} /> : null}
+          {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
+          <h1 id="h1">{title}</h1>
+          <p className="lead">{lead}</p>
+          {bullets.length ? (
+            <ul className="ticks">
+              {bullets.map((b) => (
+                <li key={b}>
+                  <Tick />
+                  {b}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          {price ? (
+            <p className="hero-price">
+              <span>{c.blocks.pricesTitle}</span>
+              <strong>{price}</strong>
+            </p>
+          ) : null}
+          <div className="hero-alt">
+            <span>{c.blocks.cta.or}</span>
+            <Messengers c={c} />
+          </div>
+        </div>
+        <FormIsland ctx={ctx} />
+      </div>
+      {home ? (
+        <div className="wrap">
+          <ul className="strip">
+            {c.blocks.trustStrip.map((t) => (
+              <li key={t.title}>
+                <strong>{t.title}</strong>
+                <span>{t.text}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+    </section>
+  )
+}
+
+/* ——— Секции ——— */
+
+export function Head({ eyebrow, title, sub, id }: { eyebrow?: string; title: string; sub?: string; id?: string }) {
+  return (
+    <div className="head">
+      {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
+      <h2 id={id}>{title}</h2>
+      {sub ? <p className="sub">{sub}</p> : null}
+    </div>
+  )
+}
+
+export function ServiceCards({ lang, services, compact }: { lang: Lang; services: ServicePage[]; compact?: boolean }) {
+  return (
+    <ul className={`cards${compact ? ' cards--compact' : ''}`}>
       {services.map((s) => (
-        <a key={s.slug} className="tile" href={url(lang, servicePath(s))}>
-          <span className="tile-ic">
-            <Icon name={s.icon} />
-          </span>
-          <b>{s.tile.title}</b>
-          <span>{s.tile.text}</span>
-          <span className="tile-go">
-            <Arrow size={16} />
-          </span>
-        </a>
+        <li key={s.slug}>
+          <ServiceCard href={url(lang, servicePath(s))} card={s.card} />
+        </li>
       ))}
-    </div>
+    </ul>
   )
 }
 
-export function IntlCards({ lang, services, more }: { lang: Lang; services: ServicePage[]; more: string }) {
+function ServiceCard({ href, card }: { href: string; card: Card }) {
   return (
-    <div className="intl">
-      {services.map((s, i) => (
-        <a key={s.slug} className={`big${i === 1 ? ' big--acc' : ''}`} href={url(lang, servicePath(s))}>
-          <Icon name={s.icon} size={28} />
-          <b>{s.tile.title}</b>
-          <span>{s.tile.text}</span>
-          <span className="big-go">
-            {more} <Arrow size={16} />
-          </span>
-        </a>
-      ))}
-    </div>
+    <a className="card" href={href}>
+      <span className="card-ico">
+        <Icon name={card.icon} />
+      </span>
+      <span className="card-body">
+        <strong>{card.title}</strong>
+        <span>{card.text}</span>
+      </span>
+      {card.price ? <span className="card-price">{card.price}</span> : null}
+      <span className="card-go">
+        <Arrow size={18} />
+      </span>
+    </a>
   )
 }
 
-export function Transport({ c, vehicles, id }: { c: LangContent; vehicles: Vehicle[]; id?: string }) {
+export function Directions({ ctx }: { ctx: Ctx }) {
+  const { c, lang } = ctx
+  const b = c.blocks.directions
+  const ukr = c.services.filter((s) => s.group === 'ukraine')
+  const intl = c.services.filter((s) => s.group === 'international')
+  return (
+    <section className="s" aria-labelledby="dir-h">
+      <div className="wrap">
+        <Head eyebrow={b.eyebrow} title={b.title} sub={b.sub} id="dir-h" />
+        <div className="group">
+          <h3 className="group-h">
+            <a href={url(lang, 'ukraine/')}>
+              {c.ui.nav.ukraine} <Arrow size={16} />
+            </a>
+          </h3>
+          <ServiceCards lang={lang} services={ukr} />
+        </div>
+        <div className="group">
+          <h3 className="group-h">
+            <a href={url(lang, 'international/')}>
+              {c.ui.nav.international} <Arrow size={16} />
+            </a>
+          </h3>
+          <ServiceCards lang={lang} services={intl} />
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export function Transport({ c, vehicles, quoteHref, tinted }: { c: LangContent; vehicles: Vehicle[]; quoteHref: string; tinted?: boolean }) {
+  const b = c.blocks.transport
   if (!vehicles.length) return null
   return (
-    <section className="s" id={id} aria-labelledby="transport-h">
+    <section className={`s${tinted ? ' s--tint' : ''}`} aria-labelledby="tr-h" id="transport">
       <div className="wrap">
-        <h2 id="transport-h">{c.ui.sections.transport}</h2>
-        <p className="sub">{c.ui.sections.transportSub}</p>
-        <ul className="vts">
+        <Head eyebrow={b.eyebrow} title={b.title} sub={b.sub} id="tr-h" />
+        <ul className="fleet">
           {vehicles.map((v) => (
-            <li key={v.id} className="vt">
-              <span className="vt-ic">
-                <Icon name={v.icon} size={26} />
-              </span>
-              <div>
-                <b>{v.name}</b>
-                <div className="specs">
-                  {v.specs.map((s) => (
-                    <i key={s}>{s}</i>
-                  ))}
-                </div>
-                {v.price ? (
-                  <p className="vt-price">
-                    {c.ui.sections.price}: <strong>{v.price}</strong>
-                  </p>
-                ) : null}
+            <li key={v.id} className="veh">
+              <div className="veh-top">
+                <h3>{v.name}</h3>
+                <p>{v.use}</p>
+              </div>
+              <dl>
+                {v.specs.map((s) => (
+                  <div key={s.label}>
+                    <dt>{s.label}</dt>
+                    <dd>{s.value}</dd>
+                  </div>
+                ))}
+              </dl>
+              <div className="veh-foot">
+                <strong>{v.price}</strong>
+                <a href={quoteHref} className="link-acc">
+                  {c.ui.orderVehicle} <Arrow size={16} />
+                </a>
               </div>
             </li>
           ))}
         </ul>
-        <p className="note">{c.ui.sections.transportNote}</p>
       </div>
     </section>
   )
 }
 
-export function Steps({ c }: { c: LangContent }) {
+export function Steps({ c, tinted }: { c: LangContent; tinted?: boolean }) {
+  const b = c.blocks.steps
   return (
-    <section className="s s--white" aria-labelledby="steps-h">
+    <section className={`s${tinted ? ' s--tint' : ''}`} aria-labelledby="st-h">
       <div className="wrap">
-        <h2 id="steps-h">{c.ui.sections.steps}</h2>
+        <Head eyebrow={b.eyebrow} title={b.title} sub={b.sub} id="st-h" />
         <ol className="steps">
-          {c.steps.map((s) => (
-            <li key={s.title}>
-              <b>{s.title}</b>
-              <span>{s.text}</span>
+          {b.items.map((i, n) => (
+            <li key={i.title}>
+              <span className="step-n">{String(n + 1).padStart(2, '0')}</span>
+              <h3>{i.title}</h3>
+              <p>{i.text}</p>
             </li>
           ))}
         </ol>
+        <p className="fine">{b.note}</p>
       </div>
     </section>
   )
 }
 
-export function Why({ c }: { c: LangContent }) {
+export function Why({ c, tinted }: { c: LangContent; tinted?: boolean }) {
+  const b = c.blocks.why
   return (
-    <section className="s" aria-labelledby="why-h">
+    <section className={`s${tinted ? ' s--tint' : ''}`} aria-labelledby="why-h">
       <div className="wrap">
-        <h2 id="why-h">{c.ui.sections.whyUs}</h2>
+        <Head eyebrow={b.eyebrow} title={b.title} sub={b.sub} id="why-h" />
         <ul className="why">
-          {c.why.map((w) => (
-            <li key={w.title}>
-              <span className="why-ic">
-                <Icon name={w.icon} />
+          {b.items.map((i) => (
+            <li key={i.title}>
+              <span className="why-ico">
+                <Icon name={i.icon} />
               </span>
-              <b>{w.title}</b>
-              <span>{w.text}</span>
+              <h3>{i.title}</h3>
+              <p>{i.text}</p>
             </li>
           ))}
         </ul>
@@ -305,12 +405,56 @@ export function Why({ c }: { c: LangContent }) {
   )
 }
 
-export function FaqBlock({ c, faq }: { c: LangContent; faq: Faq[] }) {
+const fmt = (n: number) => n.toLocaleString('uk-UA').replace(/ /g, ' ')
+
+export function Routes({ c, busRate = 20, furaRate = 45 }: { c: LangContent; busRate?: number; furaRate?: number }) {
+  const b = c.blocks.routes
+  const h = c.ui.routesHead
+  const round = (n: number) => Math.round(n / 100) * 100
+  return (
+    <section className="s" aria-labelledby="rt-h">
+      <div className="wrap">
+        <Head eyebrow={b.eyebrow} title={b.title} sub={b.sub} id="rt-h" />
+        <div className="table-wrap">
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">{h.route}</th>
+                <th scope="col">{h.km}</th>
+                <th scope="col">{h.bus}</th>
+                <th scope="col">{h.fura}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {b.list.map((r) => (
+                <tr key={r.to}>
+                  <th scope="row">
+                    {r.from} → {r.to}
+                  </th>
+                  <td>~{fmt(r.km)} км</td>
+                  <td>
+                    {c.ui.from} {fmt(round(r.km * busRate))} грн
+                  </td>
+                  <td>
+                    {c.ui.from} {fmt(round(r.km * furaRate))} грн
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="fine">{b.note}</p>
+      </div>
+    </section>
+  )
+}
+
+export function FaqBlock({ c, faq, tinted }: { c: LangContent; faq: Faq[]; tinted?: boolean }) {
   if (!faq.length) return null
   return (
-    <section className="s" aria-labelledby="faq-h">
-      <div className="wrap">
-        <h2 id="faq-h">{c.ui.sections.faq}</h2>
+    <section className={`s${tinted ? ' s--tint' : ''}`} aria-labelledby="faq-h">
+      <div className="wrap faq-grid">
+        <Head eyebrow={c.blocks.faq.eyebrow} title={c.blocks.faq.title} id="faq-h" />
         <div className="faq">
           {faq.map((f) => (
             <details key={f.q}>
@@ -324,23 +468,88 @@ export function FaqBlock({ c, faq }: { c: LangContent; faq: Faq[] }) {
   )
 }
 
-export function FinalCta({ c, quoteHref }: { c: LangContent; quoteHref: string }) {
+export function SectionsBlock({ sections }: { sections: Section[] }) {
   return (
-    <section className="s s--tight">
+    <div className="prose">
+      {sections.map((s) => (
+        <div key={s.title} className="prose-item">
+          <h2>{s.title}</h2>
+          {s.text ? <p>{s.text}</p> : null}
+          {s.items ? (
+            <ul className="dots">
+              {s.items.map((i) => (
+                <li key={i}>{i}</li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export function PriceCard({ title, rows, note, cta, quoteHref }: { title: string; rows: PriceRow[]; note: string; cta: string; quoteHref: string }) {
+  return (
+    <aside className="price-card">
+      <h2>{title}</h2>
+      <PriceRows rows={rows} />
+      <p className="fine">{note}</p>
+      <a className="btn btn--acc btn--block" href={quoteHref}>
+        {cta}
+      </a>
+    </aside>
+  )
+}
+
+export function PriceRows({ rows }: { rows: PriceRow[] }) {
+  return (
+    <dl className="prices">
+      {rows.map((r) => (
+        <div key={r.label}>
+          <dt>
+            {r.label}
+            {r.note ? <small>{r.note}</small> : null}
+          </dt>
+          <dd>{r.value}</dd>
+        </div>
+      ))}
+    </dl>
+  )
+}
+
+export function Chips({ title, items }: { title: string; items: string[] }) {
+  return (
+    <div className="chips-block">
+      <h2>{title}</h2>
+      <ul className="chips">
+        {items.map((i) => (
+          <li key={i}>{i}</li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+export function FinalCta({ c, quoteHref }: { c: LangContent; quoteHref: string }) {
+  const b = c.blocks.cta
+  return (
+    <section className="s s--cta" aria-labelledby="cta-h">
       <div className="wrap">
-        <div className="final">
+        <div className="cta">
           <div>
-            <h2>{c.ui.final.title}</h2>
-            <p>{c.ui.final.text}</p>
+            <h2 id="cta-h">{b.title}</h2>
+            <p>{b.text}</p>
           </div>
-          <div className="final-actions">
-            <a className="btn btn--dark" href={quoteHref}>
-              {c.ui.ctaQuote}
+          <div className="cta-actions">
+            <a className="btn btn--acc btn--lg" href={quoteHref}>
+              {b.button}
+              <Arrow />
             </a>
-            <a className="btn btn--line" href={links.tel}>
+            <a className="cta-phone" href={links.tel}>
               <MessengerGlyph kind="phone" />
               {contacts.phoneDisplay}
             </a>
+            <Messengers c={c} dark />
           </div>
         </div>
       </div>
@@ -348,87 +557,69 @@ export function FinalCta({ c, quoteHref }: { c: LangContent; quoteHref: string }
   )
 }
 
-export function Footer({ lang, c, path, available }: Ctx) {
+/* ——— Подвал ——— */
+
+export function Footer({ lang, c }: Ctx) {
   const ukr = c.services.filter((s) => s.group === 'ukraine')
   const intl = c.services.filter((s) => s.group === 'international')
+  const year = new Date().getFullYear()
   return (
     <footer className="ftr">
-      <div className="wrap ftr-cols">
+      <div className="wrap ftr-grid">
         <div className="ftr-brand">
-          <Logo lang={lang} height={36} label={c.ui.logoHome} />
-          <p>{c.ui.footer.tagline}</p>
-          <p className="ftr-loc">
-            {c.ui.location}
-          </p>
+          <Logo lang={lang} />
+          <p>{c.ui.footerAbout}</p>
+          <p className="ftr-loc">{c.ui.location}</p>
         </div>
         <div>
-          <b>
-            <a href={url(lang, 'ukraine/')}>{c.ui.footer.ukraine}</a>
-          </b>
+          <p className="ftr-h">
+            <a href={url(lang, 'ukraine/')}>{c.ui.nav.ukraine}</a>
+          </p>
           <ul>
             {ukr.map((s) => (
               <li key={s.slug}>
-                <a href={url(lang, servicePath(s))}>{s.tile.title}</a>
+                <a href={url(lang, servicePath(s))}>{s.card.title}</a>
               </li>
             ))}
           </ul>
         </div>
         <div>
-          <b>
-            <a href={url(lang, 'international/')}>{c.ui.footer.international}</a>
-          </b>
+          <p className="ftr-h">
+            <a href={url(lang, 'international/')}>{c.ui.nav.international}</a>
+          </p>
           <ul>
             {intl.map((s) => (
               <li key={s.slug}>
-                <a href={url(lang, servicePath(s))}>{s.tile.title}</a>
+                <a href={url(lang, servicePath(s))}>{s.card.title}</a>
               </li>
             ))}
-          </ul>
-          <b className="ftr-sub">{c.ui.footer.company}</b>
-          <ul>
             <li>
-              <a href={url(lang, 'business/')}>{c.pages.business.h1}</a>
-            </li>
-            <li>
-              <a href={url(lang, 'about/')}>{c.pages.about.h1}</a>
+              <a href={url(lang, 'prices/')}>{c.ui.nav.prices}</a>
             </li>
           </ul>
         </div>
         <div>
-          <b>
-            <a href={url(lang, 'contacts/')}>{c.ui.footer.contacts}</a>
-          </b>
+          <p className="ftr-h">
+            <a href={url(lang, 'contacts/')}>{c.ui.nav.contacts}</a>
+          </p>
           <ul>
             <li>
               <a href={links.tel}>{contacts.phoneDisplay}</a>
             </li>
             <li>
-              <a href={links.viber}>Viber</a> · <a href={links.telegram}>Telegram</a> · <a href={links.whatsapp}>WhatsApp</a>
-            </li>
-            <li>
               <a href={links.email}>{contacts.email}</a>
             </li>
-          </ul>
-          <b className="ftr-sub">{c.ui.footer.language}</b>
-          <ul className="ftr-langs">
-            {languages.map((l) =>
-              available.includes(l.code) ? (
-                <li key={l.code}>
-                  <a href={url(l.code, path)} hrefLang={l.hreflang}>
-                    {l.label}
-                  </a>
-                </li>
-              ) : (
-                <li key={l.code} className="is-off">
-                  {l.label}
-                </li>
-              ),
-            )}
+            <li>
+              <a href={links.viber}>Viber</a> · <a href={links.telegram}>Telegram</a> · <a href={links.whatsapp}>WhatsApp</a>
+            </li>
           </ul>
         </div>
       </div>
       <div className="wrap ftr-bottom">
-        © {new Date().getFullYear()} {brand.name}. {c.ui.footer.rights}
+        <p>
+          © {year} CR Logistics. {c.ui.rights}
+        </p>
+        <p>{c.ui.footerNote}</p>
       </div>
     </footer>
   )
@@ -436,24 +627,17 @@ export function Footer({ lang, c, path, available }: Ctx) {
 
 export function MobileBar({ c, quoteHref }: { c: LangContent; quoteHref: string }) {
   return (
-    <nav className="mbar" aria-label={c.ui.ctaMessengers}>
+    <div className="mbar">
       <a className="mbar-call" href={links.tel} aria-label={c.ui.call}>
         <MessengerGlyph kind="phone" />
+        <span>{c.ui.call}</span>
       </a>
-      <a className="mbar-viber" href={links.viber} aria-label="Viber">
-        <MessengerGlyph kind="viber" />
-      </a>
-      <a className="mbar-tg" href={links.telegram} aria-label="Telegram">
+      <a className="mbar-tg" href={links.telegram} aria-label="Telegram" target="_blank" rel="noopener">
         <MessengerGlyph kind="telegram" />
       </a>
-      <a className="mbar-wa" href={links.whatsapp} aria-label="WhatsApp">
-        <MessengerGlyph kind="whatsapp" />
+      <a className="mbar-cta" href={quoteHref}>
+        {c.ui.ctaShort}
       </a>
-      <a className="mbar-quote" href={quoteHref}>
-        {c.ui.ctaQuote}
-      </a>
-    </nav>
+    </div>
   )
 }
-
-export type { Ctx }
