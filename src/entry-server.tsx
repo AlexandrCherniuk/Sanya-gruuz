@@ -5,6 +5,7 @@ import { buildRoutes, content, langsForPath, servicePath, type Route } from './s
 import type { LangContent, Vehicle } from './content/types'
 import {
   Chips,
+  Clients,
   Crumbs,
   Directions,
   FaqBlock,
@@ -60,11 +61,12 @@ function Home({ ctx }: { ctx: Ctx }) {
         bullets={c.home.bullets}
       />
       <Directions ctx={ctx} />
-      <Transport c={c} vehicles={c.vehicles.filter((v) => v.id !== 'crane')} quoteHref={ctx.quoteHref} tinted />
+      <Transport c={c} vehicles={c.vehicles.filter((v) => ['bus', 't5', 't10', 'fura', 'coupler', 'carrier', 'lowbed', 'manipulator'].includes(v.id))} quoteHref={ctx.quoteHref} tinted />
       <Steps c={c} />
       <Why c={c} tinted />
-      <Routes c={c} />
-      <FaqBlock c={c} faq={c.home.faq} tinted />
+      <Clients c={c} />
+      <Routes c={c} tinted />
+      <FaqBlock c={c} faq={c.home.faq} />
       <FinalCta c={c} quoteHref={ctx.quoteHref} />
     </>
   )
@@ -74,7 +76,7 @@ function Hub({ ctx, route }: { ctx: Ctx; route: Extract<Route, { kind: 'hub' }> 
   const { c, lang } = ctx
   const hub = route.hub
   const list = c.services.filter((s) => s.group === hub.slug)
-  const vehicles = hub.slug === 'ukraine' ? c.vehicles : pickVehicles(c, ['bus', 'fura', 'carrier', 'lowbed'])
+  const vehicles = hub.slug === 'ukraine' ? c.vehicles.filter((v) => v.id !== 'crane') : pickVehicles(c, ['bus', 'fura', 'carrier', 'lowbed'])
   return (
     <>
       <Hero ctx={ctx} crumbs={crumbsFor(ctx, [{ label: hubLabel(c, hub.slug) }])} title={hub.h1} lead={hub.lead} bullets={hub.bullets} />
@@ -92,7 +94,8 @@ function Hub({ ctx, route }: { ctx: Ctx; route: Extract<Route, { kind: 'hub' }> 
       {hub.slug === 'ukraine' ? <Routes c={c} /> : null}
       <Steps c={c} tinted />
       <Why c={c} />
-      <FaqBlock c={c} faq={hub.faq} tinted />
+      <Clients c={c} tinted />
+      <FaqBlock c={c} faq={hub.faq} />
       <FinalCta c={c} quoteHref={ctx.quoteHref} />
     </>
   )
@@ -115,6 +118,14 @@ function Service({ ctx, route }: { ctx: Ctx; route: Extract<Route, { kind: 'serv
       <section className="s">
         <div className="wrap svc-grid">
           <div>
+            {s.intro ? (
+              <div className="intro">
+                <h2>{s.intro.title}</h2>
+                {s.intro.paragraphs.map((t) => (
+                  <p key={t}>{t}</p>
+                ))}
+              </div>
+            ) : null}
             {s.cargo ? <Chips title={s.cargo.title} items={s.cargo.items} /> : null}
             <SectionsBlock sections={s.sections} />
           </div>

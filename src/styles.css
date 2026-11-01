@@ -821,6 +821,72 @@ ol {
   font-size: 0.94rem;
 }
 
+/* С кем работаем */
+.clients {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+.clients li {
+  display: flex;
+  gap: 14px;
+  padding: 22px 20px 22px 0;
+  border-bottom: 1px solid var(--line);
+}
+.clients svg {
+  flex: none;
+  margin-top: 2px;
+  color: var(--acc-ink);
+}
+.clients h3 {
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+}
+.clients p {
+  color: var(--muted);
+  font-size: 0.93rem;
+}
+.logos {
+  margin-top: 36px;
+}
+.logos-h {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+.logos ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px 40px;
+  align-items: center;
+}
+.logos img {
+  height: 40px;
+  width: auto;
+  filter: grayscale(1);
+  opacity: 0.75;
+}
+
+/* Вступление на странице услуги */
+.intro {
+  margin-bottom: 44px;
+}
+.intro h2 {
+  font-size: 1.45rem;
+  margin-bottom: 14px;
+}
+.intro p {
+  color: var(--ink-3);
+  max-width: 70ch;
+}
+.intro p + p {
+  margin-top: 12px;
+}
+
 /* Таблица маршрутов */
 .table-wrap {
   overflow-x: auto;
@@ -1201,7 +1267,8 @@ ol {
   .steps {
     grid-template-columns: repeat(2, 1fr);
   }
-  .why {
+  .why,
+  .clients {
     grid-template-columns: repeat(2, 1fr);
   }
   .ftr-grid {
@@ -1287,7 +1354,8 @@ ol {
     margin-bottom: 28px;
   }
   .steps,
-  .why {
+  .why,
+  .clients {
     grid-template-columns: 1fr;
   }
   .steps li {

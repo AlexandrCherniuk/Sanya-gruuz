@@ -23,12 +23,35 @@ export type IconName =
   | 'wallet'
   | 'clock'
   | 'check'
+  | 'business'
+  | 'store'
+  | 'factory'
+  | 'build'
+  | 'agro'
+  | 'home'
+  | 'reefer'
+  | 'bulk'
+  | 'liquid'
+  | 'city'
+  | 'flag'
 
 export type Meta = { title: string; description: string }
 
 export type Faq = { q: string; a: string }
 
-export type VehicleId = 'bus' | 't5' | 't10' | 'fura' | 'coupler' | 'carrier' | 'lowbed' | 'manipulator' | 'crane'
+export type VehicleId =
+  | 'bus'
+  | 't5'
+  | 't10'
+  | 'fura'
+  | 'coupler'
+  | 'reefer'
+  | 'tipper'
+  | 'tanker'
+  | 'carrier'
+  | 'lowbed'
+  | 'manipulator'
+  | 'crane'
 
 export type Vehicle = {
   id: VehicleId
@@ -60,6 +83,8 @@ export type ServicePage = {
   bullets: string[]
   /** Цена «від» в первом экране, если есть. */
   priceFrom?: string
+  /** Вводный текст об услуге (2–3 абзаца). */
+  intro?: { title: string; paragraphs: string[] }
   /** Что везём: список видов груза. */
   cargo?: { title: string; items: string[] }
   /** Блоки описания услуги. */
@@ -115,6 +140,7 @@ export type LangContent = {
     why: { eyebrow: string; title: string; sub: string; items: Card[] }
     routes: { eyebrow: string; title: string; sub: string; note: string; list: Route[] }
     faq: { eyebrow: string; title: string }
+    clients: { eyebrow: string; title: string; sub: string; items: Card[]; logosTitle: string }
     cta: { title: string; text: string; button: string; or: string }
     related: string
     cargoTitle: string

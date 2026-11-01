@@ -1,6 +1,6 @@
 // Блоки страниц. Рендерятся в статический HTML при сборке; в браузере оживает только форма.
 import type { ReactNode } from 'react'
-import { asset, contacts, languages, links, url, type Lang } from '../site/config'
+import { asset, clientLogos, contacts, languages, links, url, type Lang } from '../site/config'
 import type { Card, Faq, LangContent, PriceRow, Section, ServicePage, Vehicle } from '../content/types'
 import { QuoteForm } from '../QuoteForm'
 import { Arrow, Icon, MessengerGlyph, Tick } from './Icon'
@@ -405,14 +405,48 @@ export function Why({ c, tinted }: { c: LangContent; tinted?: boolean }) {
   )
 }
 
+export function Clients({ c, tinted }: { c: LangContent; tinted?: boolean }) {
+  const b = c.blocks.clients
+  return (
+    <section className={`s${tinted ? ' s--tint' : ''}`} aria-labelledby="cl-h">
+      <div className="wrap">
+        <Head eyebrow={b.eyebrow} title={b.title} sub={b.sub} id="cl-h" />
+        <ul className="clients">
+          {b.items.map((i) => (
+            <li key={i.title}>
+              <Icon name={i.icon} />
+              <div>
+                <h3>{i.title}</h3>
+                <p>{i.text}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        {clientLogos.length ? (
+          <div className="logos">
+            <p className="logos-h">{b.logosTitle}</p>
+            <ul>
+              {clientLogos.map((l) => (
+                <li key={l.name}>
+                  <img src={asset(l.file)} alt={l.name} loading="lazy" height="40" />
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+      </div>
+    </section>
+  )
+}
+
 const fmt = (n: number) => n.toLocaleString('uk-UA').replace(/ /g, ' ')
 
-export function Routes({ c, busRate = 20, furaRate = 45 }: { c: LangContent; busRate?: number; furaRate?: number }) {
+export function Routes({ c, busRate = 20, furaRate = 45, tinted }: { c: LangContent; busRate?: number; furaRate?: number; tinted?: boolean }) {
   const b = c.blocks.routes
   const h = c.ui.routesHead
   const round = (n: number) => Math.round(n / 100) * 100
   return (
-    <section className="s" aria-labelledby="rt-h">
+    <section className={`s${tinted ? ' s--tint' : ''}`} aria-labelledby="rt-h">
       <div className="wrap">
         <Head eyebrow={b.eyebrow} title={b.title} sub={b.sub} id="rt-h" />
         <div className="table-wrap">

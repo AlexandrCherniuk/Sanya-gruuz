@@ -39,6 +39,13 @@ export const contacts = {
   email: 'cherniukolexandr@gmail.com',
 }
 
+/**
+ * Логотипы клиентов для блока «Нам доверяют». Пусто, пока Александр не пришлёт реальные
+ * (файл кладём в public/clients/). Пример: { name: 'Назва компанії', file: 'clients/name.svg' }.
+ * Пока список пустой, блок показывает только типы клиентов.
+ */
+export const clientLogos: { name: string; file: string }[] = []
+
 export const links = {
   tel: `tel:+${contacts.phone}`,
   viber: `viber://chat?number=%2B${contacts.viber}`,
