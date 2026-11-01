@@ -172,7 +172,7 @@ function Simple({ ctx, route }: { ctx: Ctx; route: Extract<Route, { kind: 'page'
             </div>
             <Messengers c={c} />
             <p className="hero-loc">
-              {brand.city} · {brand.secondLocation}
+              {c.ui.location}
             </p>
           </div>
         </section>
@@ -184,7 +184,7 @@ function Simple({ ctx, route }: { ctx: Ctx; route: Extract<Route, { kind: 'page'
   return (
     <>
       <Hero ctx={ctx} crumbs={crumbsFor(ctx, [{ label: p.h1 }])} title={p.h1} lead={p.lead} bullets={[]} />
-      {p.slug === 'contacts' ? <ContactCards /> : null}
+      {p.slug === 'contacts' ? <ContactCards c={c} /> : null}
       <Blocks blocks={p.blocks} />
       <Steps c={c} />
       <FinalCta c={c} quoteHref={ctx.quoteHref} />
@@ -192,7 +192,7 @@ function Simple({ ctx, route }: { ctx: Ctx; route: Extract<Route, { kind: 'page'
   )
 }
 
-function ContactCards() {
+function ContactCards({ c }: { c: LangContent }) {
   const items = [
     { href: links.tel, kind: 'phone' as const, label: contacts.phoneDisplay },
     { href: links.viber, kind: 'viber' as const, label: 'Viber' },
@@ -214,7 +214,7 @@ function ContactCards() {
           ))}
           <li>
             <span className="contact contact--loc">
-              {brand.city} · {brand.secondLocation}
+              {c.ui.location}
             </span>
           </li>
         </ul>
@@ -369,8 +369,8 @@ export function render404(assets: { js: string; css: string[] }) {
       <main>
         <section className="hero hero--plain">
           <div className="wrap">
-            <h1>Сторінку не знайдено</h1>
-            <p className="lead">Можливо, її перенесли. Почніть з головної або одразу залиште заявку.</p>
+            <h1>{c.ui.notFound.title}</h1>
+            <p className="lead">{c.ui.notFound.text}</p>
             <div className="contact-big">
               <a className="btn btn--acc" href={url(defaultLang)}>
                 {c.ui.breadcrumbHome}

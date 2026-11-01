@@ -486,6 +486,9 @@ export const ua: LangContent = {
       rights: 'Усі права захищено.',
     },
     mobileBar: { quote: 'Заявка' },
+    location: 'Київ · Словенія',
+    logoHome: 'на головну',
+    notFound: { title: 'Сторінку не знайдено', text: 'Можливо, її перенесли. Почніть з головної або одразу залиште заявку.' },
   },
   home: {
     meta: {

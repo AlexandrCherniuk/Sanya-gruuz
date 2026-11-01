@@ -487,6 +487,9 @@ export const ru: LangContent = {
       rights: 'Все права защищены.',
     },
     mobileBar: { quote: 'Заявка' },
+    location: 'Киев · Словения',
+    logoHome: 'на главную',
+    notFound: { title: 'Страница не найдена', text: 'Возможно, её перенесли. Начните с главной или сразу оставьте заявку.' },
   },
   home: {
     meta: {

@@ -9,9 +9,9 @@ import { Arrow, Icon, MessengerGlyph, Tick } from './Icon'
 
 type Ctx = { lang: Lang; c: LangContent; path: string; available: Lang[]; quoteHref: string }
 
-export function Logo({ lang, height = 30 }: { lang: Lang; height?: number }) {
+export function Logo({ lang, height = 30, label }: { lang: Lang; height?: number; label: string }) {
   return (
-    <a className="logo" href={url(lang)} aria-label={`${brand.name}: на головну`}>
+    <a className="logo" href={url(lang)} aria-label={`${brand.name}: ${label}`}>
       <img src={asset('brand/logo-cr.png')} alt={brand.name} width={Math.round(height * 2.42)} height={height} />
     </a>
   )
@@ -62,7 +62,7 @@ export function Header(ctx: Ctx) {
   return (
     <header className="hdr">
       <div className="wrap hdr-in">
-        <Logo lang={lang} />
+        <Logo lang={lang} label={c.ui.logoHome} />
         <nav className="nav" aria-label={c.ui.menu}>
           {nav.map((n) => (
             <a key={n.href} href={n.href}>
@@ -346,10 +346,10 @@ export function Footer({ lang, c, path, available }: Ctx) {
     <footer className="ftr">
       <div className="wrap ftr-cols">
         <div className="ftr-brand">
-          <Logo lang={lang} height={36} />
+          <Logo lang={lang} height={36} label={c.ui.logoHome} />
           <p>{c.ui.footer.tagline}</p>
           <p className="ftr-loc">
-            {brand.city} · {brand.secondLocation}
+            {c.ui.location}
           </p>
         </div>
         <div>

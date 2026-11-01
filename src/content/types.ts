@@ -110,6 +110,11 @@ export type Ui = {
   final: { title: string; text: string }
   footer: { tagline: string; ukraine: string; international: string; company: string; contacts: string; language: string; rights: string }
   mobileBar: { quote: string }
+  /** «Київ · Словенія» на языке страницы. */
+  location: string
+  /** aria-label логотипа: «на головну». */
+  logoHome: string
+  notFound: { title: string; text: string }
 }
 
 export type LangContent = {
