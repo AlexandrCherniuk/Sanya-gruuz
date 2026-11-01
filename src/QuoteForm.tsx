@@ -1,136 +1,227 @@
-import { useId, useMemo, useState, type FormEvent } from 'react'
+import { useEffect, useId, useState, type FormEvent } from 'react'
+import './QuoteForm.css'
 import { copy } from './content'
+import { formCopy as t } from './formCopy'
 import { site } from './seo'
-import { isValidPhone, mailtoQuote, type QuoteDraft } from './quote'
+import { initAnalytics, trackLead } from './analytics'
+import { sendLead } from './lead'
+import { emptyDraft, isValidPhone, type QuoteDraft } from './quote'
 
-const initial: QuoteDraft = {
-  phone: '',
-  from: '',
-  to: '',
-  cargo: copy.form.cargoOptions[0],
+type Status = 'idle' | 'sending' | 'sent' | 'failed'
+type Field = 'phone' | 'from' | 'to'
+
+type Props = {
+  /** Якорь формы. На странице с двумя формами второй даём другой id. */
+  id?: string
 }
 
-export function QuoteForm() {
-  const formId = useId()
-  const [draft, setDraft] = useState<QuoteDraft>(initial)
-  const [error, setError] = useState('')
-  const [sent, setSent] = useState(false)
-  const mailHref = useMemo(() => mailtoQuote(draft), [draft])
+function validate(draft: QuoteDraft): Partial<Record<Field, string>> {
+  const errors: Partial<Record<Field, string>> = {}
+  if (!isValidPhone(draft.phone)) errors.phone = t.errorPhone
+  if (!draft.from.trim()) errors.from = t.errorFrom
+  if (!draft.to.trim()) errors.to = t.errorTo
+  return errors
+}
+
+export function QuoteForm({ id = copy.form.id }: Props) {
+  const uid = useId()
+  const [draft, setDraft] = useState<QuoteDraft>(emptyDraft)
+  const [honeypot, setHoneypot] = useState('')
+  const [errors, setErrors] = useState<Partial<Record<Field, string>>>({})
+  const [status, setStatus] = useState<Status>('idle')
+
+  useEffect(() => {
+    initAnalytics()
+  }, [])
 
   function update<K extends keyof QuoteDraft>(key: K, value: QuoteDraft[K]) {
     setDraft((prev) => ({ ...prev, [key]: value }))
-    if (error) setError('')
+    if (key in errors) setErrors((prev) => ({ ...prev, [key]: undefined }))
+    if (status === 'failed') setStatus('idle')
   }
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (!isValidPhone(draft.phone)) {
-      setError(copy.form.error)
-      setSent(false)
+    if (status === 'sending') return
+    const found = validate(draft)
+    setErrors(found)
+    const first = (['phone', 'from', 'to'] as Field[]).find((f) => found[f])
+    if (first) {
+      document.getElementById(`${uid}-${first}`)?.focus()
       return
     }
-    setError('')
-    setSent(true)
+    setStatus('sending')
+    const result = await sendLead(draft, honeypot)
+    if (result.ok) {
+      trackLead()
+      setStatus('sent')
+      setDraft(emptyDraft)
+    } else {
+      setStatus('failed')
+    }
   }
 
-  if (sent) {
+  if (status === 'sent') {
     return (
-      <div id={copy.form.id} className="quote-card quote-card--success" role="status">
-        <h2>{copy.form.successTitle}</h2>
-        <p className="lead">{copy.form.successText}</p>
+      <div id={id} className="quote-card quote-card--success" role="status">
+        <h2>{t.successTitle}</h2>
+        <p className="lead">{t.successText}</p>
         <div className="quote-success-actions">
           <a className="btn btn--ghost-dark" href={`tel:${site.phone}`}>
-            {copy.form.call}
+            {t.call}
           </a>
-          <a className="btn btn--signal" href={mailHref}>
-            {copy.form.successMail}
-          </a>
+          <button className="btn btn--signal" type="button" onClick={() => setStatus('idle')}>
+            {t.again}
+          </button>
         </div>
       </div>
     )
   }
 
+  const errId = (f: Field) => (errors[f] ? `${uid}-${f}-error` : undefined)
+
   return (
     <form
-      id={copy.form.id}
+      id={id}
       className="quote-card"
       onSubmit={onSubmit}
       noValidate
-      aria-labelledby={`${formId}-title`}
+      aria-labelledby={`${uid}-title`}
+      aria-busy={status === 'sending'}
     >
-      <h2 id={`${formId}-title`}>{copy.form.title}</h2>
-      <p className="lead">{copy.form.lead}</p>
+      <h2 id={`${uid}-title`}>{t.title}</h2>
+      <p className="lead">{t.lead}</p>
 
-      <label htmlFor={`${formId}-phone`}>
-        {copy.form.phone}
+      <label htmlFor={`${uid}-phone`}>
+        {t.phone}
         <input
-          id={`${formId}-phone`}
+          id={`${uid}-phone`}
           name="phone"
           type="tel"
           inputMode="tel"
           autoComplete="tel"
           required
-          placeholder="+38 096 000 00 00"
+          placeholder={t.phonePlaceholder}
           value={draft.phone}
           onChange={(e) => update('phone', e.target.value)}
-          aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${formId}-error` : undefined}
+          aria-invalid={Boolean(errors.phone)}
+          aria-describedby={errId('phone')}
         />
+        {errors.phone ? (
+          <span id={errId('phone')} className="quote-error">
+            {errors.phone}
+          </span>
+        ) : null}
       </label>
 
       <div className="quote-grid">
-        <label htmlFor={`${formId}-from`}>
-          {copy.form.from}
+        <label htmlFor={`${uid}-from`}>
+          {t.from}
           <input
-            id={`${formId}-from`}
+            id={`${uid}-from`}
             name="from"
             type="text"
             autoComplete="address-level2"
-            placeholder="Київ"
+            required
+            placeholder={t.fromPlaceholder}
             value={draft.from}
             onChange={(e) => update('from', e.target.value)}
+            aria-invalid={Boolean(errors.from)}
+            aria-describedby={errId('from')}
           />
+          {errors.from ? (
+            <span id={errId('from')} className="quote-error">
+              {errors.from}
+            </span>
+          ) : null}
         </label>
-        <label htmlFor={`${formId}-to`}>
-          {copy.form.to}
+        <label htmlFor={`${uid}-to`}>
+          {t.to}
           <input
-            id={`${formId}-to`}
+            id={`${uid}-to`}
             name="to"
             type="text"
-            autoComplete="address-level2"
-            placeholder="Варшава"
+            required
+            placeholder={t.toPlaceholder}
             value={draft.to}
             onChange={(e) => update('to', e.target.value)}
+            aria-invalid={Boolean(errors.to)}
+            aria-describedby={errId('to')}
+          />
+          {errors.to ? (
+            <span id={errId('to')} className="quote-error">
+              {errors.to}
+            </span>
+          ) : null}
+        </label>
+      </div>
+
+      <details className="quote-details">
+        <summary>{t.detailsToggle}</summary>
+        <div className="quote-details-body">
+          <label htmlFor={`${uid}-cargo`}>
+            {t.cargo}
+            <input
+              id={`${uid}-cargo`}
+              name="cargo"
+              type="text"
+              placeholder={t.cargoPlaceholder}
+              value={draft.cargo}
+              onChange={(e) => update('cargo', e.target.value)}
+            />
+          </label>
+          <div className="quote-grid">
+            <label htmlFor={`${uid}-name`}>
+              {t.name}
+              <input
+                id={`${uid}-name`}
+                name="name"
+                type="text"
+                autoComplete="given-name"
+                placeholder={t.namePlaceholder}
+                value={draft.name}
+                onChange={(e) => update('name', e.target.value)}
+              />
+            </label>
+            <label htmlFor={`${uid}-date`}>
+              {t.date}
+              <input
+                id={`${uid}-date`}
+                name="date"
+                type="date"
+                value={draft.date}
+                onChange={(e) => update('date', e.target.value)}
+              />
+            </label>
+          </div>
+        </div>
+      </details>
+
+      {/* Ловушка для ботов: человек это поле не видит и не заполняет. */}
+      <div className="quote-hp" aria-hidden="true">
+        <label>
+          Website
+          <input
+            tabIndex={-1}
+            autoComplete="off"
+            name="website"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
           />
         </label>
       </div>
 
-      <label htmlFor={`${formId}-cargo`}>
-        {copy.form.cargo}
-        <select
-          id={`${formId}-cargo`}
-          name="cargo"
-          value={draft.cargo}
-          onChange={(e) => update('cargo', e.target.value)}
-        >
-          {copy.form.cargoOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-      </label>
-
-      {error ? (
-        <p id={`${formId}-error`} className="quote-error">
-          {error}
+      {status === 'failed' ? (
+        <p className="quote-error quote-error--send" role="alert">
+          {t.errorSend}{' '}
+          <a href={`tel:${site.phone}`}>{site.phoneDisplay}</a>
         </p>
       ) : null}
 
-      <button className="btn btn--signal btn--block" type="submit">
-        {copy.form.submit}
+      <button className="btn btn--signal btn--block" type="submit" disabled={status === 'sending'}>
+        {status === 'sending' ? t.sending : t.submit}
       </button>
-      <p className="quote-privacy">{copy.form.privacy}</p>
+      <p className="quote-privacy">{t.privacy}</p>
     </form>
   )
 }

@@ -1,10 +1,19 @@
-import { site } from './seo'
-
 export type QuoteDraft = {
+  name: string
   phone: string
   from: string
   to: string
   cargo: string
+  date: string
+}
+
+export const emptyDraft: QuoteDraft = {
+  name: '',
+  phone: '',
+  from: '',
+  to: '',
+  cargo: '',
+  date: '',
 }
 
 export function digitsOnly(value: string) {
@@ -16,18 +25,21 @@ export function isValidPhone(value: string) {
   return digits.length >= 10 && digits.length <= 15
 }
 
-export function buildQuoteMessage({ phone, from, to, cargo }: QuoteDraft) {
-  return [
-    'Заявка на розрахунок — Саня Груз',
-    `Телефон: ${phone.trim()}`,
-    `Звідки: ${from.trim() || '—'}`,
-    `Куди: ${to.trim() || '—'}`,
-    `Тип: ${cargo}`,
-  ].join('\n')
+/** Приводит номер к виду +380XXXXXXXXX, если это похоже на украинский номер. */
+export function normalizePhone(value: string) {
+  const digits = digitsOnly(value)
+  if (digits.length === 10 && digits.startsWith('0')) return `+38${digits}`
+  if (digits.length === 12 && digits.startsWith('380')) return `+${digits}`
+  return value.trim().startsWith('+') ? `+${digits}` : digits
 }
 
-export function mailtoQuote(draft: QuoteDraft) {
-  const subject = encodeURIComponent('Заявка на розрахунок — Саня Груз')
-  const body = encodeURIComponent(buildQuoteMessage(draft))
-  return `mailto:${site.email}?subject=${subject}&body=${body}`
+export function cleanDraft(draft: QuoteDraft): QuoteDraft {
+  return {
+    name: draft.name.trim().slice(0, 100),
+    phone: normalizePhone(draft.phone),
+    from: draft.from.trim().slice(0, 200),
+    to: draft.to.trim().slice(0, 200),
+    cargo: draft.cargo.trim().slice(0, 500),
+    date: draft.date.trim().slice(0, 20),
+  }
 }

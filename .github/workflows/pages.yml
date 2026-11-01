@@ -24,6 +24,12 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          # Не секреты: адрес скрипта заявок и ID Google Ads видны в коде сайта всё равно.
+          # Задаются в Settings → Secrets and variables → Actions → Variables.
+          VITE_LEAD_ENDPOINT: ${{ vars.LEAD_ENDPOINT }}
+          VITE_GADS_ID: ${{ vars.GADS_ID }}
+          VITE_GADS_LEAD_LABEL: ${{ vars.GADS_LEAD_LABEL }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
