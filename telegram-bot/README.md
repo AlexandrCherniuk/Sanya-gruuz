@@ -32,7 +32,8 @@
 В GitHub: репозиторий → **Settings → Secrets and variables → Actions → вкладка Variables → New repository variable**:
 - Name: `LEAD_ENDPOINT`, Value: URL из шага 3.
 
-Дальше сайт пересоберётся при следующем пуше в main, и форма начнёт слать заявки.
+Потом пересобери сайт, чтобы он подхватил адрес: вкладка **Actions → Deploy GitHub Pages → Run workflow → Run workflow**.
+Через 1–2 минуты, когда прогон станет зелёным, форма начнёт слать заявки.
 
 ## Проверка
 Открой сайт, оставь заявку со своим номером. Через пару секунд в Telegram придёт:

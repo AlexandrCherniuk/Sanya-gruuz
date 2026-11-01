@@ -3,6 +3,8 @@ name: Deploy GitHub Pages
 on:
   push:
     branches: [main]
+  # Кнопка «Run workflow» во вкладке Actions: пересобрать сайт без пуша (например, после смены переменных).
+  workflow_dispatch:
 
 permissions:
   contents: read
