@@ -166,9 +166,17 @@ ol {
   position: sticky;
   top: 0;
   z-index: 50;
+  border-bottom: 1px solid var(--line);
+}
+/* Фон с размытием на псевдоэлементе: backdrop-filter на самой шапке делает её
+   контейнером для position: fixed, и мобильное меню обрезалось по высоте шапки. */
+.hdr::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   background: rgb(255 255 255 / 92%);
   backdrop-filter: saturate(1.4) blur(10px);
-  border-bottom: 1px solid var(--line);
 }
 .hdr-in {
   display: flex;

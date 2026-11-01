@@ -12,7 +12,7 @@ const ua = {
   detailsToggle: 'Додати деталі',
   cargo: 'Що веземо',
   cargoPlaceholder: 'Меблі, палети, техніка…',
-  name: "Ваше ім'я",
+  name: 'Ваше ім’я',
   namePlaceholder: 'Олександр',
   date: 'Коли',
   submit: 'Отримати розрахунок',
