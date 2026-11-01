@@ -1,9 +1,10 @@
 import { languages, type Lang } from './config'
 import type { HubPage, LangContent, Meta, ServicePage, SimplePage } from '../content/types'
 import { ua } from '../content/ua'
+import { ru } from '../content/ru'
 
 /** Контент по языкам. Новый язык: добавить файл src/content/<код>.ts и включить ready в config. */
-export const content: Partial<Record<Lang, LangContent>> = { ua }
+export const content: Partial<Record<Lang, LangContent>> = { ua, ru }
 
 export type Route =
   | { kind: 'home'; lang: Lang; path: ''; meta: Meta; noindex?: boolean }

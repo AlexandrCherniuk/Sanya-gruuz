@@ -14,7 +14,7 @@ export type LangInfo = {
 
 export const languages: LangInfo[] = [
   { code: 'ua', hreflang: 'uk', label: 'UA', name: 'Українська', ready: true },
-  { code: 'ru', hreflang: 'ru', label: 'RU', name: 'Русский', ready: false },
+  { code: 'ru', hreflang: 'ru', label: 'RU', name: 'Русский', ready: true },
   { code: 'en', hreflang: 'en', label: 'EN', name: 'English', ready: false },
   { code: 'pl', hreflang: 'pl', label: 'PL', name: 'Polski', ready: false },
   { code: 'sl', hreflang: 'sl', label: 'SL', name: 'Slovenščina', ready: false },
