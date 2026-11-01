@@ -1,14 +1,16 @@
 {
-  "name": "sanya-gruz",
+  "name": "cr-logistics",
   "private": true,
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "npm run build && vite preview",
+    "build": "tsc -b && vite build && vite build --ssr src/entry-server.tsx && node scripts/prerender.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource-variable/manrope": "^5.1.0",
+    "lucide-react": "^0.460.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },

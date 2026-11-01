@@ -1,18 +1,13 @@
 {
-  "name": "Саня Груз",
-  "short_name": "Саня Груз",
+  "name": "CR Logistics",
+  "short_name": "CR Logistics",
   "lang": "uk",
-  "description": "Вантажні перевезення Україною та до Європи. Розрахунок за заявкою або телефоном.",
-  "start_url": "/#zapyt",
+  "start_url": "./ua/",
   "display": "browser",
-  "background_color": "#f3eee4",
-  "theme_color": "#16140f",
+  "background_color": "#0B0D0E",
+  "theme_color": "#0B0D0E",
   "icons": [
-    {
-      "src": "/favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any"
-    }
+    { "src": "brand/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "brand/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
   ]
 }
