@@ -1,4 +1,4 @@
-import { useEffect, useId, useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import './QuoteForm.css'
 import { formCopy, type FormCopy, type FormLang } from './formCopy'
 import { site } from './seo'
@@ -28,7 +28,9 @@ function validate(draft: QuoteDraft, t: FormCopy): Partial<Record<Field, string>
 
 export function QuoteForm({ id = 'zapyt', successUrl, lang = 'ua' }: Props) {
   const t = formCopy[lang] ?? formCopy.ua
-  const uid = useId()
+  // Префикс id полей берём из id формы, а не из useId: форма гидрируется отдельным корнем,
+  // и useId на клиенте давал другие id, чем в пререндере (фокус на ошибку не работал).
+  const uid = `${id}-f`
   const [draft, setDraft] = useState<QuoteDraft>(emptyDraft)
   const [honeypot, setHoneypot] = useState('')
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({})

@@ -415,7 +415,7 @@ export function Routes({ c, busRate = 20, furaRate = 45 }: { c: LangContent; bus
     <section className="s" aria-labelledby="rt-h">
       <div className="wrap">
         <Head eyebrow={b.eyebrow} title={b.title} sub={b.sub} id="rt-h" />
-        <div className="table-wrap">
+        <div className="table-wrap" tabIndex={0}>
           <table className="table">
             <thead>
               <tr>
@@ -627,7 +627,7 @@ export function Footer({ lang, c }: Ctx) {
 
 export function MobileBar({ c, quoteHref }: { c: LangContent; quoteHref: string }) {
   return (
-    <div className="mbar">
+    <nav className="mbar" aria-label={c.ui.nav.contacts}>
       <a className="mbar-call" href={links.tel} aria-label={c.ui.call}>
         <MessengerGlyph kind="phone" />
         <span>{c.ui.call}</span>
@@ -638,6 +638,6 @@ export function MobileBar({ c, quoteHref }: { c: LangContent; quoteHref: string 
       <a className="mbar-cta" href={quoteHref}>
         {c.ui.ctaShort}
       </a>
-    </div>
+    </nav>
   )
 }
