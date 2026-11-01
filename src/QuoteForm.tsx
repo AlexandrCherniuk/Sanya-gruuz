@@ -13,6 +13,8 @@ type Field = 'phone' | 'from' | 'to'
 type Props = {
   /** Якорь формы. На странице с двумя формами второй даём другой id. */
   id?: string
+  /** Если задан, после успешной отправки переходим на страницу благодарности (например /ua/thanks/). */
+  successUrl?: string
 }
 
 function validate(draft: QuoteDraft): Partial<Record<Field, string>> {
@@ -23,7 +25,7 @@ function validate(draft: QuoteDraft): Partial<Record<Field, string>> {
   return errors
 }
 
-export function QuoteForm({ id = copy.form.id }: Props) {
+export function QuoteForm({ id = copy.form.id, successUrl }: Props) {
   const uid = useId()
   const [draft, setDraft] = useState<QuoteDraft>(emptyDraft)
   const [honeypot, setHoneypot] = useState('')
@@ -53,6 +55,10 @@ export function QuoteForm({ id = copy.form.id }: Props) {
     setStatus('sending')
     const result = await sendLead(draft, honeypot)
     if (result.ok) {
+      if (successUrl) {
+        trackLead(() => window.location.assign(successUrl))
+        return
+      }
       trackLead()
       setStatus('sent')
       setDraft(emptyDraft)

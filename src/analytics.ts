@@ -26,17 +26,30 @@ export function initAnalytics() {
   document.head.appendChild(script)
 }
 
-/** Вызывается только после того, как заявка реально принята сервером. */
-export function trackLead() {
-  if (typeof window === 'undefined') return
+/**
+ * Вызывается только после того, как заявка реально принята сервером.
+ * done вызывается, когда событие ушло в Google (или через 1 с, если тег не ответил),
+ * чтобы переход на страницу благодарности не обрывал отправку конверсии.
+ */
+export function trackLead(done?: () => void) {
+  let finished = false
+  const finish = () => {
+    if (finished) return
+    finished = true
+    done?.()
+  }
+  if (typeof window === 'undefined') return finish()
   window.dataLayer = window.dataLayer || []
   // Для Google Tag Manager, если позже подключат его вместо gtag.
   window.dataLayer.push({ event: 'lead_submit' })
 
-  if (!window.gtag || !adsId) return
+  if (!window.gtag || !adsId) return finish()
   window.gtag('event', 'generate_lead', { method: 'quote_form' })
   if (leadLabel) {
-    window.gtag('event', 'conversion', { send_to: `${adsId}/${leadLabel}` })
+    window.gtag('event', 'conversion', { send_to: `${adsId}/${leadLabel}`, event_callback: finish })
+    window.setTimeout(finish, 1000)
+  } else {
+    finish()
   }
 }
 
