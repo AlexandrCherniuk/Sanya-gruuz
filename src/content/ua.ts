@@ -873,7 +873,7 @@ export const ua: LangContent = {
       slug: 'kyiv',
       group: 'ukraine',
       meta: {
-        title: 'Вантажоперевезення Київ: по місту, області та з Києва по Україні',
+        title: 'Вантажоперевезення Київ: по місту, області та Україні',
         description:
           'Вантажні перевезення в Києві та області: бус від 350 грн/год, вантажники, переїзди. З Києва по Україні від 20 грн/км. Подача по всіх районах.',
       },
@@ -1448,7 +1448,7 @@ export const ua: LangContent = {
 
   contactsPage: {
     meta: {
-      title: 'Контакти CR Logistics',
+      title: 'Контакти: телефон, Viber, Telegram, WhatsApp',
       description: 'Телефон, Viber, Telegram, WhatsApp і пошта CR Logistics. Київ, Україна, а також Словенія.',
     },
     h1: 'Контакти',

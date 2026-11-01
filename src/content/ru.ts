@@ -872,7 +872,7 @@ export const ru: LangContent = {
       slug: 'kyiv',
       group: 'ukraine',
       meta: {
-        title: 'Грузоперевозки Киев: по городу, области и из Киева по Украине',
+        title: 'Грузоперевозки Киев: по городу, области и Украине',
         description:
           'Грузовые перевозки в Киеве и области: бус от 350 грн/час, грузчики, переезды. Из Киева по Украине от 20 грн/км. Подача по всем районам.',
       },
@@ -1447,7 +1447,7 @@ export const ru: LangContent = {
 
   contactsPage: {
     meta: {
-      title: 'Контакты CR Logistics',
+      title: 'Контакты: телефон, Viber, Telegram, WhatsApp',
       description: 'Телефон, Viber, Telegram, WhatsApp и почта CR Logistics. Киев, Украина, а также Словения.',
     },
     h1: 'Контакты',
