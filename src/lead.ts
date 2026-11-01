@@ -11,12 +11,13 @@ export type LeadResult = { ok: true } | { ok: false; reason: 'not_configured' | 
  * Шлёт заявку в Google Apps Script. Тот пишет строку в таблицу и шлёт сообщение в Telegram.
  * Content-Type text/plain, чтобы браузер не делал preflight (Apps Script его не умеет).
  */
-export async function sendLead(draft: QuoteDraft, honeypot: string): Promise<LeadResult> {
+export async function sendLead(draft: QuoteDraft, honeypot: string, lang = 'ua'): Promise<LeadResult> {
   if (!endpoint) return { ok: false, reason: 'not_configured' }
 
   const payload = {
     ...cleanDraft(draft),
     website: honeypot,
+    lang,
     page: window.location.href.slice(0, 500),
     ...getAttribution(),
   }

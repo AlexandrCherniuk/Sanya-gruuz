@@ -1,7 +1,7 @@
 import { useEffect, useId, useState, type FormEvent } from 'react'
 import './QuoteForm.css'
 import { copy } from './content'
-import { formCopy as t } from './formCopy'
+import { formCopy, type FormCopy, type FormLang } from './formCopy'
 import { site } from './seo'
 import { initAnalytics, trackLead } from './analytics'
 import { sendLead } from './lead'
@@ -15,9 +15,11 @@ type Props = {
   id?: string
   /** Если задан, после успешной отправки переходим на страницу благодарности (например /ua/thanks/). */
   successUrl?: string
+  /** Язык формы, по умолчанию украинский. */
+  lang?: FormLang
 }
 
-function validate(draft: QuoteDraft): Partial<Record<Field, string>> {
+function validate(draft: QuoteDraft, t: FormCopy): Partial<Record<Field, string>> {
   const errors: Partial<Record<Field, string>> = {}
   if (!isValidPhone(draft.phone)) errors.phone = t.errorPhone
   if (!draft.from.trim()) errors.from = t.errorFrom
@@ -25,7 +27,8 @@ function validate(draft: QuoteDraft): Partial<Record<Field, string>> {
   return errors
 }
 
-export function QuoteForm({ id = copy.form.id, successUrl }: Props) {
+export function QuoteForm({ id = copy.form.id, successUrl, lang = 'ua' }: Props) {
+  const t = formCopy[lang] ?? formCopy.ua
   const uid = useId()
   const [draft, setDraft] = useState<QuoteDraft>(emptyDraft)
   const [honeypot, setHoneypot] = useState('')
@@ -45,7 +48,7 @@ export function QuoteForm({ id = copy.form.id, successUrl }: Props) {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (status === 'sending') return
-    const found = validate(draft)
+    const found = validate(draft, t)
     setErrors(found)
     const first = (['phone', 'from', 'to'] as Field[]).find((f) => found[f])
     if (first) {
@@ -53,7 +56,7 @@ export function QuoteForm({ id = copy.form.id, successUrl }: Props) {
       return
     }
     setStatus('sending')
-    const result = await sendLead(draft, honeypot)
+    const result = await sendLead(draft, honeypot, lang)
     if (result.ok) {
       if (successUrl) {
         trackLead(() => window.location.assign(successUrl))

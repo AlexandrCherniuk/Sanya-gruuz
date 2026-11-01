@@ -10,7 +10,7 @@
  * Как поставить: см. telegram-bot/README.md
  */
 
-var MAX = { name: 100, phone: 20, from: 200, to: 200, cargo: 500, date: 20, page: 300 };
+var MAX = { name: 100, phone: 20, from: 200, to: 200, cargo: 500, date: 20, page: 300, lang: 5 };
 var ATTR_KEYS = ['gclid', 'gbraid', 'wbraid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
 
 function doPost(e) {
@@ -40,6 +40,7 @@ function doPost(e) {
     if (lead.cargo) lines.push('📦 ' + esc_(lead.cargo));
     if (lead.date) lines.push('📅 ' + esc_(lead.date.replace(/^(\d{4})-(\d{2})-(\d{2})$/, '$3.$2.$1')));
     if (lead.name) lines.push('👤 ' + esc_(lead.name));
+    if (lead.lang === 'ru') lines.push('🌐 RU версія сайту');
 
     var attr = ATTR_KEYS.filter(function (k) { return data[k]; })
       .map(function (k) { return k + '=' + esc_(clean_(data[k], 200)); });
