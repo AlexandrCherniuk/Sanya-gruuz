@@ -5,7 +5,7 @@ import { hydrateRoot } from 'react-dom/client'
 import { QuoteForm } from './QuoteForm'
 
 document.querySelectorAll<HTMLElement>('[data-island="quote"]').forEach((el) => {
-  hydrateRoot(el, <QuoteForm successUrl={el.dataset.successUrl} />)
+  hydrateRoot(el, <QuoteForm successUrl={el.dataset.successUrl} lang={el.dataset.lang === 'ru' ? 'ru' : 'ua'} />)
 })
 
 // Закрываем выпадающие меню (язык, бургер) по клику мимо и по Esc.

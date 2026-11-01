@@ -121,8 +121,17 @@ export function Messengers({ c, compact = false }: { c: LangContent; compact?: b
 /** Форма заявки команды «Заявки»: рендерится на сервере и оживает в браузере (src/client.tsx). */
 export function QuoteIsland({ lang }: { lang: Lang }) {
   const successUrl = url(lang, 'thanks/')
-  const html = renderToString(<QuoteForm successUrl={successUrl} />)
-  return <div className="quote-slot" data-island="quote" data-success-url={successUrl} dangerouslySetInnerHTML={{ __html: html }} />
+  const formLang = lang === 'ru' ? 'ru' : 'ua'
+  const html = renderToString(<QuoteForm successUrl={successUrl} lang={formLang} />)
+  return (
+    <div
+      className="quote-slot"
+      data-island="quote"
+      data-success-url={successUrl}
+      data-lang={formLang}
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  )
 }
 
 export function Hero({
