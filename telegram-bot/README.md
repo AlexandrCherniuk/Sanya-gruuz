@@ -29,6 +29,8 @@
 3. **Развернуть** → скопируй **URL веб-приложения** (заканчивается на `/exec`).
 
 ### 4. Подключить к сайту
+Сейчас адрес уже вшит в `src/lead.ts` (`DEFAULT_ENDPOINT`). Если делаешь новый скрипт, поменяй его там или задай переменную:
+
 В GitHub: репозиторий → **Settings → Secrets and variables → Actions → вкладка Variables → New repository variable**:
 - Name: `LEAD_ENDPOINT`, Value: URL из шага 3.
 
