@@ -1,7 +1,8 @@
 // Сборка статических страниц: scripts/prerender.mjs вызывает renderPage для каждого адреса.
 import { renderToStaticMarkup } from 'react-dom/server'
-import { type Lang, absUrl, asset, brand, contacts, defaultLang, languages, links, SITE_URL, url } from './site/config'
+import { type Lang, absUrl, asset, BASE as BASE_PATH, brand, contacts, defaultLang, languages, links, SITE_URL, url } from './site/config'
 import { buildRoutes, content, langsForPath, servicePath, type Route } from './site/routes'
+import { browserLangMap, LANG_KEY } from './site/langPick'
 import type { LangContent, Vehicle } from './content/types'
 import {
   Chips,
@@ -444,22 +445,30 @@ ${bodyHtml}
 `
 }
 
-/** Корень сайта: сразу отправляем на украинскую версию, ссылки на все языки для ботов. */
+/**
+ * Корень сайта: открываем язык посетителя. Сначала сохранённый выбор (переключатель или
+ * плашка), потом язык браузера, иначе английский. Без JS (и для ботов) — украинская версия
+ * через noscript и ссылки на все языки. Логика та же, что в src/site/langPick.ts.
+ */
 export function renderRoot() {
   const ready = languages.filter((l) => l.ready)
-  const target = url(defaultLang)
+  const fallback = url(defaultLang)
+  const map = Object.fromEntries(Object.entries(browserLangMap).filter(([, code]) => ready.some((l) => l.code === code)))
+  const pick = `(function(){var m=${JSON.stringify(map)},c=null;try{c=localStorage.getItem(${JSON.stringify(LANG_KEY)})}catch(e){}
+if(!c||${JSON.stringify(ready.map((l) => l.code))}.indexOf(c)<0){c=null;var a=navigator.languages||[navigator.language||''];for(var i=0;i<a.length&&!c;i++){c=m[String(a[i]).toLowerCase().split('-')[0]]||null}}
+location.replace(${JSON.stringify(BASE_PATH)}+(c||'en')+'/'+location.search+location.hash)})()`
   return `<!doctype html>
 <html lang="uk">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>${esc(brand.name)}</title>
-    <meta http-equiv="refresh" content="0; url=${target}">
+    <noscript><meta http-equiv="refresh" content="0; url=${fallback}"></noscript>
     <link rel="canonical" href="${absUrl(defaultLang)}">
     ${ready.map((l) => `<link rel="alternate" hreflang="${l.hreflang}" href="${absUrl(l.code)}">`).join('\n    ')}
     <link rel="alternate" hreflang="x-default" href="${SITE_URL}/">
     <link rel="icon" type="image/png" href="${asset('favicon.png')}">
-    <script>location.replace(${JSON.stringify(target)} + location.search + location.hash)</script>
+    <script>${pick}</script>
   </head>
   <body style="font-family:system-ui,sans-serif;padding:24px">
     <p>${ready.map((l) => `<a style="color:#0B0D0E" href="${url(l.code)}" hreflang="${l.hreflang}">${l.name}</a>`).join(' · ')}</p>

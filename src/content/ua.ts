@@ -30,6 +30,8 @@ export const ua: LangContent = {
       text: 'Можливо, її перенесли. Почніть з головної або одразу залиште заявку на перевезення.',
     },
     routesHead: { route: 'Маршрут', km: 'Відстань', bus: 'Бус до 2 т', fura: 'Фура 22 т' },
+    langSwitch: 'Мова сайту',
+    units: { km: 'км', uah: 'грн' },
   },
 
   blocks: {
