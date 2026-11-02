@@ -93,6 +93,11 @@ export type ServicePage = {
   prices?: { title: string; rows: PriceRow[]; note: string }
   vehicles: VehicleId[]
   faq: Faq[]
+  /**
+   * Страница маршрута (Київ — Львів и т.п.). Такие страницы не попадают в меню и карточки услуг,
+   * на них ведут строки таблицы маршрутов и блок «Популярні маршрути».
+   */
+  route?: Route
 }
 
 export type HubPage = {
@@ -105,7 +110,13 @@ export type HubPage = {
   faq: Faq[]
 }
 
-export type Route = { from: string; to: string; km: number }
+export type Route = {
+  from: string
+  to: string
+  km: number
+  /** Если есть страница маршрута: её путь внутри языка, например 'ukraine/kyiv-lviv/'. */
+  href?: string
+}
 
 export type LangContent = {
   /** Язык интерфейса: подписи, меню, кнопки. */
@@ -130,6 +141,10 @@ export type LangContent = {
     rights: string
     notFound: { title: string; text: string }
     routesHead: { route: string; km: string; bus: string; fura: string }
+    /** Подпись переключателя языков для экранных читалок. */
+    langSwitch: string
+    /** Единицы в таблице маршрутов. */
+    units: { km: string; uah: string }
   }
   /** Общие блоки, которые повторяются на страницах. */
   blocks: {
@@ -143,6 +158,8 @@ export type LangContent = {
     clients: { eyebrow: string; title: string; sub: string; items: Card[]; logosTitle: string }
     cta: { title: string; text: string; button: string; or: string }
     related: string
+    /** Заголовок блока со страницами маршрутов на разделах «По Україні» и «Міжнародні». */
+    routePages?: string
     cargoTitle: string
     pricesTitle: string
   }

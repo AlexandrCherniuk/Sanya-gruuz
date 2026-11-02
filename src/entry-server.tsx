@@ -1,7 +1,8 @@
 // Сборка статических страниц: scripts/prerender.mjs вызывает renderPage для каждого адреса.
 import { renderToStaticMarkup } from 'react-dom/server'
-import { absUrl, asset, brand, contacts, defaultLang, languages, links, SITE_URL, url } from './site/config'
+import { type Lang, absUrl, asset, BASE as BASE_PATH, brand, contacts, defaultLang, languages, links, SITE_URL, url } from './site/config'
 import { buildRoutes, content, langsForPath, servicePath, type Route } from './site/routes'
+import { browserLangMap, LANG_KEY } from './site/langPick'
 import type { LangContent, Vehicle } from './content/types'
 import {
   Chips,
@@ -16,6 +17,8 @@ import {
   Hero,
   Messengers,
   MobileBar,
+  mainServices,
+  routePages,
   PriceCard,
   PriceRows,
   Routes,
@@ -65,7 +68,7 @@ function Home({ ctx }: { ctx: Ctx }) {
       <Steps c={c} />
       <Why c={c} tinted />
       <Clients c={c} />
-      <Routes c={c} tinted />
+      <Routes c={c} lang={ctx.lang} tinted />
       <FaqBlock c={c} faq={c.home.faq} />
       <FinalCta c={c} quoteHref={ctx.quoteHref} />
     </>
@@ -75,7 +78,8 @@ function Home({ ctx }: { ctx: Ctx }) {
 function Hub({ ctx, route }: { ctx: Ctx; route: Extract<Route, { kind: 'hub' }> }) {
   const { c, lang } = ctx
   const hub = route.hub
-  const list = c.services.filter((s) => s.group === hub.slug)
+  const list = mainServices(c, hub.slug)
+  const routeList = routePages(c).filter((s) => s.group === hub.slug)
   const vehicles = hub.slug === 'ukraine' ? c.vehicles.filter((v) => v.id !== 'crane') : pickVehicles(c, ['bus', 'fura', 'carrier', 'lowbed'])
   return (
     <>
@@ -83,6 +87,12 @@ function Hub({ ctx, route }: { ctx: Ctx; route: Extract<Route, { kind: 'hub' }> 
       <section className="s">
         <div className="wrap">
           <ServiceCards lang={lang} services={list} />
+          {routeList.length ? (
+            <div className="mt-l">
+              <Head title={c.blocks.routePages ?? c.blocks.routes.title} />
+              <ServiceCards lang={lang} services={routeList} compact />
+            </div>
+          ) : null}
         </div>
       </section>
       <section className="s s--tint">
@@ -91,7 +101,7 @@ function Hub({ ctx, route }: { ctx: Ctx; route: Extract<Route, { kind: 'hub' }> 
         </div>
       </section>
       <Transport c={c} vehicles={vehicles} quoteHref={ctx.quoteHref} />
-      {hub.slug === 'ukraine' ? <Routes c={c} /> : null}
+      {hub.slug === 'ukraine' ? <Routes c={c} lang={ctx.lang} /> : null}
       <Steps c={c} tinted />
       <Why c={c} />
       <Clients c={c} tinted />
@@ -104,7 +114,16 @@ function Hub({ ctx, route }: { ctx: Ctx; route: Extract<Route, { kind: 'hub' }> 
 function Service({ ctx, route }: { ctx: Ctx; route: Extract<Route, { kind: 'service' }> }) {
   const { c, lang } = ctx
   const s = route.service
-  const related = c.services.filter((x) => x.group === s.group && x.slug !== s.slug)
+  // На странице маршрута: другие маршруты и основной транспорт; на странице услуги: соседние услуги.
+  const related = s.route
+    ? [
+        ...routePages(c).filter((x) => x.slug !== s.slug),
+        ...mainServices(c, s.group).filter((x) => (s.group === 'ukraine' ? ['bus', 'trucks', 'fura', 'pereizd', 'zbirni'] : ['europe', 'poland']).includes(x.slug)),
+      ]
+    : [
+        ...mainServices(c, s.group).filter((x) => x.slug !== s.slug),
+        ...(s.group === 'international' ? routePages(c).filter((x) => x.group === 'international') : []),
+      ]
   return (
     <>
       <Hero
@@ -177,7 +196,7 @@ function Prices({ ctx }: { ctx: Ctx }) {
           <SectionsBlock sections={[{ title: p.factorsTitle, items: p.factors }]} />
         </div>
       </section>
-      <Routes c={c} />
+      <Routes c={c} lang={ctx.lang} />
       <FaqBlock c={c} faq={p.faq} tinted />
       <FinalCta c={c} quoteHref={ctx.quoteHref} />
     </>
@@ -262,18 +281,50 @@ function Thanks({ ctx }: { ctx: Ctx }) {
 function jsonLd(route: Route, c: LangContent) {
   const graph: object[] = []
   const pageUrl = absUrl(route.lang, route.path)
-  if (route.kind === 'home') {
-    graph.push({
-      '@type': 'LocalBusiness',
-      '@id': `${SITE_URL}/#business`,
-      name: brand.name,
-      url: absUrl(route.lang),
-      image: `${SITE_URL}/brand/og.png`,
-      logo: `${SITE_URL}/brand/icon-512.png`,
+  const inLanguage = languages.find((l) => l.code === route.lang)!.hreflang
+  const business = { '@id': `${SITE_URL}/#business` }
+  // Компания описана на каждой странице, остальные сущности ссылаются на неё по @id.
+  graph.push({
+    '@type': 'LocalBusiness',
+    ...business,
+    name: brand.name,
+    url: absUrl(route.lang),
+    image: `${SITE_URL}/brand/og.png`,
+    logo: `${SITE_URL}/brand/icon-512.png`,
+    telephone: `+${contacts.phone}`,
+    email: contacts.email,
+    address: { '@type': 'PostalAddress', addressLocality: brand.city, addressCountry: 'UA' },
+    areaServed: ['UA', 'EU'],
+    contactPoint: {
+      '@type': 'ContactPoint',
       telephone: `+${contacts.phone}`,
-      email: contacts.email,
-      address: { '@type': 'PostalAddress', addressLocality: brand.city, addressCountry: 'UA' },
-      areaServed: ['UA', 'EU'],
+      contactType: 'customer service',
+      availableLanguage: languages.filter((l) => l.ready).map((l) => l.hreflang),
+    },
+  })
+  graph.push({
+    '@type': 'WebPage',
+    '@id': `${pageUrl}#page`,
+    url: pageUrl,
+    name: route.meta.title,
+    description: route.meta.description,
+    inLanguage,
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    about: business,
+  })
+  if (route.kind === 'home') {
+    graph.push({ '@type': 'WebSite', '@id': `${SITE_URL}/#website`, url: `${SITE_URL}/`, name: brand.name, publisher: business, inLanguage })
+  }
+  if (route.kind === 'service') {
+    const s = route.service
+    graph.push({
+      '@type': 'Service',
+      name: s.h1,
+      description: s.meta.description,
+      serviceType: s.card.title,
+      provider: business,
+      url: pageUrl,
+      areaServed: s.group === 'ukraine' ? 'UA' : ['UA', 'EU'],
     })
   }
   if (route.kind !== 'home') {
@@ -308,17 +359,23 @@ function jsonLd(route: Route, c: LangContent) {
   return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c')
 }
 
+type Assets = { js: string; css: string[]; fonts: string[] }
+
+const ogLocale: Record<Lang, string> = { ua: 'uk_UA', ru: 'ru_RU', en: 'en_GB', pl: 'pl_PL', sl: 'sl_SI' }
+
 function esc(s: string) {
   return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
 }
 
-export function renderPage(route: Route, assets: { js: string; css: string[] }) {
+export function renderPage(route: Route, assets: Assets) {
   const c = content[route.lang]!
   const available = langsForPath(route.path, routes)
   const hasForm = route.kind !== 'thanks'
   const ctx: Ctx = { lang: route.lang, c, path: route.path, available, quoteHref: hasForm ? '#zapyt' : `${url(route.lang)}#zapyt` }
   const info = languages.find((l) => l.code === route.lang)!
-  const title = route.kind === 'home' ? route.meta.title : `${route.meta.title} | ${brand.name}`
+  // Бренд дописываем, только если title влезает в выдачу Google (~65 знаков).
+  const branded = `${route.meta.title} | ${brand.name}`
+  const title = route.kind === 'home' || branded.length > 65 ? route.meta.title : branded
 
   let body: React.ReactNode
   if (route.kind === 'home') body = <Home ctx={ctx} />
@@ -361,12 +418,17 @@ export function renderPage(route: Route, assets: { js: string; css: string[] }) 
     <link rel="manifest" href="${asset('site.webmanifest')}">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="${esc(brand.name)}">
-    <meta property="og:locale" content="${info.hreflang === 'uk' ? 'uk_UA' : info.hreflang}">
+    <meta property="og:locale" content="${ogLocale[route.lang]}">
+    ${available
+      .filter((code) => code !== route.lang)
+      .map((code) => `<meta property="og:locale:alternate" content="${ogLocale[code]}">`)
+      .join('\n    ')}
     <meta property="og:title" content="${esc(title)}">
     <meta property="og:description" content="${esc(route.meta.description)}">
     <meta property="og:url" content="${canonical}">
     <meta property="og:image" content="${SITE_URL}/brand/og.png">
     <meta name="twitter:card" content="summary_large_image">
+    ${assets.fonts.map((href) => `<link rel="preload" href="${href}" as="font" type="font/woff2" crossorigin>`).join('\n    ')}
     ${assets.css.map((href) => `<link rel="stylesheet" href="${href}">`).join('\n    ')}
     <script type="module" src="${assets.js}"></script>
     <script type="application/ld+json">${jsonLd(route, c)}</script>`
@@ -383,22 +445,30 @@ ${bodyHtml}
 `
 }
 
-/** Корень сайта: сразу отправляем на украинскую версию, ссылки на все языки для ботов. */
+/**
+ * Корень сайта: открываем язык посетителя. Сначала сохранённый выбор (переключатель или
+ * плашка), потом язык браузера, иначе английский. Без JS (и для ботов) — украинская версия
+ * через noscript и ссылки на все языки. Логика та же, что в src/site/langPick.ts.
+ */
 export function renderRoot() {
   const ready = languages.filter((l) => l.ready)
-  const target = url(defaultLang)
+  const fallback = url(defaultLang)
+  const map = Object.fromEntries(Object.entries(browserLangMap).filter(([, code]) => ready.some((l) => l.code === code)))
+  const pick = `(function(){var m=${JSON.stringify(map)},c=null;try{c=localStorage.getItem(${JSON.stringify(LANG_KEY)})}catch(e){}
+if(!c||${JSON.stringify(ready.map((l) => l.code))}.indexOf(c)<0){c=null;var a=navigator.languages||[navigator.language||''];for(var i=0;i<a.length&&!c;i++){c=m[String(a[i]).toLowerCase().split('-')[0]]||null}}
+location.replace(${JSON.stringify(BASE_PATH)}+(c||'en')+'/'+location.search+location.hash)})()`
   return `<!doctype html>
 <html lang="uk">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>${esc(brand.name)}</title>
-    <meta http-equiv="refresh" content="0; url=${target}">
+    <noscript><meta http-equiv="refresh" content="0; url=${fallback}"></noscript>
     <link rel="canonical" href="${absUrl(defaultLang)}">
     ${ready.map((l) => `<link rel="alternate" hreflang="${l.hreflang}" href="${absUrl(l.code)}">`).join('\n    ')}
     <link rel="alternate" hreflang="x-default" href="${SITE_URL}/">
     <link rel="icon" type="image/png" href="${asset('favicon.png')}">
-    <script>location.replace(${JSON.stringify(target)} + location.search + location.hash)</script>
+    <script>${pick}</script>
   </head>
   <body style="font-family:system-ui,sans-serif;padding:24px">
     <p>${ready.map((l) => `<a style="color:#0B0D0E" href="${url(l.code)}" hreflang="${l.hreflang}">${l.name}</a>`).join(' · ')}</p>
@@ -407,7 +477,7 @@ export function renderRoot() {
 `
 }
 
-export function render404(assets: { js: string; css: string[] }) {
+export function render404(assets: Assets) {
   const c = content[defaultLang]!
   const ctx: Ctx = { lang: defaultLang, c, path: '', available: [defaultLang], quoteHref: `${url(defaultLang)}#zapyt` }
   const html = renderToStaticMarkup(
@@ -459,6 +529,7 @@ export function renderSitemap() {
           const l = languages.find((x) => x.code === code)!
           return `    <xhtml:link rel="alternate" hreflang="${l.hreflang}" href="${absUrl(code, r.path)}"/>`
         })
+        .concat(r.kind === 'home' ? [`    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/"/>`] : [])
         .join('\n')
       return `  <url>\n    <loc>${absUrl(r.lang, r.path)}</loc>\n${alts}\n  </url>`
     })

@@ -10,14 +10,16 @@ export type LangInfo = {
   name: string
   /** Язык собирается в отдельную папку /<code>/ только когда готовы тексты. */
   ready: boolean
+  /** Локаль для чисел (1 200 км) в таблицах. */
+  locale: string
 }
 
 export const languages: LangInfo[] = [
-  { code: 'ua', hreflang: 'uk', label: 'UA', name: 'Українська', ready: true },
-  { code: 'ru', hreflang: 'ru', label: 'RU', name: 'Русский', ready: true },
-  { code: 'en', hreflang: 'en', label: 'EN', name: 'English', ready: false },
-  { code: 'pl', hreflang: 'pl', label: 'PL', name: 'Polski', ready: false },
-  { code: 'sl', hreflang: 'sl', label: 'SL', name: 'Slovenščina', ready: false },
+  { code: 'ua', hreflang: 'uk', label: 'UA', name: 'Українська', ready: true, locale: 'uk-UA' },
+  { code: 'ru', hreflang: 'ru', label: 'RU', name: 'Русский', ready: true, locale: 'ru-RU' },
+  { code: 'en', hreflang: 'en', label: 'EN', name: 'English', ready: true, locale: 'en-GB' },
+  { code: 'pl', hreflang: 'pl', label: 'PL', name: 'Polski', ready: true, locale: 'pl-PL' },
+  { code: 'sl', hreflang: 'sl', label: 'SL', name: 'Slovenščina', ready: true, locale: 'sl-SI' },
 ]
 
 export const defaultLang: Lang = 'ua'

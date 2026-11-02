@@ -17,6 +17,16 @@ export const servicePath = (s: Pick<ServicePage, 'group' | 'slug'>) => `${s.grou
 
 /* ——— Шапка ——— */
 
+/** Услуги для меню и карточек: без страниц маршрутов. */
+export function mainServices(c: LangContent, group: ServicePage['group']) {
+  return c.services.filter((s) => s.group === group && !s.route)
+}
+
+/** Страницы маршрутов (Київ — Львів и т.п.). */
+export function routePages(c: LangContent) {
+  return c.services.filter((s) => s.route)
+}
+
 function Logo({ lang }: { lang: Lang }) {
   return (
     <a className="logo" href={url(lang)} aria-label="CR Logistics">
@@ -28,29 +38,41 @@ function Logo({ lang }: { lang: Lang }) {
   )
 }
 
-function LangSwitch({ lang, available, path }: { lang: Lang; available: Lang[]; path: string }) {
+function LangSwitch({ lang, available, path, label }: { lang: Lang; available: Lang[]; path: string; label: string }) {
   const ready = languages.filter((l) => l.ready)
+  const current = ready.find((l) => l.code === lang)!
+  // Выпадающий список: пять языков в шапке не помещаются на телефоне.
+  // data-lang на ссылке: client.tsx запоминает выбор посетителя.
   return (
-    <div className="lang" role="group" aria-label="Мова / Язык">
-      {ready.map((l) => {
-        const href = available.includes(l.code) ? url(l.code, path) : url(l.code)
-        return l.code === lang ? (
-          <span key={l.code} className="lang-on" aria-current="true">
-            {l.label}
-          </span>
-        ) : (
-          <a key={l.code} href={href} hrefLang={l.hreflang} lang={l.hreflang}>
-            {l.label}
-          </a>
-        )
-      })}
-    </div>
+    <details className="lang">
+      <summary aria-label={`${label}: ${current.name}`}>
+        {current.label}
+        <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
+          <path d="M1.5 3.5 5 7l3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+        </svg>
+      </summary>
+      <ul className="lang-menu">
+        {ready.map((l) => (
+          <li key={l.code}>
+            {l.code === lang ? (
+              <span className="lang-on" aria-current="true" lang={l.hreflang}>
+                <b>{l.label}</b> {l.name}
+              </span>
+            ) : (
+              <a href={available.includes(l.code) ? url(l.code, path) : url(l.code)} hrefLang={l.hreflang} lang={l.hreflang} data-lang={l.code}>
+                <b>{l.label}</b> {l.name}
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
+    </details>
   )
 }
 
 export function Header({ lang, c, path, available, quoteHref }: Ctx) {
-  const ukr = c.services.filter((s) => s.group === 'ukraine')
-  const intl = c.services.filter((s) => s.group === 'international')
+  const ukr = mainServices(c, 'ukraine')
+  const intl = mainServices(c, 'international')
   const active = (p: string) => (path.startsWith(p) ? 'is-active' : undefined)
   const drop = (items: ServicePage[]) => (
     <div className="drop">
@@ -94,7 +116,7 @@ export function Header({ lang, c, path, available, quoteHref }: Ctx) {
           <a className="hdr-phone" href={links.tel}>
             {contacts.phoneDisplay}
           </a>
-          <LangSwitch lang={lang} available={available} path={path} />
+          <LangSwitch lang={lang} available={available} path={path} label={c.ui.langSwitch} />
           <a className="btn btn--acc btn--sm hdr-cta" href={quoteHref}>
             {c.ui.ctaShort}
           </a>
@@ -179,7 +201,7 @@ export function Messengers({ c, dark }: { c: LangContent; dark?: boolean }) {
 
 function FormIsland({ ctx }: { ctx: Ctx }) {
   const successUrl = url(ctx.lang, 'thanks/')
-  const formLang = ctx.lang === 'ru' ? 'ru' : 'ua'
+  const formLang = ctx.lang
   return (
     <div className="hero-form" data-island="quote" data-lang={formLang} data-success-url={successUrl}>
       <QuoteForm successUrl={successUrl} lang={formLang} />
@@ -299,8 +321,8 @@ function ServiceCard({ href, card }: { href: string; card: Card }) {
 export function Directions({ ctx }: { ctx: Ctx }) {
   const { c, lang } = ctx
   const b = c.blocks.directions
-  const ukr = c.services.filter((s) => s.group === 'ukraine')
-  const intl = c.services.filter((s) => s.group === 'international')
+  const ukr = mainServices(c, 'ukraine')
+  const intl = mainServices(c, 'international')
   return (
     <section className="s" aria-labelledby="dir-h">
       <div className="wrap">
@@ -439,12 +461,18 @@ export function Clients({ c, tinted }: { c: LangContent; tinted?: boolean }) {
   )
 }
 
-const fmt = (n: number) => n.toLocaleString('uk-UA').replace(/ /g, ' ')
-
-export function Routes({ c, busRate = 20, furaRate = 45, tinted }: { c: LangContent; busRate?: number; furaRate?: number; tinted?: boolean }) {
+export function Routes({ c, lang, busRate = 20, furaRate = 45, tinted }: { c: LangContent; lang: Lang; busRate?: number; furaRate?: number; tinted?: boolean }) {
   const b = c.blocks.routes
+  // Строка ведёт на страницу маршрута, если она есть.
+  const pageFor = (from: string, to: string) => {
+    const s = routePages(c).find((p) => p.route!.from === from && p.route!.to === to)
+    return s ? url(lang, servicePath(s)) : undefined
+  }
   const h = c.ui.routesHead
   const round = (n: number) => Math.round(n / 100) * 100
+  const locale = languages.find((l) => l.code === lang)?.locale ?? 'uk-UA'
+  const fmt = (n: number) => n.toLocaleString(locale).replace(/[\s\u202f]/g, '\u00a0')
+  const u = c.ui.units
   return (
     <section className={`s${tinted ? ' s--tint' : ''}`} aria-labelledby="rt-h">
       <div className="wrap">
@@ -463,14 +491,24 @@ export function Routes({ c, busRate = 20, furaRate = 45, tinted }: { c: LangCont
               {b.list.map((r) => (
                 <tr key={r.to}>
                   <th scope="row">
-                    {r.from} → {r.to}
+                    {pageFor(r.from, r.to) ? (
+                      <a href={pageFor(r.from, r.to)}>
+                        {r.from} → {r.to}
+                      </a>
+                    ) : (
+                      <>
+                        {r.from} → {r.to}
+                      </>
+                    )}
                   </th>
-                  <td>~{fmt(r.km)} км</td>
                   <td>
-                    {c.ui.from} {fmt(round(r.km * busRate))} грн
+                    ~{fmt(r.km)} {u.km}
                   </td>
                   <td>
-                    {c.ui.from} {fmt(round(r.km * furaRate))} грн
+                    {c.ui.from} {fmt(round(r.km * busRate))} {u.uah}
+                  </td>
+                  <td>
+                    {c.ui.from} {fmt(round(r.km * furaRate))} {u.uah}
                   </td>
                 </tr>
               ))}
@@ -594,8 +632,8 @@ export function FinalCta({ c, quoteHref }: { c: LangContent; quoteHref: string }
 /* ——— Подвал ——— */
 
 export function Footer({ lang, c }: Ctx) {
-  const ukr = c.services.filter((s) => s.group === 'ukraine')
-  const intl = c.services.filter((s) => s.group === 'international')
+  const ukr = mainServices(c, 'ukraine')
+  const intl = mainServices(c, 'international')
   const year = new Date().getFullYear()
   return (
     <footer className="ftr">

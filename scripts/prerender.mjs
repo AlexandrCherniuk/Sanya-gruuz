@@ -13,6 +13,8 @@ const base = ssr.BASE ?? '/'
 const assets = {
   js: base + entry.file,
   css: (entry.css ?? []).map((f) => base + f),
+  // Кириллический шрифт грузим заранее: на нём весь текст первого экрана.
+  fonts: (entry.assets ?? []).filter((f) => /manrope-cyrillic-wght/.test(f)).map((f) => base + f),
 }
 
 async function write(rel, html) {
