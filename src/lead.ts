@@ -1,7 +1,13 @@
 import { getAttribution } from './analytics'
 import { cleanDraft, type QuoteDraft } from './quote'
 
-const endpoint = import.meta.env.VITE_LEAD_ENDPOINT?.trim()
+// Адрес Google Apps Script, который пересылает заявки в Telegram-бота (telegram-bot/Code.gs).
+// Он не секретный: токен бота хранится в самом скрипте. Переменная LEAD_ENDPOINT в репо
+// при необходимости его перекрывает.
+const DEFAULT_ENDPOINT =
+  'https://script.google.com/macros/s/AKfycbzor-XjnKoMRX8Jdtw7YBHb2y29GEvo1WzsmSBIcVVOe4AtsKteb_yzYuxrA1oZXrbM/exec'
+
+const endpoint = import.meta.env.VITE_LEAD_ENDPOINT?.trim() || DEFAULT_ENDPOINT
 
 export const leadEndpointConfigured = Boolean(endpoint)
 
