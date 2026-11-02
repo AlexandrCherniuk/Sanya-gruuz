@@ -2,12 +2,15 @@
  * Заявки с сайта → Telegram-группа → Google-таблица лидов (CR Logistics).
  *
  * Как устроено:
- *   - заявка с сайта приходит в группу карточкой #0001 с кнопкой «🙋 Взяти заявку»;
+ *   - заявка с сайта приходит в группу карточкой CR-0211-01 (дата + номер за день) с кнопкой «🙋 Взяти заявку»;
  *   - взял → в карточке «Взяв: Іван», строка сама появляется в таблице «Ліди», менеджеру пинг в личку;
  *   - дальше менеджер работает в таблице: статус, клиент, перевозчик, цена, оплата…;
  *     статус из таблицы бот сам подтягивает в карточку в группе;
  *   - «🔄 Передати» в группе (может тот, кто взял, и админ) → новому менеджеру пинг в личку;
- *   - личка менеджера с ботом = только контроль: напоминания и утренний список его заявок.
+ *   - личка менеджера с ботом = только контроль: напоминания и утренний список его заявок;
+ *   - «💬 Коментар» или ответ (Reply) на сообщение бота про заявку → коментар в карточку и в таблицу;
+ *   - «⏰ Нагадати» → личное напоминание по заявке в личку тому, кто поставил;
+ *   - номер заявки в личку боту (CR-0211-01) → бот показывает заявку с кнопками.
  *
  * Это Google Apps Script в Google-аккаунте Александра, токен бота в репозиторий не попадает.
  * «Свойства скрипта»:
@@ -159,6 +162,7 @@ function createLead_(f) {
     var now = Date.now();
     var lead = {
       n: n,
+      id: newId_(now),
       f: f,
       status: 'new',
       mgr: null,
@@ -169,13 +173,29 @@ function createLead_(f) {
       sheet: {}, // последнее, что видели в таблице: цена, перевозчик, оплата, дата загрузки
       log: [],
       reminded: {},
+      msgs: [], // [chatId, messageId, вид] сообщения бота про эту заявку: ответ на них = коментар
+      rem: [], // личные напоминания: {at, uid, name, note}
+      comments: [], // коментарі до того, как появилась строка в таблице
     };
+    // Ошибка в одной из групп не должна валить заявку: иначе карточка уже ушла в Telegram,
+    // а сайт показывает клиенту «не удалось отправить».
+    var lastErr = null;
     groups_().forEach(function (chat) {
-      var res = tg_('sendMessage', cardPayload_(lead, chat));
-      lead.copies.push([chat, res.result.message_id]);
+      try {
+        var res = tg_('sendMessage', cardPayload_(lead, chat));
+        lead.copies.push([chat, res.result.message_id]);
+      } catch (err) {
+        console.error(err);
+        lastErr = err;
+      }
     });
-    saveLead_(lead);
-    bumpStat_('new');
+    if (!lead.copies.length) throw lastErr || new Error('Заявка не ушла ни в одну группу');
+    try {
+      saveLead_(lead);
+      bumpStat_('new');
+    } catch (err) {
+      console.error(err);
+    }
     return lead;
   });
 }
@@ -186,13 +206,26 @@ function num_(n) {
   return '#' + ('000' + n).slice(-4);
 }
 
+/** Номер заявки для людей: CR-ДДММ-NN (дата + порядковый за день). У старых заявок был #0001. */
+function idOf_(lead) {
+  return lead.id || num_(lead.n);
+}
+
+function newId_(now) {
+  var day = Utilities.formatDate(new Date(now), TIMEZONE, 'yyyyMMdd');
+  var key = 'seq_' + day;
+  var n = Number(props_().getProperty(key) || 0) + 1;
+  props_().setProperty(key, String(n));
+  return 'CR-' + day.slice(6, 8) + day.slice(4, 6) + '-' + ('0' + n).slice(-2);
+}
+
 function route_(lead) {
   return lead.f.from + ' → ' + lead.f.to;
 }
 
 function cardText_(lead) {
   var st = STATUS[lead.status];
-  var text = '🚚 <b>Заявка ' + num_(lead.n) + '</b> · ' + st.icon + ' <b>' + st.label + '</b>\n';
+  var text = '🚚 <b>Заявка ' + idOf_(lead) + '</b> · ' + st.icon + ' <b>' + st.label + '</b>\n';
   text += lead.mgr ? '👷 Взяв: <b>' + esc_(lead.mgr.name) + '</b>' : '👷 Ще ніхто не взяв';
   text += '\n\n' + bodyHtml_(lead.f);
   if (lead.log.length) text += '\n\n<i>' + lead.log.slice(-5).map(esc_).join('\n') + '</i>';
@@ -205,7 +238,28 @@ function keyboard_(lead) {
   if (!FINAL[lead.status]) row.push({ text: '🔄 Передати', callback_data: 'tr:' + lead.n });
   var link = rowLink_(lead);
   if (link) row.push({ text: '📋 Таблиця', url: link });
-  return { inline_keyboard: row.length ? [row] : [] };
+  var rows = row.length ? [row] : [];
+  rows.push(noteButtons_(lead));
+  return { inline_keyboard: rows };
+}
+
+function noteButtons_(lead) {
+  return [
+    { text: '💬 Коментар', callback_data: 'cm:' + lead.n },
+    { text: '⏰ Нагадати', callback_data: 'rm:' + lead.n },
+  ];
+}
+
+/** Кнопки под сообщением бота в личке: ссылки на строку и карточку + коментар/напоминание. */
+function dmKeyboard_(lead) {
+  var links = [];
+  var link = rowLink_(lead);
+  if (link) links.push({ text: '📋 Рядок у таблиці', url: link });
+  var g = groupLink_(lead);
+  if (g) links.push({ text: '💬 Заявка в групі', url: g });
+  var rows = links.length ? [links] : [];
+  rows.push(noteButtons_(lead));
+  return { inline_keyboard: rows };
 }
 
 function cardPayload_(lead, chat) {
@@ -260,7 +314,7 @@ function appendRow_(lead) {
   var sh = sheet_();
   var row = new Array(NCOL);
   for (var i = 0; i < NCOL; i++) row[i] = '';
-  row[COL.num - 1] = num_(lead.n);
+  row[COL.num - 1] = idOf_(lead);
   row[COL.created - 1] = new Date(lead.created);
   row[COL.taken - 1] = new Date();
   row[COL.mgr - 1] = lead.mgr.name;
@@ -270,7 +324,8 @@ function appendRow_(lead) {
   row[COL.to - 1] = lead.f.to;
   row[COL.cargo - 1] = lead.f.cargo || '';
   row[COL.client - 1] = lead.f.name || '';
-  row[COL.comment - 1] = lead.f.date ? 'Бажана дата з сайту: ' + fmtSiteDate_(lead.f.date) : '';
+  var notes = lead.f.date ? ['Бажана дата з сайту: ' + fmtSiteDate_(lead.f.date)] : [];
+  row[COL.comment - 1] = notes.concat(lead.comments || []).join('\n');
   row[COL.source - 1] = lead.f.src || '';
   row[COL.updated - 1] = new Date();
   var at = Math.max(sh.getLastRow(), 1) + 1;
@@ -280,18 +335,18 @@ function appendRow_(lead) {
   props_().setProperty('LEADS_SHEET_GID', String(sh.getSheetId()));
 }
 
-function findRow_(sh, n) {
+function findRow_(sh, lead) {
   var last = sh.getLastRow();
   if (last < 2) return 0;
   var nums = sh.getRange(2, COL.num, last - 1, 1).getValues();
-  var want = num_(n);
+  var want = idOf_(lead);
   for (var i = 0; i < nums.length; i++) if (String(nums[i][0]).trim() === want) return i + 2;
   return 0;
 }
 
 function setCell_(lead, col, value) {
   var sh = sheet_();
-  var r = findRow_(sh, lead.n);
+  var r = findRow_(sh, lead);
   if (!r) return;
   lead.row = r;
   sh.getRange(r, col).setValue(value);
@@ -317,7 +372,7 @@ function syncFromSheet() {
     var mgrs = managers_();
 
     leads.forEach(function (lead) {
-      var hit = byNum[num_(lead.n)];
+      var hit = byNum[idOf_(lead)];
       if (!hit) return;
       var v = hit.v;
       var changed = lead.row !== hit.row;
@@ -400,18 +455,34 @@ function handleTelegram_(e) {
 
 function onMessage_(m) {
   rememberChat_(m.chat);
-  if (m.chat.type !== 'private' || !m.from) return;
+  if (!m.from || m.from.is_bot) return;
+  var text = String(m.text || '').trim();
+  var isPrivate = m.chat.type === 'private';
   // Любое сообщение боту в личку (обычно /start) = менеджер зарегистрирован.
-  registerManager_(m.from);
+  if (isPrivate) registerManager_(m.from);
+
+  // Ответ на сообщение бота про заявку = коментар (или время напоминания).
+  if (text && m.reply_to_message && onReply_(m, text)) return;
+  if (!isPrivate) return;
+
+  var id = parseLeadId_(text);
+  if (id) return showLead_(m.chat.id, id);
+
   tg_('sendMessage', {
     chat_id: m.chat.id,
-    text:
-      'Привіт, ' + esc_(m.from.first_name || '') + '! 👋\n' +
-      'Сюди я буду писати нагадування по твоїх заявках і зранку список того, що в роботі. ' +
-      'Самі заявки береш у групі, дані вносиш у таблицю.',
+    text: /^\/start/.test(text)
+      ? 'Привіт, ' + esc_(m.from.first_name || '') + '! 👋\n' +
+        'Сюди я буду писати нагадування по твоїх заявках і зранку список того, що в роботі. ' +
+        'Самі заявки береш у групі, дані вносиш у таблицю.\n\n' + HELP_TEXT_
+      : HELP_TEXT_,
     parse_mode: 'HTML',
   });
 }
+
+var HELP_TEXT_ =
+  '🔎 Напиши номер заявки, наприклад <code>CR-0211-01</code>, і я покажу її.\n' +
+  '💬 Щоб додати коментар, відповідай (Reply) на моє повідомлення про заявку або натисни «💬 Коментар».\n' +
+  '⏰ «Нагадати» під заявкою поставить тобі нагадування сюди.';
 
 function onButton_(q) {
   var parts = String(q.data || '').split(':');
@@ -423,7 +494,7 @@ function onButton_(q) {
 
   withLock_(function () {
     var lead = loadLead_(n);
-    if (!lead) return answer_(q, 'Заявку ' + num_(n) + ' не знайдено (можливо, вже в архіві).', true);
+    if (!lead) return answer_(q, 'Заявку не знайдено (можливо, вже в архіві).', true);
     var me = { id: q.from.id, name: personName_(q.from) };
 
     if (action === 'take') {
@@ -438,12 +509,70 @@ function onButton_(q) {
         console.error(err);
         sheetOk = false;
       }
-      saveLead_(lead);
       refresh_(lead);
-      var dmOk = dm_(lead.mgr, '✅ Ти взяв заявку <b>' + num_(n) + '</b> (' + esc_(route_(lead)) + ').\n' +
+      var dmOk = dm_(lead.mgr, '✅ Ти взяв заявку <b>' + idOf_(lead) + '</b> (' + esc_(route_(lead)) + ').\n' +
         'Внеси в таблицю: клієнт, вага/обʼєм, дата завантаження, перевізник, ціна, оплата.', lead);
+      saveLead_(lead);
       if (!sheetOk) return answer_(q, 'Заявка твоя, але в таблицю не записалась. Скажи адміну.', true);
       return answer_(q, dmOk ? 'Заявка твоя 👍' : NO_START_TEXT_, !dmOk);
+    }
+
+    // Коментар и напоминание может любой участник группы.
+    if (action === 'cm' || action === 'rc') {
+      var ask = action === 'cm'
+        ? '💬 Коментар до <b>' + idOf_(lead) + '</b> (' + esc_(route_(lead)) + '): напиши його відповіддю на це повідомлення.'
+        : '⏰ Коли нагадати по <b>' + idOf_(lead) + '</b>? Напиши відповіддю, наприклад:\n' +
+          '<code>16:30</code>, <code>завтра 10:00</code>, <code>05.11 9:00</code>, <code>через 2 год</code>\n' +
+          'Після часу можна дописати, про що нагадати.';
+      var sent = tg_('sendMessage', {
+        chat_id: q.message.chat.id,
+        text: ask,
+        parse_mode: 'HTML',
+        reply_markup: { force_reply: true, input_field_placeholder: action === 'cm' ? 'Коментар' : 'завтра 10:00' },
+      });
+      trackMsg_(lead, q.message.chat.id, sent.result.message_id, action === 'cm' ? 'c' : 'r');
+      saveLead_(lead);
+      if (action === 'rc') restoreKeyboard_(lead, q.message);
+      return answer_(q, '');
+    }
+
+    if (action === 'rm') {
+      tg_('editMessageReplyMarkup', {
+        chat_id: q.message.chat.id,
+        message_id: q.message.message_id,
+        reply_markup: {
+          inline_keyboard: [
+            [
+              { text: '30 хв', callback_data: 'rt:' + n + ':m30' },
+              { text: '1 год', callback_data: 'rt:' + n + ':h1' },
+              { text: '3 год', callback_data: 'rt:' + n + ':h3' },
+            ],
+            [
+              { text: 'Завтра 9:00', callback_data: 'rt:' + n + ':t9' },
+              { text: 'Завтра 14:00', callback_data: 'rt:' + n + ':t14' },
+            ],
+            [
+              { text: '✍️ Свій час', callback_data: 'rc:' + n },
+              { text: '✖️ Скасувати', callback_data: 'back:' + n },
+            ],
+          ],
+        },
+      });
+      return answer_(q, 'Нагадаю тобі в особисті. Коли?');
+    }
+
+    if (action === 'rt') {
+      var at = quickTime_(parts[2], Date.now());
+      if (!at) return answer_(q, 'Ця кнопка застаріла.', true);
+      addReminder_(lead, me, at, '');
+      saveLead_(lead);
+      restoreKeyboard_(lead, q.message);
+      return answer_(q, '⏰ Нагадаю ' + fmtWhen_(at) + ' в особисті з ботом.');
+    }
+
+    if (action === 'back') {
+      restoreKeyboard_(lead, q.message);
+      return answer_(q, '');
     }
 
     if (!canEdit_(lead, q.from.id)) {
@@ -462,7 +591,7 @@ function onButton_(q) {
         message_id: q.message.message_id,
         reply_markup: { inline_keyboard: rows },
       });
-      return answer_(q, 'Кому передати ' + num_(n) + '?');
+      return answer_(q, 'Кому передати ' + idOf_(lead) + '?');
     }
 
     if (action === 'to') {
@@ -478,19 +607,14 @@ function onButton_(q) {
       } catch (err) {
         console.error(err);
       }
-      saveLead_(lead);
       refresh_(lead);
-      var ok = dm_(lead.mgr, '🔄 Тобі передали заявку <b>' + num_(n) + '</b> (' + esc_(route_(lead)) + ')' +
+      var ok = dm_(lead.mgr, '🔄 Тобі передали заявку <b>' + idOf_(lead) + '</b> (' + esc_(route_(lead)) + ')' +
         (old ? ' від ' + esc_(old.name) : '') + '. Подивись таблицю і продовжуй.', lead);
       if (old && String(old.id) !== String(q.from.id)) {
-        dm_(old, '↪️ Заявку <b>' + num_(n) + '</b> передали: ' + esc_(target.name) + '.', lead);
+        dm_(old, '↪️ Заявку <b>' + idOf_(lead) + '</b> передали: ' + esc_(target.name) + '.', lead);
       }
+      saveLead_(lead);
       return answer_(q, ok ? 'Передано ' + target.name : target.name + ' не натиснув Start у боті, пінг не дійшов.', !ok);
-    }
-
-    if (action === 'back') {
-      refresh_(lead);
-      return answer_(q, '');
     }
 
     return answer_(q, '');
@@ -514,27 +638,282 @@ function canEdit_(lead, userId) {
   return admins_().indexOf(String(userId)) >= 0;
 }
 
+/* ═════════════ Коментарі, нагадування, пошук по номеру ═════════════ */
+
+/** Запоминаем сообщение бота про заявку, чтобы ответ на него попал в эту заявку. */
+function trackMsg_(lead, chat, mid, kind) {
+  lead.msgs = (lead.msgs || []).concat([[String(chat), mid, kind || '']]).slice(-60);
+}
+
+function leadByMessage_(chat, mid) {
+  chat = String(chat);
+  var leads = allLeads_();
+  for (var i = 0; i < leads.length; i++) {
+    var l = leads[i];
+    for (var j = 0; j < l.copies.length; j++) {
+      if (String(l.copies[j][0]) === chat && l.copies[j][1] === mid) return { lead: l, kind: '' };
+    }
+    var msgs = l.msgs || [];
+    for (var k = 0; k < msgs.length; k++) {
+      if (msgs[k][0] === chat && msgs[k][1] === mid) return { lead: l, kind: msgs[k][2] };
+    }
+  }
+  return null;
+}
+
+/** Ответ на сообщение бота. true — если это было про заявку и мы его обработали. */
+function onReply_(m, text) {
+  return withLock_(function () {
+    var hit = leadByMessage_(m.chat.id, m.reply_to_message.message_id);
+    if (!hit) return false;
+    var lead = hit.lead;
+    var me = { id: m.from.id, name: personName_(m.from) };
+
+    var wantsReminder = hit.kind === 'r' || /^(нагадай|напомни|⏰)/i.test(text);
+    if (wantsReminder) {
+      var when = parseWhen_(text, Date.now());
+      if (!when) {
+        var again = tg_('sendMessage', {
+          chat_id: m.chat.id,
+          reply_to_message_id: m.message_id,
+          text: 'Не зрозумів час 🤔 Напиши відповіддю так: <code>16:30</code>, <code>завтра 10:00</code>, ' +
+            '<code>05.11 9:00</code> або <code>через 2 год</code>.',
+          parse_mode: 'HTML',
+          reply_markup: { force_reply: true, selective: true },
+        });
+        trackMsg_(lead, m.chat.id, again.result.message_id, 'r');
+        saveLead_(lead);
+        return true;
+      }
+      addReminder_(lead, me, when.at, when.note);
+      saveLead_(lead);
+      safeSend_({
+        chat_id: m.chat.id,
+        reply_to_message_id: m.message_id,
+        text: '⏰ Нагадаю ' + fmtWhen_(when.at) + ' в особисті з ботом.',
+      });
+      return true;
+    }
+
+    addComment_(lead, me, text);
+    saveLead_(lead);
+    refresh_(lead);
+    react_(m.chat.id, m.message_id);
+    return true;
+  });
+}
+
+function addComment_(lead, who, text) {
+  text = clean_(text, 1000);
+  var line = stamp_() + ' ' + who.name + ': ' + text;
+  lead.log.push('💬 ' + who.name + ': ' + (text.length > 120 ? text.slice(0, 117) + '…' : text));
+  lead.log = lead.log.slice(-20);
+  var inSheet = false;
+  if (lead.mgr) {
+    try {
+      var sh = sheet_();
+      var r = findRow_(sh, lead);
+      if (r) {
+        lead.row = r;
+        var cell = sh.getRange(r, COL.comment);
+        var cur = String(cell.getValue() || '').trim();
+        cell.setValue(cur ? cur + '\n' + line : line);
+        sh.getRange(r, COL.updated).setValue(new Date());
+        inSheet = true;
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  if (!inSheet) lead.comments = (lead.comments || []).concat([line]).slice(-20);
+  // Написал не менеджер заявки (например, админ) → менеджеру пинг в личку.
+  if (lead.mgr && String(lead.mgr.id) !== String(who.id)) {
+    dm_(lead.mgr, '💬 <b>' + esc_(who.name) + '</b> до <b>' + esc_(idOf_(lead)) + '</b> (' + esc_(route_(lead)) + '):\n' +
+      esc_(text), lead);
+  }
+}
+
+function addReminder_(lead, who, at, note) {
+  // В карточку не пишем: напоминание личное, а лог карточки нужен для коментарів і статусов.
+  lead.rem = (lead.rem || []).concat([{ at: at, uid: who.id, name: who.name, note: clean_(note, 300) }]).slice(-30);
+}
+
+/** Срабатывание личных напоминаний (из таймера раз в 5 минут). */
+function firePersonalReminders_() {
+  var now = Date.now();
+  withLock_(function () {
+    allLeads_().forEach(function (lead) {
+      var list = lead.rem || [];
+      var due = list.filter(function (r) { return r.at <= now; });
+      if (!due.length) return;
+      lead.rem = list.filter(function (r) { return r.at > now; });
+      var st = STATUS[lead.status];
+      due.forEach(function (r) {
+        dm_({ id: r.uid, name: r.name },
+          '⏰ <b>Нагадування: ' + esc_(idOf_(lead)) + '</b> (' + esc_(route_(lead)) + ')\n' +
+          st.icon + ' ' + st.label + (lead.mgr ? ' · 👷 ' + esc_(lead.mgr.name) : '') +
+          (r.note ? '\n📝 ' + esc_(r.note) : ''), lead);
+      });
+      saveLead_(lead);
+    });
+  });
+}
+
+/** Возвращает кнопки на место: в карточке группы — полную клавиатуру, в личке — кнопки лички. */
+function restoreKeyboard_(lead, msg) {
+  var isCard = lead.copies.some(function (c) {
+    return String(c[0]) === String(msg.chat.id) && c[1] === msg.message_id;
+  });
+  if (isCard) return refresh_(lead);
+  try {
+    tg_('editMessageReplyMarkup', {
+      chat_id: msg.chat.id,
+      message_id: msg.message_id,
+      reply_markup: dmKeyboard_(lead),
+    });
+  } catch (err) {
+    if (String(err).indexOf('message is not modified') < 0) console.error(err);
+  }
+}
+
+/** Номер из текста: CR-0211-01, cr 0211 1, 0211-01 или старый #0001. */
+function parseLeadId_(text) {
+  var t = String(text || '').trim();
+  var m = t.match(/(?:^|[^a-zа-яіїє])(?:cr|ср)[\s#№-]*(\d{4})[\s-]+(\d{1,3})(?!\d)/i) || t.match(/^(\d{4})[\s-](\d{1,3})$/);
+  if (m) return 'CR-' + m[1] + '-' + ('0' + Number(m[2])).slice(-2);
+  m = t.match(/^[#№](\d{1,4})$/);
+  if (m) return num_(Number(m[1]));
+  return '';
+}
+
+function showLead_(chat, id) {
+  withLock_(function () {
+    var found = allLeads_()
+      .filter(function (l) { return idOf_(l).toUpperCase() === id.toUpperCase(); })
+      .sort(function (a, b) { return b.created - a.created; })[0];
+    if (!found) {
+      var sid = props_().getProperty('LEADS_SHEET_ID');
+      safeSend_({
+        chat_id: chat,
+        text: 'Заявки ' + id + ' нема в памʼяті бота (закриті я забуваю через ' + KEEP_CLOSED_DAYS + ' днів). ' +
+          'Знайди її в таблиці на листі «Пошук».',
+        reply_markup: sid
+          ? { inline_keyboard: [[{ text: '🔎 Пошук у таблиці', url: 'https://docs.google.com/spreadsheets/d/' + sid + '/edit' }]] }
+          : { inline_keyboard: [] },
+      });
+      return;
+    }
+    var res = tg_('sendMessage', {
+      chat_id: chat,
+      text: cardText_(found) + '\n\n<i>Відповідай на це повідомлення, щоб додати коментар.</i>',
+      parse_mode: 'HTML',
+      disable_web_page_preview: true,
+      reply_markup: dmKeyboard_(found),
+    });
+    trackMsg_(found, chat, res.result.message_id, '');
+    saveLead_(found);
+  });
+}
+
+function react_(chat, mid) {
+  try {
+    tg_('setMessageReaction', { chat_id: chat, message_id: mid, reaction: [{ type: 'emoji', emoji: '👍' }] });
+  } catch (err) {
+    safeSend_({ chat_id: chat, reply_to_message_id: mid, text: '✅ Записав' });
+  }
+}
+
+/* ── Время по Киеву ── */
+
+/** Момент времени для даты и часа по Киеву (учитывает летнее/зимнее время). */
+function kyivTime_(y, mo, d, h, mi) {
+  var guess = Date.UTC(y, mo - 1, d, h, mi);
+  var z = Utilities.formatDate(new Date(guess), TIMEZONE, 'Z'); // +0200 / +0300
+  var off = (z.charAt(0) === '-' ? -1 : 1) * (Number(z.slice(1, 3)) * 60 + Number(z.slice(3, 5)));
+  return guess - off * 60000;
+}
+
+/** Сегодняшняя дата по Киеву + сдвиг в днях, в час:мин. */
+function kyivDay_(now, plusDays, h, mi) {
+  var p = Utilities.formatDate(new Date(now), TIMEZONE, 'yyyy-MM-dd').split('-');
+  return kyivTime_(Number(p[0]), Number(p[1]), Number(p[2]) + plusDays, h, mi);
+}
+
+function quickTime_(code, now) {
+  if (code === 'm30') return now + 30 * 60000;
+  if (code === 'h1') return now + 3600000;
+  if (code === 'h3') return now + 3 * 3600000;
+  if (code === 't9') return kyivDay_(now, 1, 9, 0);
+  if (code === 't14') return kyivDay_(now, 1, 14, 0);
+  return 0;
+}
+
+/**
+ * Разбирает «16:30», «завтра 10:00», «завтра», «05.11 9:00», «через 2 год», «30 хв» (+ текст после времени).
+ * Возвращает {at, note} или null.
+ */
+function parseWhen_(raw, now) {
+  var s = String(raw || '').trim().replace(/^(?:нагадай(?:те)?|напомни(?:те)?|⏰)[\s,:]*/i, '');
+  var low = s.toLowerCase();
+  var END = '(?=[\\s,.!:;—-]|$)';
+  var m, at = 0;
+
+  if ((m = low.match(new RegExp('^через\\s+(годину|годинку|час|пів\\s*години|півгодини|полчаса|пол\\s*часа|день|добу)' + END)))) {
+    at = now + (/^(пів|пол)/.test(m[1]) ? 1800000 : /^(день|добу)/.test(m[1]) ? 86400000 : 3600000);
+  } else if ((m = low.match(new RegExp('^(?:через\\s+)?(\\d{1,3})\\s*(хв[а-яіїє]*|мин[а-я]*|min|m|год[а-яіїє]*|час[а-я]*|h|дн[а-яіїє]*|день|d)\\.?' + END)))) {
+    var u = m[2].charAt(0);
+    var mult = /[хмm]/.test(u) ? 60000 : /[гчh]/.test(u) ? 3600000 : 86400000;
+    at = now + Number(m[1]) * mult;
+  } else if ((m = low.match(new RegExp('^(\\d{1,2})\\.(\\d{1,2})(?:\\.(\\d{2,4}))?(?:\\s*(?:о|об|в|на)?\\s*(\\d{1,2})(?:[:.](\\d{2}))?)?' + END))) &&
+      Number(m[2]) >= 1 && Number(m[2]) <= 12) {
+    var y = m[3] ? (m[3].length === 2 ? 2000 + Number(m[3]) : Number(m[3])) : Number(Utilities.formatDate(new Date(now), TIMEZONE, 'yyyy'));
+    var h = m[4] ? Number(m[4]) : 9;
+    var mi = m[5] ? Number(m[5]) : 0;
+    if (h > 23 || mi > 59) return null;
+    at = kyivTime_(y, Number(m[2]), Number(m[1]), h, mi);
+    if (!m[3] && at < now) at = kyivTime_(y + 1, Number(m[2]), Number(m[1]), h, mi);
+  } else if ((m = low.match(new RegExp('^(завтра|післязавтра|послезавтра|сьогодні|сегодня)(?:\\s*(?:о|об|в|на)?\\s*(\\d{1,2})(?:[:.](\\d{2}))?)?' + END)))) {
+    var plus = /^(після|после)/.test(m[1]) ? 2 : /^завтра/.test(m[1]) ? 1 : 0;
+    var hh = m[2] ? Number(m[2]) : 9;
+    var mm = m[3] ? Number(m[3]) : 0;
+    if (hh > 23 || mm > 59) return null;
+    at = kyivDay_(now, plus, hh, mm);
+  } else if ((m = low.match(new RegExp('^(?:о|об|в|на)?\\s*(\\d{1,2})[:.](\\d{2})' + END)))) {
+    if (Number(m[1]) > 23 || Number(m[2]) > 59) return null;
+    at = kyivDay_(now, 0, Number(m[1]), Number(m[2]));
+    if (at <= now) at = kyivDay_(now, 1, Number(m[1]), Number(m[2]));
+  } else {
+    return null;
+  }
+  if (!at || at <= now || at - now > 366 * 86400000) return null;
+  var note = s.slice(m[0].length).replace(/^[\s,.!:;—-]+/, '').trim();
+  return { at: at, note: note };
+}
+
+function fmtWhen_(t) {
+  var day = dayKey_(t);
+  var now = Date.now();
+  var hm = Utilities.formatDate(new Date(t), TIMEZONE, 'HH:mm');
+  if (day === dayKey_(now)) return 'сьогодні о ' + hm;
+  if (day === dayKey_(now + 86400000)) return 'завтра о ' + hm;
+  return Utilities.formatDate(new Date(t), TIMEZONE, 'dd.MM') + ' о ' + hm;
+}
+
 /* ═════════════ Личка менеджера: пинги ═════════════ */
 
 /** Пишет менеджеру в личку. Если он не нажимал Start, пишет в группу с его именем. */
 function dm_(mgr, html, lead) {
-  var buttons = [];
-  if (lead) {
-    var link = rowLink_(lead);
-    if (link) buttons.push({ text: '📋 Рядок у таблиці', url: link });
-    var g = groupLink_(lead);
-    if (g) buttons.push({ text: '💬 Заявка в групі', url: g });
-  }
   var payload = {
     text: html,
     parse_mode: 'HTML',
     disable_web_page_preview: true,
-    reply_markup: { inline_keyboard: buttons.length ? [buttons] : [] },
+    reply_markup: lead ? dmKeyboard_(lead) : { inline_keyboard: [] },
   };
   if (mgr && mgr.id) {
     try {
       payload.chat_id = mgr.id;
-      tg_('sendMessage', payload);
+      var res = tg_('sendMessage', payload);
+      if (lead) trackMsg_(lead, mgr.id, res.result.message_id, '');
       return true;
     } catch (err) {
       console.error(err);
@@ -578,12 +957,17 @@ function checkReminders() {
   } catch (err) {
     console.error(err);
   }
+  try {
+    firePersonalReminders_();
+  } catch (err) {
+    console.error(err);
+  }
   var now = Date.now();
   var today = dayKey_(now);
   allLeads_().forEach(function (lead) {
     var r = lead.reminded || {};
     var s = lead.sheet || {};
-    var name = num_(lead.n) + ' (' + route_(lead) + ')';
+    var name = idOf_(lead) + ' (' + route_(lead) + ')';
     var hours = (now - lead.statusAt) / 3600000;
     var touched = false;
 
@@ -592,7 +976,7 @@ function checkReminders() {
         safeSend_({
           chat_id: c[0],
           reply_to_message_id: c[1],
-          text: '⏰ Заявка ' + num_(lead.n) + ' без менеджера вже ' + ago_(lead.created) + '. Хто бере?',
+          text: '⏰ Заявка ' + idOf_(lead) + ' без менеджера вже ' + ago_(lead.created) + '. Хто бере?',
         });
       });
       r.new = touched = true;
@@ -609,7 +993,7 @@ function checkReminders() {
           safeSend_({
             chat_id: c[0],
             reply_to_message_id: c[1],
-            text: '⏰ ' + num_(lead.n) + ' на прорахунку вже ' + ago_(lead.statusAt) + ' (' + lead.mgr.name + ').',
+            text: '⏰ ' + idOf_(lead) + ' на прорахунку вже ' + ago_(lead.statusAt) + ' (' + lead.mgr.name + ').',
           });
         });
         r.calc24 = touched = true;
@@ -678,7 +1062,7 @@ function dailySummary() {
     var lines = ['☀️ <b>Доброго ранку! Твої заявки:</b>'];
     g.list.sort(function (a, b) { return a.n - b.n; }).forEach(function (l) {
       var st = STATUS[l.status];
-      lines.push(st.icon + ' ' + num_(l.n) + ' ' + esc_(route_(l)) + ' · ' + st.label);
+      lines.push(st.icon + ' ' + idOf_(l) + ' ' + esc_(route_(l)) + ' · ' + st.label);
     });
     dm_(g.mgr, lines.join('\n'), null);
   });
@@ -696,7 +1080,7 @@ function dailySummary() {
     }
     if ((l.status === 'new' && now - l.created > REMIND_NEW_MIN * 60000) ||
         (l.status === 'calc' && now - l.statusAt > ESCALATE_CALC_HOURS * 3600000)) {
-      stuck.push(num_(l.n) + ' ' + STATUS[l.status].label + (l.mgr ? ' (' + l.mgr.name + ')' : ''));
+      stuck.push(idOf_(l) + ' ' + STATUS[l.status].label + (l.mgr ? ' (' + l.mgr.name + ')' : ''));
     }
   });
 
@@ -733,6 +1117,9 @@ function cleanup_() {
   var oldest = dayKey_(now - 31 * 86400000);
   Object.keys(all).forEach(function (k) {
     if (/^stat_/.test(k) && k.slice(5) < oldest) props_().deleteProperty(k);
+    if (/^seq_/.test(k) && k.slice(4) < Utilities.formatDate(new Date(now - 2 * 86400000), TIMEZONE, 'yyyyMMdd')) {
+      props_().deleteProperty(k);
+    }
   });
 }
 
