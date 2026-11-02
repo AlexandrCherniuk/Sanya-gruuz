@@ -1444,3 +1444,19 @@ ol {
     scroll-behavior: auto !important;
   }
 }
+
+/* Блок страниц маршрутов под карточками услуг на разделах. */
+.mt-l {
+  margin-top: 48px;
+}
+
+/* Строка таблицы маршрутов ведёт на страницу маршрута. */
+.table th a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--acc-ink);
+  text-underline-offset: 3px;
+}
+.table th a:hover {
+  text-decoration-color: currentColor;
+}

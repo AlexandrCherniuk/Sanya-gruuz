@@ -17,6 +17,16 @@ export const servicePath = (s: Pick<ServicePage, 'group' | 'slug'>) => `${s.grou
 
 /* ——— Шапка ——— */
 
+/** Услуги для меню и карточек: без страниц маршрутов. */
+export function mainServices(c: LangContent, group: ServicePage['group']) {
+  return c.services.filter((s) => s.group === group && !s.route)
+}
+
+/** Страницы маршрутов (Київ — Львів и т.п.). */
+export function routePages(c: LangContent) {
+  return c.services.filter((s) => s.route)
+}
+
 function Logo({ lang }: { lang: Lang }) {
   return (
     <a className="logo" href={url(lang)} aria-label="CR Logistics">
@@ -49,8 +59,8 @@ function LangSwitch({ lang, available, path }: { lang: Lang; available: Lang[]; 
 }
 
 export function Header({ lang, c, path, available, quoteHref }: Ctx) {
-  const ukr = c.services.filter((s) => s.group === 'ukraine')
-  const intl = c.services.filter((s) => s.group === 'international')
+  const ukr = mainServices(c, 'ukraine')
+  const intl = mainServices(c, 'international')
   const active = (p: string) => (path.startsWith(p) ? 'is-active' : undefined)
   const drop = (items: ServicePage[]) => (
     <div className="drop">
@@ -299,8 +309,8 @@ function ServiceCard({ href, card }: { href: string; card: Card }) {
 export function Directions({ ctx }: { ctx: Ctx }) {
   const { c, lang } = ctx
   const b = c.blocks.directions
-  const ukr = c.services.filter((s) => s.group === 'ukraine')
-  const intl = c.services.filter((s) => s.group === 'international')
+  const ukr = mainServices(c, 'ukraine')
+  const intl = mainServices(c, 'international')
   return (
     <section className="s" aria-labelledby="dir-h">
       <div className="wrap">
@@ -441,8 +451,25 @@ export function Clients({ c, tinted }: { c: LangContent; tinted?: boolean }) {
 
 const fmt = (n: number) => n.toLocaleString('uk-UA').replace(/ /g, ' ')
 
-export function Routes({ c, busRate = 20, furaRate = 45, tinted }: { c: LangContent; busRate?: number; furaRate?: number; tinted?: boolean }) {
+export function Routes({
+  c,
+  lang,
+  busRate = 20,
+  furaRate = 45,
+  tinted,
+}: {
+  c: LangContent
+  lang: Lang
+  busRate?: number
+  furaRate?: number
+  tinted?: boolean
+}) {
   const b = c.blocks.routes
+  // Строка ведёт на страницу маршрута, если она есть.
+  const pageFor = (from: string, to: string) => {
+    const s = routePages(c).find((p) => p.route!.from === from && p.route!.to === to)
+    return s ? url(lang, servicePath(s)) : undefined
+  }
   const h = c.ui.routesHead
   const round = (n: number) => Math.round(n / 100) * 100
   return (
@@ -463,7 +490,15 @@ export function Routes({ c, busRate = 20, furaRate = 45, tinted }: { c: LangCont
               {b.list.map((r) => (
                 <tr key={r.to}>
                   <th scope="row">
-                    {r.from} → {r.to}
+                    {pageFor(r.from, r.to) ? (
+                      <a href={pageFor(r.from, r.to)}>
+                        {r.from} → {r.to}
+                      </a>
+                    ) : (
+                      <>
+                        {r.from} → {r.to}
+                      </>
+                    )}
                   </th>
                   <td>~{fmt(r.km)} км</td>
                   <td>
@@ -594,8 +629,8 @@ export function FinalCta({ c, quoteHref }: { c: LangContent; quoteHref: string }
 /* ——— Подвал ——— */
 
 export function Footer({ lang, c }: Ctx) {
-  const ukr = c.services.filter((s) => s.group === 'ukraine')
-  const intl = c.services.filter((s) => s.group === 'international')
+  const ukr = mainServices(c, 'ukraine')
+  const intl = mainServices(c, 'international')
   const year = new Date().getFullYear()
   return (
     <footer className="ftr">
