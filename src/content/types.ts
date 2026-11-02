@@ -141,6 +141,10 @@ export type LangContent = {
     rights: string
     notFound: { title: string; text: string }
     routesHead: { route: string; km: string; bus: string; fura: string }
+    /** Подпись переключателя языков для экранных читалок. */
+    langSwitch: string
+    /** Единицы в таблице маршрутов. */
+    units: { km: string; uah: string }
   }
   /** Общие блоки, которые повторяются на страницах. */
   blocks: {

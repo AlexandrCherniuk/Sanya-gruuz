@@ -21,7 +21,7 @@ export async function sendLead(draft: QuoteDraft, honeypot: string, lang = 'ua')
   if (!endpoint) return { ok: false, reason: 'not_configured' }
 
   const payload = {
-    ...cleanDraft(draft),
+    ...cleanDraft(draft, lang),
     website: honeypot,
     lang,
     page: window.location.href.slice(0, 500),

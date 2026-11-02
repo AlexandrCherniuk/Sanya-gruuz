@@ -29,6 +29,8 @@ export const ru: LangContent = {
       text: 'Возможно, её перенесли. Начните с главной или сразу оставьте заявку на перевозку.',
     },
     routesHead: { route: 'Маршрут', km: 'Расстояние', bus: 'Бус до 2 т', fura: 'Фура 22 т' },
+    langSwitch: 'Язык сайта',
+    units: { km: 'км', uah: 'грн' },
   },
 
   blocks: {

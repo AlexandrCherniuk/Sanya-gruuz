@@ -18,9 +18,9 @@ type Props = {
   lang?: FormLang
 }
 
-function validate(draft: QuoteDraft, t: FormCopy): Partial<Record<Field, string>> {
+function validate(draft: QuoteDraft, t: FormCopy, lang: string): Partial<Record<Field, string>> {
   const errors: Partial<Record<Field, string>> = {}
-  if (!isValidPhone(draft.phone)) errors.phone = t.errorPhone
+  if (!isValidPhone(draft.phone, lang)) errors.phone = t.errorPhone
   if (!draft.from.trim()) errors.from = t.errorFrom
   if (!draft.to.trim()) errors.to = t.errorTo
   return errors
@@ -49,7 +49,7 @@ export function QuoteForm({ id = 'zapyt', successUrl, lang = 'ua' }: Props) {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (status === 'sending') return
-    const found = validate(draft, t)
+    const found = validate(draft, t, lang)
     setErrors(found)
     const first = (['phone', 'from', 'to'] as Field[]).find((f) => found[f])
     if (first) {
