@@ -4,7 +4,8 @@ import { formCopy, type FormCopy, type FormLang } from './formCopy'
 import { site } from './seo'
 import { initAnalytics, trackLead } from './analytics'
 import { sendLead } from './lead'
-import { emptyDraft, isValidPhone, type QuoteDraft } from './quote'
+import { digitsOnly, emptyDraft, isValidPhone, type QuoteDraft } from './quote'
+import { countries, DEFAULT_COUNTRY, flag, PRIORITY } from './countries'
 
 type Status = 'idle' | 'sending' | 'sent' | 'failed'
 type Field = 'phone' | 'from' | 'to'
@@ -20,10 +21,36 @@ type Props = {
 
 function validate(draft: QuoteDraft, t: FormCopy, lang: string): Partial<Record<Field, string>> {
   const errors: Partial<Record<Field, string>> = {}
-  if (!isValidPhone(draft.phone, lang)) errors.phone = t.errorPhone
+  if (!isValidPhone(draft.phone, lang, draft.country)) errors.phone = t.errorPhone
   if (!draft.from.trim()) errors.from = t.errorFrom
   if (!draft.to.trim()) errors.to = t.errorTo
   return errors
+}
+
+/** Список стран для выпадашки: названия на языке страницы, сначала частые страны. */
+function countryOptions(lang: string) {
+  let names: Intl.DisplayNames | null = null
+  try {
+    names = new Intl.DisplayNames([lang === 'ua' ? 'uk' : lang], { type: 'region' })
+  } catch {
+    names = null
+  }
+  const list = countries.map((c) => ({ ...c, name: names?.of(c.iso) ?? c.iso }))
+  const top = PRIORITY.map((iso) => list.find((c) => c.iso === iso)!).filter(Boolean)
+  const rest = list
+    .filter((c) => !PRIORITY.includes(c.iso))
+    .sort((a, b) => a.name.localeCompare(b.name, lang === 'ua' ? 'uk' : lang))
+  return { top, rest }
+}
+
+/** Если номер вписан с «+», показываем у поля страну по его коду (самое длинное совпадение). */
+function countryFromNumber(value: string) {
+  const v = value.trim()
+  if (!v.startsWith('+') && !v.startsWith('00')) return null
+  const digits = v.startsWith('00') ? digitsOnly(v).slice(2) : digitsOnly(v)
+  let best: (typeof countries)[number] | null = null
+  for (const c of countries) if (digits.startsWith(c.dial) && (!best || c.dial.length > best.dial.length)) best = c
+  return best
 }
 
 export function QuoteForm({ id = 'zapyt', successUrl, lang = 'ua' }: Props) {
@@ -35,10 +62,16 @@ export function QuoteForm({ id = 'zapyt', successUrl, lang = 'ua' }: Props) {
   const [honeypot, setHoneypot] = useState('')
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({})
   const [status, setStatus] = useState<Status>('idle')
+  // Полный список стран рисуем только в браузере: названия из Intl могут отличаться от пререндера.
+  const [opts, setOpts] = useState<ReturnType<typeof countryOptions> | null>(null)
 
   useEffect(() => {
     initAnalytics()
-  }, [])
+    setOpts(countryOptions(lang))
+  }, [lang])
+
+  const iso = draft.country || DEFAULT_COUNTRY[lang] || 'UA'
+  const shown = countryFromNumber(draft.phone) ?? countries.find((c) => c.iso === iso)!
 
   function update<K extends keyof QuoteDraft>(key: K, value: QuoteDraft[K]) {
     setDraft((prev) => ({ ...prev, [key]: value }))
@@ -102,27 +135,62 @@ export function QuoteForm({ id = 'zapyt', successUrl, lang = 'ua' }: Props) {
       <h2 id={`${uid}-title`}>{t.title}</h2>
       <p className="lead">{t.lead}</p>
 
-      <label htmlFor={`${uid}-phone`}>
-        {t.phone}
-        <input
-          id={`${uid}-phone`}
-          name="phone"
-          type="tel"
-          inputMode="tel"
-          autoComplete="tel"
-          required
-          placeholder={t.phonePlaceholder}
-          value={draft.phone}
-          onChange={(e) => update('phone', e.target.value)}
-          aria-invalid={Boolean(errors.phone)}
-          aria-describedby={errId('phone')}
-        />
+      <div className="quote-phone-field">
+        <label htmlFor={`${uid}-phone`}>{t.phone}</label>
+        <div className="quote-phone">
+          <span className="quote-cc" aria-hidden="true">
+            <span className="quote-cc-flag">{flag(shown.iso)}</span>
+            {`+${shown.dial}`}
+          </span>
+          <select
+            className="quote-cc-select"
+            aria-label={t.country}
+            value={iso}
+            onChange={(e) => update('country', e.target.value)}
+          >
+            {opts ? (
+              <>
+                <optgroup label="★">
+                  {opts.top.map((c) => (
+                    <option key={c.iso} value={c.iso}>
+                      {`${flag(c.iso)} ${c.name} +${c.dial}`}
+                    </option>
+                  ))}
+                </optgroup>
+                <optgroup label="A–Z">
+                  {opts.rest.map((c) => (
+                    <option key={c.iso} value={c.iso}>
+                      {`${flag(c.iso)} ${c.name} +${c.dial}`}
+                    </option>
+                  ))}
+                </optgroup>
+              </>
+            ) : (
+              <option value={iso}>
+                {`${flag(shown.iso)} +${shown.dial}`}
+              </option>
+            )}
+          </select>
+          <input
+            id={`${uid}-phone`}
+            name="phone"
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel"
+            required
+            placeholder={t.phonePlaceholder}
+            value={draft.phone}
+            onChange={(e) => update('phone', e.target.value)}
+            aria-invalid={Boolean(errors.phone)}
+            aria-describedby={errId('phone')}
+          />
+        </div>
         {errors.phone ? (
           <span id={errId('phone')} className="quote-error">
             {errors.phone}
           </span>
         ) : null}
-      </label>
+      </div>
 
       <div className="quote-grid">
         <label htmlFor={`${uid}-from`}>

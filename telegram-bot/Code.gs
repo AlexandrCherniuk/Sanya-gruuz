@@ -83,7 +83,7 @@ function handleSiteLead_(e) {
     });
 
     var digits = f.phone.replace(/\D/g, '');
-    if (digits.length < 10 || digits.length > 15) return json_({ ok: false, error: 'phone' });
+    if (digits.length < 8 || digits.length > 15) return json_({ ok: false, error: 'phone' });
     if (!f.from || !f.to) return json_({ ok: false, error: 'route' });
 
     if (isFlood_(digits)) return json_({ ok: true });

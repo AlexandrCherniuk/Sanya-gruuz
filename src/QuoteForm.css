@@ -140,3 +140,59 @@
     padding: 20px 16px;
   }
 }
+
+/* Телефон: код страны слева. Нативный select поверх значка: на телефоне открывается системный список с поиском по буквам. */
+.quote-phone-field {
+  display: grid;
+  gap: 6px;
+}
+.quote-phone-field > label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.quote-phone {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 8px;
+  position: relative;
+}
+.quote-cc {
+  grid-column: 1;
+  grid-row: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 48px;
+  padding: 0 26px 0 12px;
+  border: 1px solid var(--line-2);
+  border-radius: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  background: var(--bg)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%235b6670' stroke-width='1.6'/%3E%3C/svg%3E")
+    no-repeat right 10px center;
+  pointer-events: none;
+}
+.quote-cc-flag {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+.quote-cc-select {
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  opacity: 0;
+  cursor: pointer;
+  font-size: 16px;
+}
+.quote-phone:has(.quote-cc-select:focus-visible) .quote-cc {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px var(--acc-soft);
+}
+.quote-phone input {
+  grid-column: 2;
+  grid-row: 1;
+}
