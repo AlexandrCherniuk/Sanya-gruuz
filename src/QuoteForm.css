@@ -50,8 +50,24 @@
 }
 .quote-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 12px;
+}
+.quote-grid > label {
+  min-width: 0;
+}
+/* iOS Safari рисует поле даты со своей минимальной шириной, и оно вылезало за карточку. */
+.quote-card input[type='date'] {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  text-align: left;
+}
+.quote-card input[type='date']::-webkit-date-and-time-value {
+  text-align: left;
+  margin: 0;
 }
 .quote-error {
   color: var(--err);

@@ -30,7 +30,8 @@ export async function sendLead(draft: QuoteDraft, honeypot: string, lang = 'ua')
 
   try {
     const controller = new AbortController()
-    const timer = window.setTimeout(() => controller.abort(), 15000)
+    // Скрипт может ждать блокировку до 25 с (синхронизация с таблицей), поэтому ждём с запасом.
+    const timer = window.setTimeout(() => controller.abort(), 45000)
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },

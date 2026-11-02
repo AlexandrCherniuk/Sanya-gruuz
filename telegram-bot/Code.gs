@@ -170,12 +170,25 @@ function createLead_(f) {
       log: [],
       reminded: {},
     };
+    // Ошибка в одной из групп не должна валить заявку: иначе карточка уже ушла в Telegram,
+    // а сайт показывает клиенту «не удалось отправить».
+    var lastErr = null;
     groups_().forEach(function (chat) {
-      var res = tg_('sendMessage', cardPayload_(lead, chat));
-      lead.copies.push([chat, res.result.message_id]);
+      try {
+        var res = tg_('sendMessage', cardPayload_(lead, chat));
+        lead.copies.push([chat, res.result.message_id]);
+      } catch (err) {
+        console.error(err);
+        lastErr = err;
+      }
     });
-    saveLead_(lead);
-    bumpStat_('new');
+    if (!lead.copies.length) throw lastErr || new Error('Заявка не ушла ни в одну группу');
+    try {
+      saveLead_(lead);
+      bumpStat_('new');
+    } catch (err) {
+      console.error(err);
+    }
     return lead;
   });
 }

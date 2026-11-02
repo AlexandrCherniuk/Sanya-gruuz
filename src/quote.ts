@@ -21,20 +21,22 @@ export function digitsOnly(value: string) {
 }
 
 /**
- * Номер без кода страны дописываем по языку страницы: польские и словенские номера
- * короче украинских (9 цифр), без этого они бы не прошли проверку.
+ * Приводим номер к виду +<код><номер>. Без кода страны угадываем страну по длине и языку страницы.
+ * Украинский: 0XX XXX XX XX (10 цифр). Словенский: 0XX XXX XXX (9 цифр с нулём) на любой версии сайта,
+ * без нуля 8 цифр на словенской. Польский: 9 цифр без нуля на польской версии.
  */
 export function normalizePhone(value: string, lang = 'ua') {
   const digits = digitsOnly(value)
-  const plus = value.trim().startsWith('+') || value.trim().startsWith('00')
-  if (plus) return `+${digits.replace(/^00/, '')}`
+  const v = value.trim()
+  if (v.startsWith('+')) return `+${digits}`
+  if (v.startsWith('00')) return `+${digits.slice(2)}`
   if (digits.length === 10 && digits.startsWith('0')) return `+38${digits}`
   if (digits.length === 12 && digits.startsWith('380')) return `+${digits}`
-  if (lang === 'pl' && digits.length === 9) return `+48${digits}`
-  if (lang === 'pl' && digits.length === 11 && digits.startsWith('48')) return `+${digits}`
-  if (lang === 'sl' && digits.length === 9 && digits.startsWith('0')) return `+386${digits.slice(1)}`
-  if (lang === 'sl' && digits.length === 8) return `+386${digits}`
-  if (lang === 'sl' && digits.length === 11 && digits.startsWith('386')) return `+${digits}`
+  if (digits.length === 11 && (digits.startsWith('386') || digits.startsWith('48'))) return `+${digits}`
+  if (digits.length === 9 && digits.startsWith('0')) return `+386${digits.slice(1)}`
+  if (digits.length === 9 && lang === 'pl') return `+48${digits}`
+  if (digits.length === 9 && (lang === 'ua' || lang === 'ru')) return `+380${digits}`
+  if (digits.length === 8 && lang === 'sl') return `+386${digits}`
   return digits
 }
 
