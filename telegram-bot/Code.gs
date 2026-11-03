@@ -517,7 +517,7 @@ function onMessage_(m) {
   }
   if (deep) return showLead_(m.chat.id, '', Number(deep[1]));
   if (id) return showLead_(m.chat.id, id);
-  if (text && !/^\//.test(text) && aiOn_()) return aiChat_(m.chat.id, m.from, text);
+  if (text && !/^\//.test(text) && aiOn_()) return aiChat_(m.chat.id, m.from, text + quotedText_(m));
 
   tg_('sendMessage', {
     chat_id: m.chat.id,
@@ -568,7 +568,11 @@ var AGENT_RULES_ = [
     'Вже заповнені поля не перезаписуй, якщо прямо не просять змінити.',
   '• «Видали коментар» — знайди його через get_lead і видали delete_comment. «Закрили», «відмова», «в роботу» — це статус.',
   '• Нагадування ставиш тільки в особистому чаті (set_reminder). У групі нагадування не став — попроси написати боту в особисті.',
-  '• Для статистики використовуй lead_stats за потрібний період (сьогодні, тиждень, місяць — порахуй дати самостійно).',
+  '• Для статистики використовуй lead_stats за потрібний період (дати — з рядка «Дати» нижче). ' +
+    'Якщо період не названо — не перепитуй, бери цей місяць і скажи про це.',
+  '• Шукаєш і нічого не знайшлося — спробуй ще раз ширше: одне ключове слово, місто, частину телефону, без фільтрів. ' +
+    'Лише потім кажи, що не знайшов.',
+  '• Якщо людина цитує повідомлення («Цитує повідомлення») — знайди заявку за даними з нього (телефон, маршрут, номер) через search_leads.',
   '• Відповідай коротко, по суті, мовою користувача (українська або російська). Без markdown і таблиць: звичайний текст, ' +
     'списки через «•». Дати пиши дд.мм. У групі — 1–2 рядки, бо це бачать усі.',
   '• Телефони клієнтів показуй, лише коли про них питають.',
@@ -951,22 +955,48 @@ function runTool_(name, input, ctx) {
   return out;
 }
 
+/**
+ * Поиск «как у человека»: каждое слово ищем по основе, без окончания («залупа» найдёт «залупу»,
+ * «Варшава» — «Варшаві»), телефон — по цифрам (пробелы и плюсы не важны). Нужны все слова.
+ */
+function queryMatcher_(query) {
+  query = String(query || '').trim();
+  // Только телефон («+48 555 531…») — одно число целиком.
+  if (/^[\d\s+()-]+$/.test(query) && query.replace(/\D/g, '').length >= 5) query = query.replace(/\D/g, '');
+  var words = query.toLowerCase().replace(/ё/g, 'е').split(/[\s,;]+/).filter(Boolean);
+  if (!words.length) return null;
+  var parts = words.map(function (w) {
+    var digits = w.replace(/\D/g, '');
+    if (digits.length >= 5 && digits.length >= w.replace(/[^\p{L}\d]/gu, '').length - 1) return { d: digits };
+    w = w.replace(/[^\p{L}\d-]/gu, '');
+    if (w.length >= 6) w = w.slice(0, -2);
+    else if (w.length >= 4) w = w.slice(0, -1);
+    return w ? { w: w } : null;
+  }).filter(Boolean);
+  if (!parts.length) return null;
+  return function (o) {
+    var hay = JSON.stringify(o).toLowerCase().replace(/ё/g, 'е');
+    var hayDigits = hay.replace(/\D/g, '');
+    return parts.every(function (pt) { return pt.d ? hayDigits.indexOf(pt.d) >= 0 : hay.indexOf(pt.w) >= 0; });
+  };
+}
+
 function toolImpl_(name, input, ctx) {
   var me = ctx.user;
   var isAdmin = admins_().indexOf(String(me.id)) >= 0;
 
   if (name === 'search_leads') {
-    var q = String(input.query || '').toLowerCase().trim();
+    var match = queryMatcher_(input.query);
     var from = dayStart_(input.date_from);
     var to = dayStart_(input.date_to);
     if (to) to += 86400000;
     var rows = sheetRows_().map(function (r) {
       var c = r.v[COL.created - 1];
-      return { o: rowObj_(r.v), t: c && typeof c.getTime === 'function' ? c.getTime() : 0, v: r.v };
+      return { o: rowObj_(r.v, true), t: c && typeof c.getTime === 'function' ? c.getTime() : 0, v: r.v };
     }).concat(freshRows_().map(function (o) { return { o: o, t: o._created, v: null }; }));
     var miss = { price: 'priceClient', carrier: 'carrier', pay: 'payTerms', client: 'client' }[input.missing];
     var found = rows.filter(function (r) {
-      if (q && JSON.stringify(r.o).toLowerCase().indexOf(q) < 0) return false;
+      if (match && !match(r.o)) return false;
       if (input.status && r.o.status !== input.status) return false;
       if (input.manager && String(r.o.manager || '').toLowerCase().indexOf(String(input.manager).toLowerCase()) < 0) return false;
       if (from && r.t < from) return false;
@@ -1231,6 +1261,15 @@ function transferLead_(lead, target, byId) {
 }
 
 /* ── Личка: разговор с памятью ── */
+
+/** Если человек отвечает на старое/чужое сообщение или цитирует его — отдаём ИИ его текст, чтобы найти заявку. */
+function quotedText_(m) {
+  var q = (m.quote && m.quote.text) ||
+    (m.reply_to_message && (m.reply_to_message.text || m.reply_to_message.caption)) ||
+    (m.external_reply && m.external_reply.text) || '';
+  q = String(q).trim();
+  return q ? '\n\n[Цитує повідомлення: «' + q.slice(0, 1500) + '»]' : '';
+}
 
 function aiChat_(chat, from, text) {
   var cache = CacheService.getScriptCache();
