@@ -336,11 +336,15 @@ function rowLink_(lead) {
 
 /* ═════════════ Таблица ═════════════ */
 
+var sheetCache_ = null; // открыть таблицу — самая медленная операция, делаем это один раз за запуск
+
 function sheet_() {
+  if (sheetCache_) return sheetCache_;
   var id = props_().getProperty('LEADS_SHEET_ID');
   if (!id) throw new Error('Не задан LEADS_SHEET_ID в свойствах скрипта');
   var sh = SpreadsheetApp.openById(id).getSheetByName(SHEET_NAME);
   if (!sh) throw new Error('В таблице нет листа «' + SHEET_NAME + '»');
+  sheetCache_ = sh;
   return sh;
 }
 
@@ -549,6 +553,8 @@ function ai_(system, userText, schema, maxTokens) {
     messages: [{ role: 'user', content: userText }],
     output_config: { effort: 'low' },
   };
+  // Haiku без «раздумий» отвечает в разы быстрее; для разбора коментарів этого хватает.
+  if (/^claude-haiku/.test(body.model)) body.thinking = { type: 'disabled' };
   if (schema) body.output_config.format = { type: 'json_schema', schema: schema };
 
   var res = UrlFetchApp.fetch('https://api.anthropic.com/v1/messages', {
@@ -1024,6 +1030,7 @@ function onReply_(m, text) {
   // С ключом ИИ понимает, что имели в виду (запрос к ИИ — до блокировки, он идёт пару секунд).
   var intent = null;
   if (!explicitRemind && props_().getProperty('ANTHROPIC_API_KEY')) {
+    react_(m.chat.id, m.message_id, '👀'); // сразу видно, что бот прочитал и думает
     try {
       intent = aiIntent_(hit.lead, text, me);
     } catch (err) {
@@ -1260,11 +1267,11 @@ function showLead_(chat, id, n) {
   });
 }
 
-function react_(chat, mid) {
+function react_(chat, mid, emoji) {
   try {
-    tg_('setMessageReaction', { chat_id: chat, message_id: mid, reaction: [{ type: 'emoji', emoji: '👍' }] });
+    tg_('setMessageReaction', { chat_id: chat, message_id: mid, reaction: [{ type: 'emoji', emoji: emoji || '👍' }] });
   } catch (err) {
-    safeSend_({ chat_id: chat, reply_to_message_id: mid, text: '✅ Записав' });
+    if (!emoji) safeSend_({ chat_id: chat, reply_to_message_id: mid, text: '✅ Записав' });
   }
 }
 
@@ -1719,8 +1726,10 @@ function ago_(t) {
   return h < 48 ? h + ' год' : Math.round(h / 24) + ' дн';
 }
 
+var tgToken_ = null;
+
 function tg_(method, payload) {
-  var token = props_().getProperty('TG_TOKEN');
+  var token = tgToken_ || (tgToken_ = props_().getProperty('TG_TOKEN'));
   if (!token) throw new Error('Не задан TG_TOKEN в свойствах скрипта');
   var res = UrlFetchApp.fetch('https://api.telegram.org/bot' + token + '/' + method, {
     method: 'post',
