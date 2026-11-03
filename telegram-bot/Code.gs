@@ -497,14 +497,7 @@ function onMessage_(m) {
   if (isPrivate && isTeam_(m.from.id)) registerManager_(m.from);
 
   // Ответ на сообщение бота про заявку = коментар (или время напоминания).
-  if (text && m.reply_to_message && onReply_(m, text)) {
-    if (pendingAi_) {
-      var job = pendingAi_;
-      pendingAi_ = null;
-      aiFillFromComment_(job);
-    }
-    return;
-  }
+  if (text && m.reply_to_message && onReply_(m, text)) return;
   if (!isPrivate) return;
 
   var deep = text.match(/^\/start\s+l(\d+)$/);
@@ -532,7 +525,6 @@ function onMessage_(m) {
 
 var AI_MODEL_DEFAULT = 'claude-haiku-5-5';
 var AI_DAILY_LIMIT_DEFAULT = 300; // запросов к ИИ в день, чтобы случайно не потратить много
-var pendingAi_ = null;
 
 /**
  * Один запрос к Claude. Ключ в свойстве ANTHROPIC_API_KEY (не в репо).
@@ -605,79 +597,143 @@ var AI_FIELDS_ = [
 ];
 var PAY_TERMS_ = ['Передоплата', 'При завантаженні', 'При вивантаженні', 'Відстрочка', 'Готівка'];
 
-function aiFillFromComment_(job) {
+function fieldsSchema_() {
+  var props = {};
+  AI_FIELDS_.forEach(function (fd) {
+    props[fd[0]] = fd[0] === 'payTerms'
+      ? { type: 'string', enum: [''].concat(PAY_TERMS_), description: fd[2] }
+      : { type: 'string', description: fd[2] };
+  });
+  return {
+    type: 'object',
+    properties: props,
+    required: AI_FIELDS_.map(function (fd) { return fd[0]; }),
+    additionalProperties: false,
+  };
+}
+
+/** Что сейчас в строке таблицы (для ИИ). */
+function rowSummary_(lead) {
+  if (!lead.mgr) return '(заявку ще не взяли, рядка в таблиці немає)';
+  var sh = sheet_();
+  var r = findRow_(sh, lead);
+  if (!r) return '(рядок у таблиці не знайдено)';
+  var row = sh.getRange(r, 1, 1, NCOL).getValues()[0];
+  return AI_FIELDS_.map(function (fd) {
+    var v = row[COL[fd[0]] - 1];
+    if (v && typeof v.getTime === 'function') v = Utilities.formatDate(v, TIMEZONE, 'yyyy-MM-dd');
+    return fd[1] + ': ' + (String(v || '').trim() || '—');
+  }).join('\n');
+}
+
+/** Коментарі, которые можно удалить: новые (lead.notes) и старого формата из лога карточки. */
+function commentList_(lead) {
+  var list = [];
+  (lead.notes || []).forEach(function (c, i) {
+    list.push({ kind: 'n', i: i, label: c.name + ' (' + c.t + '): ' + c.text, sheet: c.t + ' ' + c.name + ': ' + c.text });
+  });
+  lead.log.forEach(function (l, i) {
+    if (l.indexOf('💬 ') !== 0) return;
+    list.push({ kind: 'l', i: i, label: l.slice(3), sheet: l.slice(3).replace(/…$/, '') });
+  });
+  return list;
+}
+
+/**
+ * ИИ читает ответ на сообщение бота и решает, что это: коментар (+ данные для таблицы),
+ * просьба удалить коментар, сменить статус или поставить напоминание.
+ */
+function aiIntent_(lead, text, who) {
+  var labels = Object.keys(STATUS).map(function (k) { return STATUS[k].label; });
+  var comments = commentList_(lead);
+  var schema = {
+    type: 'object',
+    properties: {
+      action: { type: 'string', enum: ['comment', 'delete_comment', 'set_status', 'remind'] },
+      delete_index: { type: 'integer', description: 'номер коментаря зі списку для delete_comment, інакше -1' },
+      status: { type: 'string', enum: [''].concat(labels), description: 'новий статус для set_status' },
+      remind_at: { type: 'string', description: 'для remind: дата і час за Києвом YYYY-MM-DD HH:MM, інакше порожньо' },
+      remind_note: { type: 'string', description: 'для remind: про що нагадати' },
+      fields: fieldsSchema_(),
+    },
+    required: ['action', 'delete_index', 'status', 'remind_at', 'remind_note', 'fields'],
+    additionalProperties: false,
+  };
+  var now = Utilities.formatDate(new Date(), TIMEZONE, 'yyyy-MM-dd HH:mm, EEEE');
+  return ai_(
+    'Ти помічник логістичної компанії CR Logistics. Менеджер відповів у Telegram на повідомлення бота про заявку. ' +
+      'Визнач, чого він хоче:\n' +
+      '• comment — звичайний коментар або інформація по заявці (це за замовчуванням, якщо сумніваєшся);\n' +
+      '• delete_comment — просить видалити / прибрати коментар; delete_index — номер зі списку (якщо не ясно який — останній);\n' +
+      '• set_status — просить змінити статус заявки (закрили, відмова, в роботі, в планах, прорахунок);\n' +
+      '• remind — просить нагадати; remind_at за Києвом.\n' +
+      'Для comment заповни fields даними з тексту для таблиці: тільки те, що прямо сказано, інакше порожній рядок, нічого не вигадуй, ' +
+      'коротко і мовою оригіналу, дати у YYYY-MM-DD. Для інших дій fields порожні. Зараз: ' + now + ' (Київ).',
+    'Заявка ' + idOf_(lead) + ': ' + route_(lead) + ', статус «' + STATUS[lead.status].label + '»' +
+      (lead.mgr ? ', менеджер ' + lead.mgr.name : '') + '\nЗараз у таблиці:\n' + rowSummary_(lead) +
+      '\n\nКоментарі:\n' + (comments.length ? comments.map(function (c, i) { return i + '. ' + c.label; }).join('\n') : '(немає)') +
+      '\n\nПише ' + who.name + ':\n' + text,
+    schema,
+    3000
+  );
+}
+
+/** Пишет данные от ИИ в пустые клетки строки. Возвращает список «Колонка: значение». */
+function applyFields_(lead, out) {
+  var filled = [];
+  if (!out || !lead.mgr) return filled;
+  var sh = sheet_();
+  var r = findRow_(sh, lead);
+  if (!r) return filled;
+  var cur = sh.getRange(r, 1, 1, NCOL).getValues()[0];
+  AI_FIELDS_.forEach(function (fd) {
+    var val = String(out[fd[0]] || '').trim();
+    if (!val) return;
+    var col = COL[fd[0]];
+    var have = String(cur[col - 1] || '').trim();
+    // Пустую клетку заполняем; груз и имя с сайта можно уточнить (менеджер их ещё не трогал).
+    var fromSite = (fd[0] === 'cargo' && have === String(lead.f.cargo || '').trim()) ||
+      (fd[0] === 'client' && have === String(lead.f.name || '').trim());
+    if (have && !fromSite) return;
+    if (have === val) return;
+    var cellValue = val;
+    if (fd[0] === 'loadDate' || fd[0] === 'payDate') {
+      var m = val.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+      if (!m) return;
+      cellValue = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+    } else if (/^[=+\-@]/.test(val)) {
+      cellValue = "'" + val; // чтобы таблица не приняла текст за формулу
+    }
+    sh.getRange(r, col).setValue(cellValue);
+    filled.push(fd[1] + ': ' + val);
+  });
+  if (filled.length) sh.getRange(r, COL.updated).setValue(new Date());
+  return filled;
+}
+
+/** Удаляет коментар из карточки и из клетки «Коментар». */
+function deleteComment_(lead, c) {
+  if (c.kind === 'n') lead.notes.splice(c.i, 1);
+  else lead.log.splice(c.i, 1);
+  if (!lead.mgr) {
+    lead.comments = (lead.comments || []).filter(function (x) { return x.indexOf(c.sheet) < 0; });
+    return;
+  }
   try {
-    var lead = loadLead_(job.n);
-    if (!lead || !lead.mgr || !props_().getProperty('ANTHROPIC_API_KEY')) return;
     var sh = sheet_();
     var r = findRow_(sh, lead);
     if (!r) return;
-    var row = sh.getRange(r, 1, 1, NCOL).getValues()[0];
-
-    var props = {};
-    AI_FIELDS_.forEach(function (fd) {
-      props[fd[0]] = fd[0] === 'payTerms'
-        ? { type: 'string', enum: [''].concat(PAY_TERMS_), description: fd[2] }
-        : { type: 'string', description: fd[2] };
-    });
-    var schema = {
-      type: 'object',
-      properties: props,
-      required: AI_FIELDS_.map(function (fd) { return fd[0]; }),
-      additionalProperties: false,
-    };
-    var now = Utilities.formatDate(new Date(), TIMEZONE, 'yyyy-MM-dd');
-    var known = AI_FIELDS_.map(function (fd) {
-      var v = row[COL[fd[0]] - 1];
-      if (v && typeof v.getTime === 'function') v = Utilities.formatDate(v, TIMEZONE, 'yyyy-MM-dd');
-      return fd[1] + ': ' + (String(v || '').trim() || '—');
-    }).join('\n');
-
-    var out = ai_(
-      'Ти помічник логістичної компанії CR Logistics. З коментаря менеджера до заявки на перевезення витягни дані для таблиці. ' +
-        'Заповнюй поле тільки якщо це прямо сказано в коментарі, інакше залиш порожній рядок. Нічого не вигадуй. ' +
-        'Пиши коротко, мовою коментаря. Сьогодні ' + now + ' (Київ); відносні дати («завтра», «в пʼятницю») переводь у YYYY-MM-DD.',
-      'Заявка ' + idOf_(lead) + ': ' + route_(lead) + '\nЗараз у таблиці:\n' + known + '\n\nКоментар:\n' + job.text,
-      schema,
-      3000
-    );
-    if (!out) return;
-
-    var filled = [];
-    withLock_(function () {
-      var r2 = findRow_(sh, lead);
-      if (!r2) return;
-      var cur = sh.getRange(r2, 1, 1, NCOL).getValues()[0];
-      AI_FIELDS_.forEach(function (fd) {
-        var val = String(out[fd[0]] || '').trim();
-        if (!val) return;
-        var col = COL[fd[0]];
-        var have = String(cur[col - 1] || '').trim();
-        // Пустую клетку заполняем; груз и имя с сайта можно уточнить (менеджер их ещё не трогал).
-        var fromSite = (fd[0] === 'cargo' && have === String(lead.f.cargo || '').trim()) ||
-          (fd[0] === 'client' && have === String(lead.f.name || '').trim());
-        if (have && !fromSite) return;
-        if (have === val) return;
-        var cellValue = val;
-        if (fd[0] === 'loadDate' || fd[0] === 'payDate') {
-          var m = val.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-          if (!m) return;
-          cellValue = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
-        } else if (/^[=+\-@]/.test(val)) {
-          cellValue = "'" + val; // чтобы таблица не приняла текст за формулу
-        }
-        sh.getRange(r2, col).setValue(cellValue);
-        filled.push(fd[1] + ': ' + val);
-      });
-      if (filled.length) sh.getRange(r2, COL.updated).setValue(new Date());
-    });
-    if (filled.length) {
-      safeSend_({
-        chat_id: job.chat,
-        reply_to_message_id: job.mid,
-        text: '🤖 Заповнив у таблиці:\n' + filled.map(function (x) { return '• ' + x; }).join('\n'),
-      });
-    }
+    var cell = sh.getRange(r, COL.comment);
+    var cur = String(cell.getValue() || '');
+    var at = cur.indexOf(c.sheet);
+    if (at < 0 && c.kind === 'l') at = cur.indexOf(c.sheet.split('\n')[0]);
+    if (at < 0) return;
+    // Конец коментаря — следующая строка, начинающаяся с «дд.мм чч:мм», или конец клетки.
+    var rest = cur.slice(at + 1);
+    var next = rest.search(/\n\d{2}\.\d{2} \d{2}:\d{2} /);
+    var end = next < 0 ? cur.length : at + 1 + next;
+    cell.setValue((cur.slice(0, at) + cur.slice(end)).replace(/\n{2,}/g, '\n').replace(/^\n|\n$/g, ''));
+    sh.getRange(r, COL.updated).setValue(new Date());
   } catch (err) {
     console.error(err);
   }
@@ -957,25 +1013,42 @@ function leadByMessage_(chat, mid) {
 
 /** Ответ на сообщение бота. true — если это было про заявку и мы его обработали. */
 function onReply_(m, text) {
-  return withLock_(function () {
-    var hit = leadByMessage_(m.chat.id, m.reply_to_message.message_id);
-    if (!hit) return false;
-    var lead = hit.lead;
-    var me = { id: m.from.id, name: personName_(m.from) };
+  var hit = withLock_(function () {
+    return leadByMessage_(m.chat.id, m.reply_to_message.message_id);
+  });
+  if (!hit) return false;
+  var me = { id: m.from.id, name: personName_(m.from) };
+  var isPrivate = m.chat.type === 'private';
+  var explicitRemind = hit.kind === 'r' || /^(нагадай|напомни|⏰)/i.test(text);
 
-    var wantsReminder = hit.kind === 'r' || /^(нагадай|напомни|⏰)/i.test(text);
-    if (wantsReminder && m.chat.type !== 'private') {
-      var pl = privateLink_(lead);
-      safeSend_({
-        chat_id: m.chat.id,
-        reply_to_message_id: m.message_id,
-        text: 'Нагадування тепер тільки в особистих з ботом 🙂',
-        reply_markup: { inline_keyboard: pl ? [[{ text: '⏰ Поставити в особистих', url: pl }]] : [] },
-      });
-      return true;
+  // С ключом ИИ понимает, что имели в виду (запрос к ИИ — до блокировки, он идёт пару секунд).
+  var intent = null;
+  if (!explicitRemind && props_().getProperty('ANTHROPIC_API_KEY')) {
+    try {
+      intent = aiIntent_(hit.lead, text, me);
+    } catch (err) {
+      console.error(err);
     }
-    if (wantsReminder) {
-      var when = parseWhen_(text, Date.now());
+  }
+  var action = explicitRemind ? 'remind' : intent ? intent.action : 'comment';
+  var reply = function (t, extra) {
+    var p = { chat_id: m.chat.id, reply_to_message_id: m.message_id, text: t };
+    for (var k in extra || {}) p[k] = extra[k];
+    safeSend_(p);
+  };
+
+  return withLock_(function () {
+    var lead = loadLead_(hit.lead.n) || hit.lead;
+
+    if (action === 'remind') {
+      if (!isPrivate) {
+        var pl = privateLink_(lead);
+        reply('Нагадування тільки в особистих з ботом 🙂', {
+          reply_markup: { inline_keyboard: pl ? [[{ text: '⏰ Поставити в особистих', url: pl }]] : [] },
+        });
+        return true;
+      }
+      var when = explicitRemind ? parseWhen_(text, Date.now()) : aiWhen_(intent);
       if (!when) {
         var again = tg_('sendMessage', {
           chat_id: m.chat.id,
@@ -991,22 +1064,80 @@ function onReply_(m, text) {
       }
       addReminder_(lead, me, when.at, when.note);
       saveLead_(lead);
-      safeSend_({
-        chat_id: m.chat.id,
-        reply_to_message_id: m.message_id,
-        text: '⏰ Нагадаю ' + fmtWhen_(when.at) + ' в особисті з ботом.',
-      });
+      reply('⏰ Нагадаю ' + fmtWhen_(when.at) + (when.note ? ': ' + when.note : '') + '.');
+      return true;
+    }
+
+    if (action === 'delete_comment') {
+      var list = commentList_(lead);
+      var c = list[intent.delete_index] || list[list.length - 1];
+      if (!c) {
+        reply('По ' + idOf_(lead) + ' ще немає коментарів.');
+        return true;
+      }
+      var mine = c.label.indexOf(me.name + ' ') === 0 || c.label.indexOf(me.name + ':') === 0;
+      if (!mine && !canEdit_(lead, me.id)) {
+        reply('Видалити чужий коментар може менеджер заявки або адмін.');
+        return true;
+      }
+      deleteComment_(lead, c);
+      saveLead_(lead);
+      refresh_(lead);
+      reply('🗑 Видалив коментар: «' + c.label.slice(0, 200) + '»');
+      return true;
+    }
+
+    if (action === 'set_status' && intent.status) {
+      var code = Object.keys(STATUS).filter(function (k) { return STATUS[k].label === intent.status; })[0];
+      if (!code || code === 'new') {
+        reply('Не зрозумів, який статус поставити 🤔');
+        return true;
+      }
+      if (!lead.mgr) {
+        reply('Спочатку хтось має взяти заявку.');
+        return true;
+      }
+      if (!canEdit_(lead, me.id)) {
+        reply('Статус міняє ' + lead.mgr.name + ' або адмін.');
+        return true;
+      }
+      if (code !== lead.status) {
+        if (FINAL[code]) bumpStat_(code);
+        setStatus_(lead, code, STATUS[code].label + ' (' + me.name + ')');
+        try {
+          setCell_(lead, COL.status, STATUS[code].label);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+      saveLead_(lead);
+      refresh_(lead);
+      reply(STATUS[code].icon + ' Статус ' + idOf_(lead) + ': ' + STATUS[code].label);
       return true;
     }
 
     addComment_(lead, me, text);
+    var filled = [];
+    try {
+      filled = applyFields_(lead, intent && intent.fields);
+    } catch (err) {
+      console.error(err);
+    }
     saveLead_(lead);
     refresh_(lead);
     react_(m.chat.id, m.message_id);
-    // ИИ разложит коментар по колонкам таблицы — уже после снятия блокировки (запрос к ИИ идёт пару секунд).
-    if (lead.mgr) pendingAi_ = { n: lead.n, text: text, chat: m.chat.id, mid: m.message_id };
+    if (filled.length) reply('🤖 Заповнив у таблиці:\n' + filled.map(function (x) { return '• ' + x; }).join('\n'));
     return true;
   });
+}
+
+/** Время напоминания из ответа ИИ («2026-11-05 09:00» по Киеву). */
+function aiWhen_(intent) {
+  var m = String((intent && intent.remind_at) || '').match(/^(\d{4})-(\d{2})-(\d{2})[ T](\d{1,2}):(\d{2})/);
+  if (!m) return null;
+  var at = kyivTime_(Number(m[1]), Number(m[2]), Number(m[3]), Number(m[4]), Number(m[5]));
+  if (at <= Date.now() || at - Date.now() > 366 * 86400000) return null;
+  return { at: at, note: String(intent.remind_note || '').trim() };
 }
 
 function addComment_(lead, who, text) {
