@@ -9,7 +9,7 @@
  *   - «🔄 Передати» в группе (может тот, кто взял, и админ) → новому менеджеру пинг в личку;
  *   - личка менеджера с ботом = только контроль: напоминания и утренний список его заявок;
  *   - «💬 Коментар» или ответ (Reply) на сообщение бота про заявку → коментар в карточку и в таблицу;
- *   - «⏰ Нагадати» → личное напоминание по заявке в личку тому, кто поставил;
+ *   - «⏰ Нагадати» → только в личке с ботом (из группы кнопка открывает личку на этой заявке);
  *   - номер заявки в личку боту (CR-0211-01) → бот показывает заявку с кнопками.
  *
  * Это Google Apps Script в Google-аккаунте Александра, токен бота в репозиторий не попадает.
@@ -86,7 +86,7 @@ function handleSiteLead_(e) {
     });
 
     var digits = f.phone.replace(/\D/g, '');
-    if (digits.length < 10 || digits.length > 15) return json_({ ok: false, error: 'phone' });
+    if (digits.length < 8 || digits.length > 15) return json_({ ok: false, error: 'phone' });
     if (!f.from || !f.to) return json_({ ok: false, error: 'route' });
 
     if (isFlood_(digits)) return json_({ ok: true });
@@ -229,6 +229,18 @@ function cardText_(lead) {
   text += lead.mgr ? '👷 Взяв: <b>' + esc_(lead.mgr.name) + '</b>' : '👷 Ще ніхто не взяв';
   text += '\n\n' + bodyHtml_(lead.f);
   if (lead.log.length) text += '\n\n<i>' + lead.log.slice(-5).map(esc_).join('\n') + '</i>';
+  // Коментарі целиком. Не влезают в лимит Telegram (4096) → старые прячем, они все есть в таблице.
+  var notes = (lead.notes || []).map(function (c) {
+    return '\n<b>' + esc_(c.name) + '</b> <i>' + esc_(c.t) + '</i>\n' + esc_(c.text);
+  });
+  var hidden = 0;
+  while (notes.length && (text + '\n\n💬 <b>Коментарі</b>' + notes.join('\n')).length > 3900) {
+    notes.shift();
+    hidden++;
+  }
+  if (notes.length || hidden) {
+    text += '\n\n💬 <b>Коментарі</b>' + (hidden ? ' <i>(ще ' + hidden + ' раніших у таблиці)</i>' : '') + notes.join('\n');
+  }
   return text;
 }
 
@@ -239,15 +251,35 @@ function keyboard_(lead) {
   var link = rowLink_(lead);
   if (link) row.push({ text: '📋 Таблиця', url: link });
   var rows = row.length ? [row] : [];
-  rows.push(noteButtons_(lead));
+  rows.push(noteButtons_(lead, true));
   return { inline_keyboard: rows };
 }
 
-function noteButtons_(lead) {
-  return [
-    { text: '💬 Коментар', callback_data: 'cm:' + lead.n },
-    { text: '⏰ Нагадати', callback_data: 'rm:' + lead.n },
-  ];
+/** inGroup: в группе «⏰» ведёт в личку с ботом (напоминания ставятся только там). */
+function noteButtons_(lead, inGroup) {
+  var row = [{ text: '💬 Коментар', callback_data: 'cm:' + lead.n }];
+  if (!inGroup) {
+    row.push({ text: '⏰ Нагадати', callback_data: 'rm:' + lead.n });
+  } else {
+    var link = privateLink_(lead);
+    if (link) row.push({ text: '⏰ Нагадати (в особистих)', url: link });
+  }
+  return row;
+}
+
+/** Ссылка t.me/бот?start=l12: открывает личку с ботом сразу на этой заявке. */
+function privateLink_(lead) {
+  var name = props_().getProperty('BOT_USERNAME');
+  if (!name) {
+    try {
+      name = tg_('getMe', {}).result.username;
+      props_().setProperty('BOT_USERNAME', name);
+    } catch (err) {
+      console.error(err);
+      return '';
+    }
+  }
+  return 'https://t.me/' + name + '?start=l' + lead.n;
 }
 
 /** Кнопки под сообщением бота в личке: ссылки на строку и карточку + коментар/напоминание. */
@@ -465,6 +497,8 @@ function onMessage_(m) {
   if (text && m.reply_to_message && onReply_(m, text)) return;
   if (!isPrivate) return;
 
+  var deep = text.match(/^\/start\s+l(\d+)$/);
+  if (deep) return showLead_(m.chat.id, '', Number(deep[1]));
   var id = parseLeadId_(text);
   if (id) return showLead_(m.chat.id, id);
 
@@ -518,6 +552,10 @@ function onButton_(q) {
     }
 
     // Коментар и напоминание может любой участник группы.
+    if ((action === 'rm' || action === 'rt' || action === 'rc') && q.message.chat.type !== 'private') {
+      return answer_(q, 'Нагадування ставляться тільки в особистих з ботом: натисни «⏰ Нагадати (в особистих)» під заявкою.', true);
+    }
+
     if (action === 'cm' || action === 'rc') {
       var ask = action === 'cm'
         ? '💬 Коментар до <b>' + idOf_(lead) + '</b> (' + esc_(route_(lead)) + '): напиши його відповіддю на це повідомлення.'
@@ -670,6 +708,16 @@ function onReply_(m, text) {
     var me = { id: m.from.id, name: personName_(m.from) };
 
     var wantsReminder = hit.kind === 'r' || /^(нагадай|напомни|⏰)/i.test(text);
+    if (wantsReminder && m.chat.type !== 'private') {
+      var pl = privateLink_(lead);
+      safeSend_({
+        chat_id: m.chat.id,
+        reply_to_message_id: m.message_id,
+        text: 'Нагадування тепер тільки в особистих з ботом 🙂',
+        reply_markup: { inline_keyboard: pl ? [[{ text: '⏰ Поставити в особистих', url: pl }]] : [] },
+      });
+      return true;
+    }
     if (wantsReminder) {
       var when = parseWhen_(text, Date.now());
       if (!when) {
@@ -706,8 +754,9 @@ function onReply_(m, text) {
 function addComment_(lead, who, text) {
   text = clean_(text, 1000);
   var line = stamp_() + ' ' + who.name + ': ' + text;
-  lead.log.push('💬 ' + who.name + ': ' + (text.length > 120 ? text.slice(0, 117) + '…' : text));
-  lead.log = lead.log.slice(-20);
+  lead.notes = (lead.notes || []).concat([{ t: stamp_(), name: who.name, text: text }]);
+  // Память скрипта: до 9 КБ на заявку. Старые коментарі забываем (в таблице остаются все).
+  while (lead.notes.length > 1 && JSON.stringify(lead.notes).length > 4500) lead.notes.shift();
   var inSheet = false;
   if (lead.mgr) {
     try {
@@ -725,7 +774,10 @@ function addComment_(lead, who, text) {
       console.error(err);
     }
   }
-  if (!inSheet) lead.comments = (lead.comments || []).concat([line]).slice(-20);
+  if (!inSheet) {
+    lead.comments = (lead.comments || []).concat([line]);
+    while (lead.comments.length > 1 && JSON.stringify(lead.comments).length > 2000) lead.comments.shift();
+  }
   // Написал не менеджер заявки (например, админ) → менеджеру пинг в личку.
   if (lead.mgr && String(lead.mgr.id) !== String(who.id)) {
     dm_(lead.mgr, '💬 <b>' + esc_(who.name) + '</b> до <b>' + esc_(idOf_(lead)) + '</b> (' + esc_(route_(lead)) + '):\n' +
@@ -786,11 +838,15 @@ function parseLeadId_(text) {
   return '';
 }
 
-function showLead_(chat, id) {
+/** Показ заявки в личке: по номеру (CR-0211-01) или по внутреннему n (ссылка из группы). */
+function showLead_(chat, id, n) {
   withLock_(function () {
-    var found = allLeads_()
-      .filter(function (l) { return idOf_(l).toUpperCase() === id.toUpperCase(); })
-      .sort(function (a, b) { return b.created - a.created; })[0];
+    var found = n
+      ? loadLead_(n)
+      : allLeads_()
+          .filter(function (l) { return idOf_(l).toUpperCase() === id.toUpperCase(); })
+          .sort(function (a, b) { return b.created - a.created; })[0];
+    if (!id && found) id = idOf_(found);
     if (!found) {
       var sid = props_().getProperty('LEADS_SHEET_ID');
       safeSend_({
@@ -805,7 +861,7 @@ function showLead_(chat, id) {
     }
     var res = tg_('sendMessage', {
       chat_id: chat,
-      text: cardText_(found) + '\n\n<i>Відповідай на це повідомлення, щоб додати коментар.</i>',
+      text: cardText_(found) + '\n\n<i>Відповідай на це повідомлення, щоб додати коментар. ⏰ — поставити собі нагадування.</i>',
       parse_mode: 'HTML',
       disable_web_page_preview: true,
       reply_markup: dmKeyboard_(found),
