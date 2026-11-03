@@ -505,7 +505,15 @@ function onMessage_(m) {
 
   // Ответ на сообщение бота про заявку = коментар (или время напоминания).
   if (text && m.reply_to_message && onReply_(m, text)) return;
-  if (!isPrivate) return;
+  if (!isPrivate) {
+    // В группе помощник отвечает, когда обращаются к нему: ответ на его сообщение, @бот или «бот, …» / «ИИ, …».
+    if (text && aiOn_() && addressedToBot_(m, text) && isTeam_(m.from.id)) {
+      react_(m.chat.id, m.message_id, '👀');
+      aiChat_(m.chat.id, m.from, text + quotedText_(m, 800), m.chat.type, m.message_id);
+      react_(m.chat.id, m.message_id);
+    }
+    return;
+  }
 
   var deep = text.match(/^\/start\s+l(\d+)$/);
   var id = deep ? '' : parseLeadId_(text);
@@ -1262,28 +1270,37 @@ function transferLead_(lead, target, byId) {
 
 /* ── Личка: разговор с памятью ── */
 
+function addressedToBot_(m, text) {
+  var name = String(props_().getProperty('BOT_USERNAME') || '').toLowerCase();
+  var r = m.reply_to_message;
+  if (r && r.from && r.from.is_bot && (!name || String(r.from.username || '').toLowerCase() === name)) return true;
+  if (name && text.toLowerCase().indexOf('@' + name) >= 0) return true;
+  return /^(бот|ботик|ии|ші|ai)([\s,!?:.]|$)/i.test(text);
+}
+
 /** Если человек отвечает на старое/чужое сообщение или цитирует его — отдаём ИИ его текст, чтобы найти заявку. */
-function quotedText_(m) {
+function quotedText_(m, max) {
   var q = (m.quote && m.quote.text) ||
     (m.reply_to_message && (m.reply_to_message.text || m.reply_to_message.caption)) ||
     (m.external_reply && m.external_reply.text) || '';
   q = String(q).trim();
-  return q ? '\n\n[Цитує повідомлення: «' + q.slice(0, 1500) + '»]' : '';
+  return q ? '\n\n[Цитує повідомлення: «' + q.slice(0, max || 1500) + '»]' : '';
 }
 
-function aiChat_(chat, from, text) {
+function aiChat_(chat, from, text, chatType, replyTo) {
+  chatType = chatType || 'private';
   var cache = CacheService.getScriptCache();
-  var hk = 'hist_' + from.id;
+  var hk = chatType === 'private' ? 'hist_' + from.id : 'hist_' + chat + '_' + from.id;
   var history = [];
   try {
     history = JSON.parse(cache.get(hk) || '[]');
   } catch (err) {
     history = [];
   }
-  var ctx = { user: { id: from.id, name: personName_(from) }, chat: chat, chatType: 'private' };
+  var ctx = { user: { id: from.id, name: personName_(from) }, chat: chat, chatType: chatType };
   var answer = agent_(ctx, text, history);
   if (!answer) {
-    safeSend_({ chat_id: chat, text: 'ИИ зараз не відповів 😕 Спробуй ще раз за хвилину.' });
+    safeSend_({ chat_id: chat, reply_to_message_id: replyTo, text: 'ИИ зараз не відповів 😕 Спробуй ще раз за хвилину.' });
     return;
   }
   history = history.concat([{ role: 'user', content: text }, { role: 'assistant', content: answer.slice(0, 1500) }])
@@ -1293,15 +1310,19 @@ function aiChat_(chat, from, text) {
   } catch (err) {
     console.error(err);
   }
-  sendLong_(chat, answer);
+  sendLong_(chat, answer, replyTo);
 }
 
+/** Длинный ответ кусками по 4000 символов. Возвращает id отправленных сообщений. */
 function sendLong_(chat, text, replyTo) {
+  var ids = [];
   for (var i = 0; i < text.length; i += 4000) {
     var p = { chat_id: chat, text: text.slice(i, i + 4000), disable_web_page_preview: true };
     if (replyTo && i === 0) p.reply_to_message_id = replyTo;
-    safeSend_(p);
+    var r = safeSend_(p);
+    if (r) ids.push(r.message_id);
   }
+  return ids;
 }
 
 /** Свой: админ или участник группы заявок. Ответ кешируем на 6 часов. */
@@ -1592,13 +1613,22 @@ function onReply_(m, text) {
     react_(m.chat.id, m.message_id, '👀'); // сразу видно, что бот прочитал и думает
     var answer = null;
     try {
-      answer = agent_({ user: me, chat: m.chat.id, chatType: m.chat.type, lead: hit.lead, kind: hit.kind }, text, []);
+      answer = agent_({ user: me, chat: m.chat.id, chatType: m.chat.type, lead: hit.lead, kind: hit.kind },
+        text + quotedText_(m, 800), []);
     } catch (err) {
       console.error(err);
     }
     if (answer) {
       react_(m.chat.id, m.message_id);
-      sendLong_(m.chat.id, answer, m.message_id);
+      var ids = sendLong_(m.chat.id, answer, m.message_id);
+      // Ответ на ответ бота тоже про эту заявку — запоминаем его сообщения.
+      if (ids.length) {
+        withLock_(function () {
+          var lead = loadLead_(hit.lead.n) || hit.lead;
+          ids.forEach(function (id) { trackMsg_(lead, m.chat.id, id, ''); });
+          saveLead_(lead);
+        });
+      }
       return true;
     }
   }
@@ -2197,9 +2227,10 @@ function answer_(q, text, alert) {
 
 function safeSend_(payload) {
   try {
-    tg_('sendMessage', payload);
+    return tg_('sendMessage', payload).result;
   } catch (err) {
     console.error(err);
+    return null;
   }
 }
 
