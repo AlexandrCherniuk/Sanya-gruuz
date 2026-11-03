@@ -19,6 +19,8 @@
  *   TG_ADMIN_ID     — id админов через запятую (могут передавать любые заявки)
  *   LEADS_SHEET_ID  — id таблицы «Ліди CR Logistics» (кусок ссылки между /d/ и /edit)
  *   TG_HOOK_KEY     — создаётся сам функцией setup(), руками не трогать
+ *   ANTHROPIC_API_KEY — ключ ИИ (console.anthropic.com), необязательно: без него ИИ просто выключен
+ *   AI_MODEL, AI_DAILY_LIMIT — необязательно: модель (по умолчанию claude-haiku-5-5) и лимит запросов в день (300)
  *
  * Как поставить и обновить: см. telegram-bot/README.md
  */
@@ -491,16 +493,29 @@ function onMessage_(m) {
   var text = String(m.text || '').trim();
   var isPrivate = m.chat.type === 'private';
   // Любое сообщение боту в личку (обычно /start) = менеджер зарегистрирован.
-  if (isPrivate) registerManager_(m.from);
+  // В список менеджеров (кому можно передать заявку) попадают только свои.
+  if (isPrivate && isTeam_(m.from.id)) registerManager_(m.from);
 
   // Ответ на сообщение бота про заявку = коментар (или время напоминания).
-  if (text && m.reply_to_message && onReply_(m, text)) return;
+  if (text && m.reply_to_message && onReply_(m, text)) {
+    if (pendingAi_) {
+      var job = pendingAi_;
+      pendingAi_ = null;
+      aiFillFromComment_(job);
+    }
+    return;
+  }
   if (!isPrivate) return;
 
   var deep = text.match(/^\/start\s+l(\d+)$/);
+  var id = deep ? '' : parseLeadId_(text);
+  // Заявки с телефонами клиентов показываем только своим: админам и участникам группы.
+  if ((deep || id || (text && !/^\//.test(text))) && !isTeam_(m.from.id)) {
+    return safeSend_({ chat_id: m.chat.id, text: 'Цей бот тільки для команди CR Logistics.' });
+  }
   if (deep) return showLead_(m.chat.id, '', Number(deep[1]));
-  var id = parseLeadId_(text);
   if (id) return showLead_(m.chat.id, id);
+  if (text && !/^\//.test(text) && props_().getProperty('ANTHROPIC_API_KEY')) return aiAnswer_(m.chat.id, m.from, text);
 
   tg_('sendMessage', {
     chat_id: m.chat.id,
@@ -513,10 +528,251 @@ function onMessage_(m) {
   });
 }
 
+/* ═════════════ ИИ (Claude): разбор коментарів і відповіді в личці ═════════════ */
+
+var AI_MODEL_DEFAULT = 'claude-haiku-5-5';
+var AI_DAILY_LIMIT_DEFAULT = 300; // запросов к ИИ в день, чтобы случайно не потратить много
+var pendingAi_ = null;
+
+/**
+ * Один запрос к Claude. Ключ в свойстве ANTHROPIC_API_KEY (не в репо).
+ * schema → ответ строго JSON по схеме. Возвращает текст / объект или null, если ИИ недоступен.
+ */
+function ai_(system, userText, schema, maxTokens) {
+  var p = props_();
+  var key = p.getProperty('ANTHROPIC_API_KEY');
+  if (!key) return null;
+  var dayKey = 'ai_' + dayKey_(Date.now());
+  var used = Number(p.getProperty(dayKey) || 0);
+  if (used >= Number(p.getProperty('AI_DAILY_LIMIT') || AI_DAILY_LIMIT_DEFAULT)) {
+    console.error('ИИ: дневной лимит запросов исчерпан');
+    return null;
+  }
+  p.setProperty(dayKey, String(used + 1));
+
+  var body = {
+    model: p.getProperty('AI_MODEL') || AI_MODEL_DEFAULT,
+    max_tokens: maxTokens || 4000,
+    system: system,
+    messages: [{ role: 'user', content: userText }],
+    output_config: { effort: 'low' },
+  };
+  if (schema) body.output_config.format = { type: 'json_schema', schema: schema };
+
+  var res = UrlFetchApp.fetch('https://api.anthropic.com/v1/messages', {
+    method: 'post',
+    contentType: 'application/json',
+    headers: { 'x-api-key': key, 'anthropic-version': '2026-10-21' },
+    payload: JSON.stringify(body),
+    muteHttpExceptions: true,
+  });
+  var raw = res.getContentText() || '{}';
+  if (res.getResponseCode() !== 200) {
+    console.error('ИИ ' + res.getResponseCode() + ': ' + raw.slice(0, 300));
+    return null;
+  }
+  var j = JSON.parse(raw);
+  // Отказ или обрезанный ответ — считаем, что ИИ не ответил (ответ читаем только после этой проверки).
+  if (j.stop_reason === 'refusal' || j.stop_reason === 'max_tokens') {
+    console.error('ИИ: stop_reason ' + j.stop_reason);
+    return null;
+  }
+  var text = (j.content || [])
+    .filter(function (b) { return b.type === 'text'; })
+    .map(function (b) { return b.text; })
+    .join('');
+  if (!schema) return text.trim();
+  try {
+    return JSON.parse(text);
+  } catch (err) {
+    console.error('ИИ: не JSON ' + text.slice(0, 200));
+    return null;
+  }
+}
+
+// Колонки, которые ИИ может заполнить из коментаря (только пустые; то, что вписал менеджер, не трогает).
+var AI_FIELDS_ = [
+  ['cargo', 'Вантаж', 'що везуть і умови перевезення коротко: температура, документи, митниця, ADR тощо'],
+  ['weight', 'Вага / обʼєм', 'вага, обʼєм, кількість палет'],
+  ['loadDate', 'Дата завантаження', 'дата завантаження у форматі YYYY-MM-DD'],
+  ['carrier', 'Перевізник', 'назва або імʼя перевізника'],
+  ['priceClient', 'Ціна клієнту', 'ціна для клієнта з валютою, як написано'],
+  ['priceCarrier', 'Ціна перевізнику', 'ціна перевізнику з валютою, як написано'],
+  ['payTerms', 'Умови оплати', 'одне зі значень списку'],
+  ['payDate', 'Термін оплати', 'дата оплати у форматі YYYY-MM-DD'],
+  ['client', 'Клієнт / компанія', 'назва компанії або імʼя клієнта'],
+  ['business', 'Про бізнес', 'чим займається клієнт'],
+];
+var PAY_TERMS_ = ['Передоплата', 'При завантаженні', 'При вивантаженні', 'Відстрочка', 'Готівка'];
+
+function aiFillFromComment_(job) {
+  try {
+    var lead = loadLead_(job.n);
+    if (!lead || !lead.mgr || !props_().getProperty('ANTHROPIC_API_KEY')) return;
+    var sh = sheet_();
+    var r = findRow_(sh, lead);
+    if (!r) return;
+    var row = sh.getRange(r, 1, 1, NCOL).getValues()[0];
+
+    var props = {};
+    AI_FIELDS_.forEach(function (fd) {
+      props[fd[0]] = fd[0] === 'payTerms'
+        ? { type: 'string', enum: [''].concat(PAY_TERMS_), description: fd[2] }
+        : { type: 'string', description: fd[2] };
+    });
+    var schema = {
+      type: 'object',
+      properties: props,
+      required: AI_FIELDS_.map(function (fd) { return fd[0]; }),
+      additionalProperties: false,
+    };
+    var now = Utilities.formatDate(new Date(), TIMEZONE, 'yyyy-MM-dd');
+    var known = AI_FIELDS_.map(function (fd) {
+      var v = row[COL[fd[0]] - 1];
+      if (v && typeof v.getTime === 'function') v = Utilities.formatDate(v, TIMEZONE, 'yyyy-MM-dd');
+      return fd[1] + ': ' + (String(v || '').trim() || '—');
+    }).join('\n');
+
+    var out = ai_(
+      'Ти помічник логістичної компанії CR Logistics. З коментаря менеджера до заявки на перевезення витягни дані для таблиці. ' +
+        'Заповнюй поле тільки якщо це прямо сказано в коментарі, інакше залиш порожній рядок. Нічого не вигадуй. ' +
+        'Пиши коротко, мовою коментаря. Сьогодні ' + now + ' (Київ); відносні дати («завтра», «в пʼятницю») переводь у YYYY-MM-DD.',
+      'Заявка ' + idOf_(lead) + ': ' + route_(lead) + '\nЗараз у таблиці:\n' + known + '\n\nКоментар:\n' + job.text,
+      schema,
+      3000
+    );
+    if (!out) return;
+
+    var filled = [];
+    withLock_(function () {
+      var r2 = findRow_(sh, lead);
+      if (!r2) return;
+      var cur = sh.getRange(r2, 1, 1, NCOL).getValues()[0];
+      AI_FIELDS_.forEach(function (fd) {
+        var val = String(out[fd[0]] || '').trim();
+        if (!val) return;
+        var col = COL[fd[0]];
+        var have = String(cur[col - 1] || '').trim();
+        // Пустую клетку заполняем; груз и имя с сайта можно уточнить (менеджер их ещё не трогал).
+        var fromSite = (fd[0] === 'cargo' && have === String(lead.f.cargo || '').trim()) ||
+          (fd[0] === 'client' && have === String(lead.f.name || '').trim());
+        if (have && !fromSite) return;
+        if (have === val) return;
+        var cellValue = val;
+        if (fd[0] === 'loadDate' || fd[0] === 'payDate') {
+          var m = val.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+          if (!m) return;
+          cellValue = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+        } else if (/^[=+\-@]/.test(val)) {
+          cellValue = "'" + val; // чтобы таблица не приняла текст за формулу
+        }
+        sh.getRange(r2, col).setValue(cellValue);
+        filled.push(fd[1] + ': ' + val);
+      });
+      if (filled.length) sh.getRange(r2, COL.updated).setValue(new Date());
+    });
+    if (filled.length) {
+      safeSend_({
+        chat_id: job.chat,
+        reply_to_message_id: job.mid,
+        text: '🤖 Заповнив у таблиці:\n' + filled.map(function (x) { return '• ' + x; }).join('\n'),
+      });
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+/** Вопрос менеджера в личке («що в мене висить?») → ответ ИИ по таблице лидов. */
+function aiAnswer_(chat, from, question) {
+  try {
+    tg_('sendChatAction', { chat_id: chat, action: 'typing' });
+  } catch (err) {
+    console.error(err);
+  }
+  var data = '';
+  try {
+    data = leadsDigest_();
+  } catch (err) {
+    console.error(err);
+  }
+  var now = Utilities.formatDate(new Date(), TIMEZONE, 'yyyy-MM-dd HH:mm, EEEE');
+  var answer = ai_(
+    'Ти помічник менеджерів логістичної компанії CR Logistics у Telegram. Нижче таблиця заявок (лідів). ' +
+      'Відповідай тільки за цими даними; якщо в них немає відповіді, так і скажи. Не вигадуй цифр. ' +
+      'Відповідай коротко і по-людськи, тією мовою, якою питають. Без markdown і таблиць: звичайний текст, списки через «•». ' +
+      'Номери заявок пиши як у таблиці (CR-0311-02). Питає менеджер: ' + personName_(from) + '. Зараз: ' + now + ' (Київ).\n\n' +
+      'ТАБЛИЦЯ ЗАЯВОК:\n' + data,
+    question,
+    null,
+    4000
+  );
+  safeSend_({
+    chat_id: chat,
+    text: answer ? answer.slice(0, 4000) : 'ИИ зараз не відповів 😕 Спробуй ще раз пізніше або пошукай у таблиці на листі «Пошук».\n\n' + HELP_TEXT_.replace(/<[^>]+>/g, ''),
+  });
+}
+
+/** Сжатая выгрузка для ИИ: последние строки таблицы + ещё не взятые заявки. */
+function leadsDigest_() {
+  var lines = [];
+  var sh = sheet_();
+  var last = sh.getLastRow();
+  if (last >= 2) {
+    var from = Math.max(2, last - 299);
+    var head = sh.getRange(1, 1, 1, NCOL).getValues()[0];
+    lines.push(head.join(' | '));
+    sh.getRange(from, 1, last - from + 1, NCOL).getValues().forEach(function (r) {
+      if (!String(r[0]).trim()) return;
+      lines.push(r.map(function (v) {
+        if (v && typeof v.getTime === 'function') return Utilities.formatDate(v, TIMEZONE, 'dd.MM.yyyy HH:mm');
+        return String(v).replace(/\s+/g, ' ').trim().slice(0, 300);
+      }).join(' | '));
+    });
+  }
+  var fresh = allLeads_().filter(function (l) { return !l.mgr; });
+  if (fresh.length) {
+    lines.push('', 'ЩЕ НЕ ВЗЯТІ (є тільки в групі): ');
+    fresh.forEach(function (l) {
+      lines.push(idOf_(l) + ' | ' + Utilities.formatDate(new Date(l.created), TIMEZONE, 'dd.MM HH:mm') + ' | ' + route_(l) + ' | ' + (l.f.cargo || ''));
+    });
+  }
+  return lines.join('\n');
+}
+
+/** Свой: админ или участник группы заявок. Ответ кешируем на 6 часов. */
+function isTeam_(userId) {
+  if (admins_().indexOf(String(userId)) >= 0) return true;
+  var cache = CacheService.getScriptCache();
+  var key = 'team_' + userId;
+  var hit = cache.get(key);
+  if (hit) return hit === '1';
+  var ok = false;
+  groups_().forEach(function (g) {
+    if (ok || !/^-/.test(String(g))) return;
+    try {
+      var st = tg_('getChatMember', { chat_id: g, user_id: userId }).result;
+      ok = ['creator', 'administrator', 'member'].indexOf(st.status) >= 0 || (st.status === 'restricted' && st.is_member);
+    } catch (err) {
+      console.error(err);
+    }
+  });
+  cache.put(key, ok ? '1' : '0', 21600);
+  return ok;
+}
+
+/** Проверка ИИ из редактора: запусти testAI, в журнале будет ответ. */
+function testAI() {
+  if (!props_().getProperty('ANTHROPIC_API_KEY')) throw new Error('Добавь ANTHROPIC_API_KEY в свойства скрипта');
+  var out = ai_('Відповідай одним реченням українською.', 'Скажи, що ИИ для CR Logistics підключено.', null, 2000);
+  console.log(out ? '✅ ' + out : '❌ ИИ не ответил, смотри ошибку выше');
+}
+
 var HELP_TEXT_ =
   '🔎 Напиши номер заявки, наприклад <code>CR-0211-01</code>, і я покажу її.\n' +
   '💬 Щоб додати коментар, відповідай (Reply) на моє повідомлення про заявку або натисни «💬 Коментар».\n' +
-  '⏰ «Нагадати» під заявкою поставить тобі нагадування сюди.';
+  '⏰ «Нагадати» під заявкою поставить тобі нагадування сюди.\n' +
+  '🤖 Або просто спитай, наприклад: «що в мене без ціни?», «всі заявки по Польщі за тиждень».';
 
 function onButton_(q) {
   var parts = String(q.data || '').split(':');
@@ -747,6 +1003,8 @@ function onReply_(m, text) {
     saveLead_(lead);
     refresh_(lead);
     react_(m.chat.id, m.message_id);
+    // ИИ разложит коментар по колонкам таблицы — уже после снятия блокировки (запрос к ИИ идёт пару секунд).
+    if (lead.mgr) pendingAi_ = { n: lead.n, text: text, chat: m.chat.id, mid: m.message_id };
     return true;
   });
 }
@@ -1172,7 +1430,7 @@ function cleanup_() {
   var all = props_().getProperties();
   var oldest = dayKey_(now - 31 * 86400000);
   Object.keys(all).forEach(function (k) {
-    if (/^stat_/.test(k) && k.slice(5) < oldest) props_().deleteProperty(k);
+    if (/^(stat|ai)_/.test(k) && k.slice(k.indexOf('_') + 1) < oldest) props_().deleteProperty(k);
     if (/^seq_/.test(k) && k.slice(4) < Utilities.formatDate(new Date(now - 2 * 86400000), TIMEZONE, 'yyyyMMdd')) {
       props_().deleteProperty(k);
     }
