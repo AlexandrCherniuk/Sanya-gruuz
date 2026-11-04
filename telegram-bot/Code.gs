@@ -184,6 +184,12 @@ function createLead_(f) {
     };
     // Ошибка в одной из групп не должна валить заявку: иначе карточка уже ушла в Telegram,
     // а сайт показывает клиенту «не удалось отправить».
+    // Тот же телефон уже был → в карточке «🔁 Повторний клієнт» и прошлые перевозки.
+    try {
+      lead.repeat = repeatInfo_(lead);
+    } catch (err) {
+      console.error(err);
+    }
     var lastErr = null;
     groups_().forEach(function (chat) {
       try {
@@ -232,7 +238,7 @@ function cardText_(lead) {
   var st = STATUS[lead.status];
   var text = '🚚 <b>Заявка ' + idOf_(lead) + '</b> · ' + st.icon + ' <b>' + st.label + '</b>\n';
   text += lead.mgr ? '👷 Взяв: <b>' + esc_(lead.mgr.name) + '</b>' : '👷 Ще ніхто не взяв';
-  text += '\n\n' + bodyHtml_(lead.f);
+  text += '\n\n' + bodyHtml_(lead.f) + repeatHtml_(lead.repeat);
   if (lead.log.length) text += '\n\n<i>' + lead.log.slice(-5).map(esc_).join('\n') + '</i>';
   // Коментарі целиком. Не влезают в лимит Telegram (4096) → старые прячем, они все есть в таблице.
   var notes = (lead.notes || []).map(function (c) {
@@ -524,6 +530,12 @@ function onMessage_(m) {
     return safeSend_({ chat_id: m.chat.id, text: 'Цей бот тільки для команди CR Logistics.' });
   }
   if (deep) return showLead_(m.chat.id, '', Number(deep[1]));
+  var statCmd = text.match(/^\/(?:stat|stats|статистика)(?:@\w+)?\s*(.*)$/i);
+  if (statCmd) {
+    if (!isTeam_(m.from.id)) return safeSend_({ chat_id: m.chat.id, text: 'Цей бот тільки для команди CR Logistics.' });
+    var per = periodOf_(statCmd[1]);
+    return sendStats_(m.chat.id, per, admins_().indexOf(String(m.from.id)) >= 0);
+  }
   if (id) return showLead_(m.chat.id, id);
   if (text && !/^\//.test(text) && aiOn_()) return aiChat_(m.chat.id, m.from, text + quotedText_(m));
 
@@ -596,6 +608,8 @@ var AGENT_RULES_ = [
   '• «що в мене без ціни?» → search_leads з manager = імʼя того, хто пише, missing «price».',
   '• «статистика за тиждень» → lead_stats з date_from = понеділок цього тижня, date_to = сьогодні. «за жовтень» → 1–31 жовтня.',
   '• «скільки взяв Олег за місяць?» → lead_stats за місяць, дивись by_manager.',
+  '• «скільки заробили за місяць?», «маржа», «конверсія» → lead_stats; гроші рахуються тільки по закритих заявках.',
+  '• «цей клієнт уже возив?», «історія +380…» → search_leads з телефоном (або get_lead і client_history).',
   '• «знайди заявки Петренка» / «що по Варшаві?» → search_leads з query.',
   '• «нагадай завтра о 10 передзвонити Петренку» в особистих → set_reminder at «<завтра> 10:00», note «передзвонити Петренку»; ' +
     'якщо це відповідь на заявку — додай її id.',
@@ -803,8 +817,9 @@ var AGENT_TOOLS_ = [
   },
   {
     name: 'lead_stats',
-    description: 'Статистика заявок за період створення: кількість, за статусами, за менеджерами, джерела, ' +
-      'середній час до взяття, топ маршрутів, зависли без ціни.',
+    description: 'Статистика заявок за період створення: кількість, за статусами, закрито/відмов, конверсія, ' +
+      'за менеджерами, джерела, повторні клієнти, середній час до взяття, топ маршрутів, зависли без ціни; ' +
+      'для адміна ще гроші по закритих: оборот, перевізникам, маржа (по валютах).',
     input_schema: {
       type: 'object',
       properties: {
@@ -1042,6 +1057,13 @@ function toolImpl_(name, input, ctx) {
     } else {
       out.note = 'Заявка давня: є тільки в таблиці, коментарі видно лише в колонці comment.';
     }
+    var hist = clientHistory_(out.phone || (mem && mem.f.phone), out.id || (mem && idOf_(mem)));
+    if (hist.length) {
+      out.client_history = hist.slice(0, 10).map(function (x) {
+        return x.id + ' · ' + (x.t ? Utilities.formatDate(new Date(x.t), TIMEZONE, 'dd.MM.yy') : '') + ' · ' + x.route +
+          ' · ' + x.status + (x.price ? ' · ' + x.price : '') + (x.mgr ? ' · ' + x.mgr : '');
+      });
+    }
     return out;
   }
 
@@ -1049,40 +1071,14 @@ function toolImpl_(name, input, ctx) {
     var a = dayStart_(input.date_from);
     var b = dayStart_(input.date_to);
     if (!a || !b) return { error: 'Потрібні дати YYYY-MM-DD' };
-    b += 86400000;
-    var st = { period: input.date_from + ' — ' + input.date_to, total: 0, by_status: {}, by_manager: {}, by_source: {}, routes: {} };
-    var takeMins = [];
-    var stuck = [];
-    sheetRows_().forEach(function (r) {
-      var c = r.v[COL.created - 1];
-      var t = c && typeof c.getTime === 'function' ? c.getTime() : 0;
-      if (!t || t < a || t >= b) return;
-      var s = fmtCell_(r.v[COL.status - 1]) || '—';
-      var mg = fmtCell_(r.v[COL.mgr - 1]) || '—';
-      st.total++;
-      st.by_status[s] = (st.by_status[s] || 0) + 1;
-      st.by_manager[mg] = st.by_manager[mg] || { total: 0 };
-      st.by_manager[mg].total++;
-      st.by_manager[mg][s] = (st.by_manager[mg][s] || 0) + 1;
-      var src = (fmtCell_(r.v[COL.source - 1]).split(/[·(]/)[0] || '—').trim();
-      st.by_source[src] = (st.by_source[src] || 0) + 1;
-      var route = fmtCell_(r.v[COL.from - 1]) + ' → ' + fmtCell_(r.v[COL.to - 1]);
-      st.routes[route] = (st.routes[route] || 0) + 1;
-      var tk = r.v[COL.taken - 1];
-      if (tk && typeof tk.getTime === 'function') takeMins.push((tk.getTime() - t) / 60000);
-      if (s === STATUS.calc.label && !fmtCell_(r.v[COL.priceClient - 1])) stuck.push(fmtCell_(r.v[COL.num - 1]) + ' (' + mg + ')');
-    });
-    freshRows_().forEach(function (o) {
-      if (o._created < a || o._created >= b) return;
-      st.total++;
-      st.by_status[STATUS.new.label] = (st.by_status[STATUS.new.label] || 0) + 1;
-    });
-    st.avg_minutes_to_take = takeMins.length
-      ? Math.round(takeMins.reduce(function (x, y) { return x + y; }, 0) / takeMins.length) : null;
-    st.top_routes = Object.keys(st.routes).sort(function (x, y) { return st.routes[y] - st.routes[x]; }).slice(0, 5)
-      .map(function (k) { return k + ': ' + st.routes[k]; });
-    delete st.routes;
-    st.calc_without_price = stuck.slice(0, 20);
+    var st = computeStats_(a, b + 86400000);
+    st.period = input.date_from + ' — ' + input.date_to;
+    // Деньги видит только админ.
+    if (!isAdmin) {
+      ['revenue', 'carrier_cost', 'margin', 'without_price_closed'].forEach(function (k) { delete st[k]; });
+      Object.keys(st.by_manager).forEach(function (k) { delete st.by_manager[k].revenue; delete st.by_manager[k].margin; });
+      st.note = 'Гроші бачить тільки адмін. Причини відмов не ведуться.';
+    }
     return st;
   }
 
@@ -1396,8 +1392,18 @@ function deleteComment_(lead, c) {
   }
 }
 
+function sendStats_(chat, per, withMoney) {
+  try {
+    safeSend_({ chat_id: chat, text: statsReport_(per[0], per[1], per[2], withMoney), parse_mode: 'HTML' });
+  } catch (err) {
+    console.error(err);
+    safeSend_({ chat_id: chat, text: 'Не вийшло порахувати 😕 Перевір, що таблиця доступна.' });
+  }
+}
+
 var HELP_TEXT_ =
   '🔎 Напиши номер заявки, наприклад <code>CR-0211-01</code>, і я покажу її.\n' +
+  '📈 <code>/stat</code> — статистика за місяць; <code>/stat тиждень</code>, <code>/stat минулий місяць</code>, <code>/stat рік</code>.\n' +
   '💬 Щоб додати коментар, відповідай (Reply) на моє повідомлення про заявку або натисни «💬 Коментар».\n' +
   '⏰ «Нагадати» під заявкою поставить тобі нагадування сюди.\n' +
   '🤖 Або просто напиши мені, як людині, наприклад:\n' +
@@ -2078,6 +2084,11 @@ function dailySummary() {
   groups_().forEach(function (chat) {
     safeSend_({ chat_id: chat, text: lines.join('\n'), parse_mode: 'HTML' });
   });
+  try {
+    periodicReports_();
+  } catch (err) {
+    console.error(err);
+  }
   cleanup_();
 }
 
@@ -2102,6 +2113,259 @@ function bumpStat_(what) {
   var s = JSON.parse(props_().getProperty(key) || '{}');
   s[what] = (s[what] || 0) + 1;
   props_().setProperty(key, JSON.stringify(s));
+}
+
+/* ═════════════ Повторные клиенты и статистика ═════════════ */
+
+/** Последние 9 цифр телефона: +380 67 123 45 67 и 067-123-45-67 — один клиент. */
+function phoneKey_(phone) {
+  var d = String(phone || '').replace(/\D/g, '');
+  return d.length >= 8 ? d.slice(-9) : '';
+}
+
+/** Прошлые заявки с этим телефоном: из таблицы и ещё не взятые. Новые первыми. */
+function clientHistory_(phone, exceptId) {
+  var key = phoneKey_(phone);
+  if (!key) return [];
+  var out = [];
+  var seen = {};
+  try {
+    sheetRows_().forEach(function (r) {
+      var id = fmtCell_(r.v[COL.num - 1]);
+      if (id === exceptId || phoneKey_(r.v[COL.phone - 1]) !== key) return;
+      var c = r.v[COL.created - 1];
+      seen[id] = true;
+      out.push({
+        id: id,
+        t: c && typeof c.getTime === 'function' ? c.getTime() : 0,
+        route: fmtCell_(r.v[COL.from - 1]) + ' → ' + fmtCell_(r.v[COL.to - 1]),
+        status: fmtCell_(r.v[COL.status - 1]),
+        price: fmtCell_(r.v[COL.priceClient - 1]),
+        client: fmtCell_(r.v[COL.client - 1]),
+        mgr: fmtCell_(r.v[COL.mgr - 1]),
+      });
+    });
+  } catch (err) {
+    console.error(err);
+  }
+  allLeads_().forEach(function (l) {
+    var id = idOf_(l);
+    if (id === exceptId || seen[id] || l.mgr || phoneKey_(l.f.phone) !== key) return;
+    out.push({ id: id, t: l.created, route: route_(l), status: STATUS.new.label, price: '', client: l.f.name || '', mgr: '' });
+  });
+  return out.sort(function (a, b) { return b.t - a.t; });
+}
+
+/** Коротко для карточки: «🔁 Повторний клієнт: 3 раніших заявки» + последние три. */
+function repeatInfo_(lead) {
+  var list = clientHistory_(lead.f.phone, idOf_(lead));
+  if (!list.length) return null;
+  var done = list.filter(function (x) { return x.status === STATUS.done.label; }).length;
+  return {
+    count: list.length,
+    done: done,
+    client: (list.filter(function (x) { return x.client; })[0] || {}).client || '',
+    last: list.slice(0, 3).map(function (x) {
+      return x.id + ' · ' + (x.t ? Utilities.formatDate(new Date(x.t), TIMEZONE, 'dd.MM.yy') : '') + ' · ' + x.route +
+        ' · ' + (x.status || '—') + (x.price ? ' · ' + x.price : '') + (x.mgr ? ' (' + x.mgr + ')' : '');
+    }),
+  };
+}
+
+function repeatHtml_(rep) {
+  if (!rep) return '';
+  return '\n\n🔁 <b>Повторний клієнт</b>' + (rep.client ? ' (' + esc_(rep.client) + ')' : '') + ': ' +
+    rep.count + ' ' + plural_(rep.count, 'раніша заявка', 'раніші заявки', 'раніших заявок') +
+    (rep.done ? ', довезли ' + rep.done : '') + '\n' +
+    rep.last.map(function (s) { return '• ' + esc_(s); }).join('\n');
+}
+
+function plural_(n, one, few, many) {
+  var a = n % 10;
+  var b = n % 100;
+  if (a === 1 && b !== 11) return one;
+  if (a >= 2 && a <= 4 && (b < 12 || b > 14)) return few;
+  return many;
+}
+
+/** «18 000 грн», «4800 евро», «$1200» → {sum: 18000, cur: 'грн'}. Не число → null. */
+function money_(v) {
+  var s = String(v == null ? '' : v).toLowerCase().replace(/ /g, ' ');
+  if (typeof v === 'number') return { sum: v, cur: 'грн' };
+  var m = s.match(/\d[\d\s]*(?:[.,]\d+)?/);
+  if (!m) return null;
+  var sum = Number(m[0].replace(/\s/g, '').replace(',', '.'));
+  if (!sum) return null;
+  if (/^\s*(к|k|тис|тыс)/.test(s.slice(m.index + m[0].length))) sum *= 1000;
+  var cur = /€|eur|євро|евро/.test(s) ? 'EUR' : /\$|usd|дол/.test(s) ? 'USD' : /zł|zl|pln|злот/.test(s) ? 'PLN' : 'грн';
+  return { sum: sum, cur: cur };
+}
+
+function addMoney_(bag, cur, sum) {
+  bag[cur] = Math.round(((bag[cur] || 0) + sum) * 100) / 100;
+}
+
+/** Статистика за период по дате создания (from/to — начало дня и конец, мс). */
+function computeStats_(from, to) {
+  var st = {
+    total: 0, by_status: {}, by_manager: {}, by_source: {}, routes: {},
+    done: 0, lost: 0, open: 0, repeat_clients: 0,
+    revenue: {}, carrier_cost: {}, margin: {}, without_price_closed: [],
+  };
+  var takeMins = [];
+  var stuck = [];
+  var phones = {};
+  // Сначала все прошлые телефоны (до периода) — чтобы понять, кто повторный.
+  var before = {};
+  sheetRows_().forEach(function (r) {
+    var c = r.v[COL.created - 1];
+    var t = c && typeof c.getTime === 'function' ? c.getTime() : 0;
+    if (t && t < from) before[phoneKey_(r.v[COL.phone - 1])] = true;
+  });
+  sheetRows_().forEach(function (r) {
+    var c = r.v[COL.created - 1];
+    var t = c && typeof c.getTime === 'function' ? c.getTime() : 0;
+    if (!t || t < from || t >= to) return;
+    var s = fmtCell_(r.v[COL.status - 1]) || '—';
+    var mg = fmtCell_(r.v[COL.mgr - 1]) || '—';
+    st.total++;
+    st.by_status[s] = (st.by_status[s] || 0) + 1;
+    var m = st.by_manager[mg] = st.by_manager[mg] || { total: 0, done: 0, lost: 0, revenue: {}, margin: {} };
+    m.total++;
+    var src = (fmtCell_(r.v[COL.source - 1]).split(/[·(]/)[0] || '—').trim();
+    st.by_source[src] = (st.by_source[src] || 0) + 1;
+    var route = fmtCell_(r.v[COL.from - 1]) + ' → ' + fmtCell_(r.v[COL.to - 1]);
+    st.routes[route] = (st.routes[route] || 0) + 1;
+    var pk = phoneKey_(r.v[COL.phone - 1]);
+    if (pk) {
+      if (before[pk] || phones[pk]) st.repeat_clients++;
+      phones[pk] = true;
+    }
+    var tk = r.v[COL.taken - 1];
+    if (tk && typeof tk.getTime === 'function') takeMins.push((tk.getTime() - t) / 60000);
+    var id = fmtCell_(r.v[COL.num - 1]);
+    if (s === STATUS.calc.label && !fmtCell_(r.v[COL.priceClient - 1])) stuck.push(id + ' (' + mg + ')');
+    if (s === STATUS.done.label) {
+      st.done++;
+      m.done++;
+      var pc = money_(r.v[COL.priceClient - 1]);
+      var pr = money_(r.v[COL.priceCarrier - 1]);
+      if (pc) {
+        addMoney_(st.revenue, pc.cur, pc.sum);
+        addMoney_(m.revenue, pc.cur, pc.sum);
+      } else {
+        st.without_price_closed.push(id);
+      }
+      if (pr) addMoney_(st.carrier_cost, pr.cur, pr.sum);
+      if (pc && pr && pc.cur === pr.cur) {
+        addMoney_(st.margin, pc.cur, pc.sum - pr.sum);
+        addMoney_(m.margin, pc.cur, pc.sum - pr.sum);
+      }
+    } else if (s === STATUS.lost.label) {
+      st.lost++;
+      m.lost++;
+    } else {
+      st.open++;
+    }
+  });
+  allLeads_().forEach(function (l) {
+    if (l.mgr || l.created < from || l.created >= to) return;
+    st.total++;
+    st.open++;
+    st.by_status[STATUS.new.label] = (st.by_status[STATUS.new.label] || 0) + 1;
+  });
+  var decided = st.done + st.lost;
+  st.conversion_closed_of_all = st.total ? Math.round((st.done / st.total) * 100) + '%' : '—';
+  st.conversion_closed_of_decided = decided ? Math.round((st.done / decided) * 100) + '%' : '—';
+  st.avg_minutes_to_take = takeMins.length
+    ? Math.round(takeMins.reduce(function (x, y) { return x + y; }, 0) / takeMins.length) : null;
+  st.top_routes = Object.keys(st.routes).sort(function (x, y) { return st.routes[y] - st.routes[x]; }).slice(0, 5)
+    .map(function (k) { return k + ': ' + st.routes[k]; });
+  delete st.routes;
+  st.calc_without_price = stuck.slice(0, 20);
+  st.note = 'Гроші — тільки по закритих (Ціна клієнту / Ціна перевізнику з таблиці). Причини відмов не ведуться.';
+  return st;
+}
+
+function fmtMoney_(bag) {
+  var keys = Object.keys(bag || {});
+  if (!keys.length) return '—';
+  return keys.map(function (k) {
+    return String(Math.round(bag[k])).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ' + k;
+  }).join(' + ');
+}
+
+/** Готовый отчёт для Telegram (без ИИ, бесплатно). */
+function statsReport_(fromYmd, toYmd, title, withMoney) {
+  var a = dayStart_(fromYmd);
+  var b = dayStart_(toYmd) + 86400000;
+  var st = computeStats_(a, b);
+  var d = function (ymd) { return ymd.slice(8, 10) + '.' + ymd.slice(5, 7); };
+  var L = ['📈 <b>' + esc_(title || 'Статистика') + ': ' + d(fromYmd) + ' — ' + d(toYmd) + '</b>'];
+  L.push('Заявок: <b>' + st.total + '</b> · закрито ' + st.done + ' · відмов ' + st.lost + ' · ще відкриті ' + st.open);
+  L.push('Конверсія в перевезення: <b>' + st.conversion_closed_of_all + '</b> від усіх, ' +
+    st.conversion_closed_of_decided + ' від вирішених');
+  if (st.repeat_clients) L.push('🔁 Повторних клієнтів: ' + st.repeat_clients);
+  if (st.avg_minutes_to_take != null) L.push('⏱ Беруть заявку в середньому за ' + st.avg_minutes_to_take + ' хв');
+  if (withMoney) {
+    L.push('', '💰 <b>Гроші (закриті)</b>');
+    L.push('Оборот: ' + fmtMoney_(st.revenue));
+    L.push('Перевізникам: ' + fmtMoney_(st.carrier_cost));
+    L.push('Маржа: <b>' + fmtMoney_(st.margin) + '</b>');
+    if (st.without_price_closed.length) L.push('<i>Без ціни клієнту: ' + esc_(st.without_price_closed.join(', ')) + '</i>');
+  }
+  var mgrs = Object.keys(st.by_manager).filter(function (k) { return k !== '—'; });
+  if (mgrs.length) {
+    L.push('', '👷 <b>Менеджери</b>');
+    mgrs.sort(function (x, y) { return st.by_manager[y].done - st.by_manager[x].done; }).forEach(function (k) {
+      var m = st.by_manager[k];
+      L.push(esc_(k) + ': ' + m.total + ' взяв · ' + m.done + ' закрив · ' + m.lost + ' відмов' +
+        (withMoney && Object.keys(m.margin).length ? ' · маржа ' + fmtMoney_(m.margin) : ''));
+    });
+  }
+  if (st.top_routes.length) L.push('', '📍 <b>Топ маршрутів</b>', esc_(st.top_routes.join('\n')));
+  var srcs = Object.keys(st.by_source);
+  if (srcs.length) {
+    L.push('', '🎯 Джерела: ' + esc_(srcs.map(function (k) { return k + ' ' + st.by_source[k]; }).join(', ')));
+  }
+  if (st.calc_without_price.length) L.push('', '⏰ Без ціни в прорахунку: ' + esc_(st.calc_without_price.join(', ')));
+  return L.join('\n');
+}
+
+/** Период по слову: сьогодні, вчора, тиждень, минулий тиждень, місяць (по умолчанию), минулий місяць. */
+function periodOf_(word) {
+  var f = function (t) { return Utilities.formatDate(new Date(t), TIMEZONE, 'yyyy-MM-dd'); };
+  var now = Date.now();
+  var today = f(now);
+  var y = Number(today.slice(0, 4));
+  var mo = Number(today.slice(5, 7));
+  var d = Number(today.slice(8, 10));
+  var noon = kyivTime_(y, mo, d, 12, 0);
+  var mon = noon - ((new Date(noon).getUTCDay() + 6) % 7) * 86400000;
+  var monthStart = f(kyivTime_(y, mo, 1, 12, 0));
+  var prevEnd = kyivTime_(y, mo, 1, 12, 0) - 86400000;
+  var w = String(word || '').toLowerCase();
+  if (/мин|прош|last/.test(w) && /тиж|нед|week/.test(w)) return [f(mon - 7 * 86400000), f(mon - 86400000), 'Минулий тиждень'];
+  if (/мин|прош|last/.test(w)) return [f(prevEnd).slice(0, 8) + '01', f(prevEnd), 'Минулий місяць'];
+  if (/тиж|нед|week/.test(w)) return [f(mon), today, 'Цей тиждень'];
+  if (/вчор|вчер/.test(w)) return [f(now - 86400000), f(now - 86400000), 'Вчора'];
+  if (/сьог|сег|today/.test(w)) return [today, today, 'Сьогодні'];
+  if (/рік|год|year/.test(w)) return [today.slice(0, 4) + '-01-01', today, 'Цей рік'];
+  return [monthStart, today, 'Цей місяць'];
+}
+
+/** По понедельникам — отчёт за прошлую неделю, 1-го числа — за прошлый месяц. Админам в личку. */
+function periodicReports_() {
+  var now = new Date();
+  var dow = Utilities.formatDate(now, TIMEZONE, 'u'); // 1 = понедельник
+  var dom = Utilities.formatDate(now, TIMEZONE, 'd');
+  var reports = [];
+  if (dow === '1') reports.push(periodOf_('минулий тиждень'));
+  if (dom === '1') reports.push(periodOf_('минулий місяць'));
+  reports.forEach(function (p) {
+    var text = statsReport_(p[0], p[1], p[2], true);
+    admins_().forEach(function (id) { safeSend_({ chat_id: id, text: text, parse_mode: 'HTML' }); });
+  });
 }
 
 /* ═════════════ Ручные функции (запускать из редактора) ═════════════ */
