@@ -148,6 +148,8 @@ export type LangContent = {
   }
   /** Общие блоки, которые повторяются на страницах. */
   blocks: {
+    /** Подпись к фуре под hero (aria-label и подсказка). */
+    truck: string
     trustStrip: { title: string; text: string }[]
     directions: { eyebrow: string; title: string; sub: string }
     transport: { eyebrow: string; title: string; sub: string }

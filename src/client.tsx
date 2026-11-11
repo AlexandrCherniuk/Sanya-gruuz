@@ -65,3 +65,127 @@ function langHint() {
   document.body.prepend(bar)
 }
 langHint()
+
+// Фура под hero: по нажатию трогается, уезжает вправо за экран и приезжает слева на своё место.
+// Только Web Animations API, без библиотек. Колёса крутятся ровно на пройденный путь.
+function truckRide() {
+  const truck = document.querySelector<HTMLButtonElement>('.truck')
+  const road = truck?.closest<HTMLElement>('.road')
+  if (!truck || !road || typeof truck.animate !== 'function') return
+  const svg = truck.querySelector('svg')!
+  const body = truck.querySelector<SVGGElement>('.truck-body')!
+  const trail = truck.querySelector<SVGGElement>('.truck-trail')!
+  const wheels = [...truck.querySelectorAll<SVGGElement>('.wheel-spin')]
+  const light = truck.querySelector<SVGRectElement>('.truck-light')!
+  const pipe = truck.querySelector<SVGRectElement>('.truck-pipe')!
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)')
+  let busy = false
+
+  const play = (el: Element, k: Keyframe[], o: KeyframeAnimationOptions) => el.animate(k, { fill: 'forwards', ...o }).finished
+
+  // Клубы дыма остаются на месте, а фура уезжает от них.
+  function puffs(n: number) {
+    const r = pipe.getBoundingClientRect()
+    const base = road!.getBoundingClientRect()
+    for (let i = 0; i < n; i++) {
+      const p = document.createElement('span')
+      p.className = 'puff'
+      p.style.left = `${r.left - base.left - 4}px`
+      p.style.top = `${r.top - base.top - 6}px`
+      road!.appendChild(p)
+      const dx = -10 - Math.random() * 14 - i * 6
+      const dy = -14 - Math.random() * 12
+      p.animate(
+        [
+          { transform: 'translate(0,0) scale(0.4)', opacity: 0 },
+          { transform: `translate(${dx * 0.3}px,${dy * 0.4}px) scale(1)`, opacity: 1, offset: 0.2 },
+          { transform: `translate(${dx}px,${dy}px) scale(${1.8 + Math.random()})`, opacity: 0 },
+        ],
+        { duration: 900 + i * 120, delay: i * 110, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'forwards' },
+      ).finished.then(() => p.remove())
+    }
+  }
+
+  function spin(px: number, duration: number, easing: string) {
+    const r = (8 * svg.getBoundingClientRect().width) / 200 // радиус колеса в пикселях
+    const deg = (px / r) * (180 / Math.PI)
+    wheels.forEach((w) => w.animate([{ transform: 'rotate(0deg)' }, { transform: `rotate(${deg}deg)` }], { duration, easing }))
+  }
+
+  async function ride() {
+    const tr = truck!.getBoundingClientRect()
+    const rd = road!.getBoundingClientRect()
+    const out = rd.right - tr.left + 30 // до правого края и чуть дальше
+    const back = tr.right - rd.left + 30 // заезд из-за левого края
+    const go = Math.min(1700, 900 + out * 0.55)
+    const come = Math.min(2000, 1100 + back * 0.6)
+
+    // Заводится: дрожь кабины и дым.
+    puffs(3)
+    light.animate([{ opacity: 1 }, { opacity: 0.2 }, { opacity: 1 }], { duration: 260, iterations: 2 })
+    await play(
+      body,
+      [
+        { transform: 'translate(0,0)' },
+        { transform: 'translate(0,-0.6px)' },
+        { transform: 'translate(0,0.4px)' },
+        { transform: 'translate(0,-0.4px)' },
+        { transform: 'translate(0,0)' },
+      ],
+      { duration: 360, easing: 'linear' },
+    )
+
+    // Трогается: плавный разгон, корпус чуть приседает назад.
+    const accel = 'cubic-bezier(.55,0,.9,.45)'
+    spin(out, go, accel)
+    puffs(2)
+    body.animate(
+      [
+        { transform: 'rotate(0deg)' },
+        { transform: 'rotate(-1.6deg)', offset: 0.18 },
+        { transform: 'rotate(-0.4deg)', offset: 0.55 },
+        { transform: 'rotate(0deg)' },
+      ],
+      { duration: go, easing: 'ease-in-out' },
+    )
+    trail.animate([{ opacity: 0 }, { opacity: 0, offset: 0.35 }, { opacity: 0.9 }], { duration: go, fill: 'forwards' })
+    await play(truck!, [{ transform: 'translateX(0)' }, { transform: `translateX(${out}px)` }], { duration: go, easing: accel })
+
+    // За кадром перескакивает влево и приезжает обратно, мягко тормозит.
+    await new Promise((r) => setTimeout(r, 280))
+    const brake = 'cubic-bezier(.1,.55,.25,1)'
+    truck!.getAnimations().forEach((a) => a.cancel())
+    spin(back, come, brake)
+    trail.animate([{ opacity: 0.9 }, { opacity: 0, offset: 0.55 }, { opacity: 0 }], { duration: come, fill: 'forwards' })
+    body.animate(
+      [
+        { transform: 'rotate(0deg)' },
+        { transform: 'rotate(0deg)', offset: 0.5 },
+        { transform: 'rotate(1.4deg)', offset: 0.78 },
+        { transform: 'rotate(-0.6deg)', offset: 0.88 },
+        { transform: 'rotate(0.25deg)', offset: 0.95 },
+        { transform: 'rotate(0deg)' },
+      ],
+      { duration: come, easing: 'ease-out' },
+    )
+    await play(truck!, [{ transform: `translateX(${-back}px)` }, { transform: 'translateX(0)' }], { duration: come, easing: brake })
+    truck!.getAnimations().forEach((a) => a.cancel())
+    ;[body, trail].forEach((el) => el.getAnimations().forEach((a) => a.cancel()))
+  }
+
+  // Без лишнего движения: только моргнуть фарами и чуть пыхнуть.
+  async function blink() {
+    await light.animate([{ opacity: 1 }, { opacity: 0.15 }, { opacity: 1 }], { duration: 300, iterations: 2 }).finished
+  }
+
+  truck.addEventListener('click', async () => {
+    if (busy) return
+    busy = true
+    try {
+      await (reduce.matches ? blink() : ride())
+    } finally {
+      busy = false
+    }
+  })
+}
+truckRide()

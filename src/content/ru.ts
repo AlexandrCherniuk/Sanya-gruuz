@@ -34,6 +34,7 @@ export const ru: LangContent = {
   },
 
   blocks: {
+    truck: 'Прокатить фуру',
     trustStrip: [
       { title: 'От буса до трала', text: 'Подберём машину под вес и объём' },
       { title: 'Украина, Европа, Азия, США', text: 'Авто, море, авиа' },

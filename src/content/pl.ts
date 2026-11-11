@@ -35,6 +35,7 @@ export const pl: LangContent = {
   },
 
   blocks: {
+    truck: 'Przejedź się ciężarówką',
     trustStrip: [
       { title: 'Od busa po niskopodwoziówkę', text: 'Auto dobrane do wagi i objętości' },
       { title: 'Ukraina, Europa, Azja, USA', text: 'Drogą, morzem, samolotem' },

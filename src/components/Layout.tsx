@@ -275,7 +275,65 @@ export function Hero({
           </ul>
         </div>
       ) : null}
+      {home ? <TruckRoad label={c.blocks.truck} /> : null}
     </section>
+  )
+}
+
+/* ——— Фура под hero: по нажатию уезжает вправо и возвращается слева (анимация в client.tsx) ——— */
+
+function TruckRoad({ label }: { label: string }) {
+  return (
+    <div className="road">
+      <div className="wrap road-in">
+        <button type="button" className="truck" aria-label={label} title={label}>
+          <span className="truck-shadow" />
+          <svg className="truck-svg" viewBox="-40 0 200 56" width="200" height="56" aria-hidden="true" focusable="false">
+            <g className="truck-trail">
+              <rect x="-34" y="14" width="26" height="2" rx="1" />
+              <rect x="-24" y="24" width="18" height="2" rx="1" />
+              <rect x="-38" y="34" width="30" height="2" rx="1" />
+            </g>
+            <g className="truck-body">
+              <g className="truck-idle">
+                {/* прицеп */}
+                <rect x="2" y="6" width="100" height="34" rx="3" fill="#1d2125" />
+                <rect x="2" y="30" width="100" height="3" fill="#04ffa3" />
+                <rect x="6" y="10" width="2" height="18" rx="1" fill="#2a3036" />
+                <text x="14" y="24" fill="#04ffa3" fontSize="12" fontWeight="800" letterSpacing="0.5">
+                  GR
+                </text>
+                <text x="35" y="24" fill="#8b95a1" fontSize="6.5" fontWeight="700" letterSpacing="1.2">
+                  LOGISTICS
+                </text>
+                <rect x="8" y="40" width="94" height="3" fill="#0b0d0e" />
+                {/* тягач */}
+                <rect x="104" y="40" width="40" height="3" fill="#0b0d0e" />
+                <rect className="truck-pipe" x="106" y="4" width="3" height="12" rx="1" fill="#0b0d0e" />
+                <path d="M107 14h26l12 12v14a3 3 0 0 1-3 3h-35z" fill="#04ffa3" />
+                <path d="M127 17h5l9.5 9.5H127z" fill="#0b0d0e" />
+                <path d="M127 17h5l2 2H127z" fill="#ffffff" opacity="0.35" />
+                <path d="M124 17v24" stroke="#00b876" strokeWidth="1" />
+                <rect x="119" y="29" width="4" height="1.6" rx="0.8" fill="#007a4d" />
+                <rect x="140" y="39" width="7" height="4" rx="1" fill="#0b0d0e" />
+                <rect className="truck-light" x="143" y="33" width="3" height="3" rx="1" fill="#ffffff" />
+              </g>
+            </g>
+            {[22, 38, 114, 136].map((cx) => (
+              <g key={cx} className="truck-wheel" transform={`translate(${cx} 46)`}>
+                <g className="wheel-spin">
+                  <circle r="8" fill="#0b0d0e" />
+                  <circle r="4.2" fill="#9aa3ad" />
+                  <circle cx="0" cy="-2.4" r="0.9" fill="#1d2125" />
+                  <circle cx="2.1" cy="1.2" r="0.9" fill="#1d2125" />
+                  <circle cx="-2.1" cy="1.2" r="0.9" fill="#1d2125" />
+                </g>
+              </g>
+            ))}
+          </svg>
+        </button>
+      </div>
+    </div>
   )
 }
 

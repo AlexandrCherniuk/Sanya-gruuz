@@ -35,6 +35,7 @@ export const en: LangContent = {
   },
 
   blocks: {
+    truck: 'Take the truck for a spin',
     trustStrip: [
       { title: 'From vans to low-loaders', text: 'A vehicle matched to weight and volume' },
       { title: 'Ukraine, Europe, Asia, USA', text: 'Road, sea and air' },
