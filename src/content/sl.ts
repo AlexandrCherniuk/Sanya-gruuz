@@ -386,7 +386,7 @@ export const sl: LangContent = {
         },
         {
           q: 'Ali lahko pošljem manjši tovor?',
-          a: 'Da, od ene palete v zbirnem prevozu. Iz Kitajske od 50 kg v zbirnem kontejnerju ali letalsko.',
+          a: 'Da, poljubna teža v zbirnem prevozu. Iz Kitajske v zbirnem kontejnerju ali letalsko.',
         },
       ],
     },
@@ -812,7 +812,7 @@ export const sl: LangContent = {
       card: { icon: 'groupage', title: 'Zbirni prevoz', text: 'Plačate le svoj prostor', price: 'od 15 UAH/km' },
       h1: 'Zbirni prevoz tovora',
       lead: 'Manjša pošiljka ne potrebuje svojega vozila. Vaš tovor dodamo prevozu v pravi smeri, plačate pa le zasedeni prostor.',
-      bullets: ['Od ene palete', 'Po Ukrajini in v Evropo', 'Ceneje od samostojnega vozila'],
+      bullets: ['Brez minimalne teže', 'Po Ukrajini in v Evropo', 'Ceneje od samostojnega vozila'],
       priceFrom: 'od 15 UAH/km',
       sections: [
         {
@@ -1065,12 +1065,12 @@ export const sl: LangContent = {
       meta: {
         title: 'Prevoz tovora Ukrajina – Evropa in iz Evrope v Ukrajino',
         description:
-          'Prevoz Ukrajina – Poljska, Nemčija, Češka, Slovenija in druge države EU. Kombi od 1,2 €/km, tovornjak od 1,5 €/km, zbirni prevoz od ene palete.',
+          'Prevoz Ukrajina – Poljska, Nemčija, Češka, Slovenija in druge države EU. Kombi od 1,2 €/km, tovornjak od 1,5 €/km, zbirni prevoz poljubne teže.',
       },
       card: { icon: 'europe', title: 'Evropa', text: 'Ukrajina ↔ EU in prevozi po Evropi', price: 'od 1,2 €/km' },
       h1: 'Prevoz tovora Ukrajina – Evropa',
-      lead: 'Tovor vozimo iz Ukrajine v države EU in nazaj ter med evropskimi državami. S samostojnim vozilom ali v zbirnem prevozu od ene palete.',
-      bullets: ['Kombi, tovornjak, nizkopodnik, avtotransporter', 'Zbirni prevoz od ene palete', 'CMR in carinjenje'],
+      lead: 'Tovor vozimo iz Ukrajine v države EU in nazaj ter med evropskimi državami. S samostojnim vozilom ali v zbirnem prevozu poljubne teže.',
+      bullets: ['Kombi, tovornjak, nizkopodnik, avtotransporter', 'Zbirni prevoz poljubne teže', 'CMR in carinjenje'],
       priceFrom: 'od 1,2 €/km',
       intro: {
         title: 'Prevoz med Ukrajino in EU',
@@ -1126,13 +1126,13 @@ export const sl: LangContent = {
       meta: {
         title: 'Dostava blaga iz Kitajske po morju in letalsko',
         description:
-          'Celovit uvoz blaga iz Kitajske: po morju od 55 dni, letalsko od 14 dni, od 50 kg. Zbirni in polni kontejnerji, carinjenje, dostava do vrat.',
+          'Celovit uvoz blaga iz Kitajske: po morju od 55 dni, letalsko od 14 dni. Zbirni in polni kontejnerji, carinjenje, dostava do vrat.',
       },
-      card: { icon: 'china', title: 'Dostava iz Kitajske', text: 'Morje in letalo na ključ', price: 'od 50 kg' },
+      card: { icon: 'china', title: 'Dostava iz Kitajske', text: 'Morje in letalo na ključ', price: 'na povpraševanje' },
       h1: 'Dostava tovora iz Kitajske',
       lead: 'Blago prevzamemo pri dobavitelju na Kitajskem, ga pošljemo po morju ali letalsko prek Evrope, ocarinimo in pripeljemo v vaše skladišče.',
-      bullets: ['Od 50 kg', 'Morje od 55 dni, letalo od 14', 'Carinjenje in dostava do vrat'],
-      priceFrom: 'od 50 kg',
+      bullets: ['Poljubna teža', 'Morje od 55 dni, letalo od 14', 'Carinjenje in dostava do vrat'],
+      priceFrom: 'na povpraševanje',
       intro: {
         title: 'Uvoz iz Kitajske na ključ',
         paragraphs: [
@@ -1180,7 +1180,7 @@ export const sl: LangContent = {
       faq: [
         {
           q: 'Kakšna je najmanjša pošiljka?',
-          a: 'Od 50 kg v zbirnem tovoru. Za velike pošiljke se bolj splača poln kontejner.',
+          a: 'Poljubna teža, v zbirnem tovoru. Za velike pošiljke se bolj splača poln kontejner.',
         },
         {
           q: 'Morje ali letalo?',
@@ -1277,12 +1277,12 @@ export const sl: LangContent = {
       meta: {
         title: 'Prevoz tovora Ukrajina – Poljska in Poljska – Ukrajina',
         description:
-          'Prevoz tovora na Poljsko in s Poljske: Varšava, Vroclav, Poznanj, Gdansk, Lublin. Tovornjak od 1 000 €, kombi od 400 €, zbirni prevoz od ene palete.',
+          'Prevoz tovora na Poljsko in s Poljske: Varšava, Vroclav, Poznanj, Gdansk, Lublin. Tovornjak od 1 000 €, kombi od 400 €, zbirni prevoz poljubne teže.',
       },
       card: { icon: 'flag', title: 'Poljska', text: 'Najbolj priljubljena smer', price: 'od 400 €' },
       h1: 'Prevoz tovora Ukrajina – Poljska',
       lead: 'Tovor na Poljsko in s Poljske vozimo vsak teden: s kombijem, tovornjakom ali v zbirnem prevozu. Varšava, Vroclav, Poznanj, Krakov, Gdansk, Lublin in druga mesta.',
-      bullets: ['Kombi od 400 €, tovornjak od 1 000 €', 'Zbirni prevoz od ene palete', 'CMR in carina'],
+      bullets: ['Kombi od 400 €, tovornjak od 1 000 €', 'Zbirni prevoz poljubne teže', 'CMR in carina'],
       priceFrom: 'od 400 €',
       cargo: {
         title: 'Kaj prevažamo',

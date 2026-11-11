@@ -386,7 +386,7 @@ export const pl: LangContent = {
         },
         {
           q: 'Czy można wysłać mały ładunek?',
-          a: 'Tak, od jednej palety w doładunku. Z Chin: od 50 kg w kontenerze zbiorczym albo samolotem.',
+          a: 'Tak, dowolna waga w doładunku. Z Chin: w kontenerze zbiorczym albo samolotem.',
         },
       ],
     },
@@ -812,7 +812,7 @@ export const pl: LangContent = {
       card: { icon: 'groupage', title: 'Drobnica i doładunek', text: 'Płacisz tylko za swoje miejsce', price: 'od 15 UAH/km' },
       h1: 'Drobnica i doładunek',
       lead: 'Mała partia nie potrzebuje osobnego auta. Dołożymy Twój ładunek do kursu w odpowiednim kierunku, a Ty zapłacisz tylko za zajęte miejsce.',
-      bullets: ['Od jednej palety', 'Po Ukrainie i do Europy', 'Taniej niż auto na wyłączność'],
+      bullets: ['Bez minimalnej wagi', 'Po Ukrainie i do Europy', 'Taniej niż auto na wyłączność'],
       priceFrom: 'od 15 UAH/km',
       sections: [
         {
@@ -1065,12 +1065,12 @@ export const pl: LangContent = {
       meta: {
         title: 'Transport Ukraina – Europa i z Europy do Ukrainy',
         description:
-          'Transport Ukraina – Polska, Niemcy, Czechy, Słowenia i inne kraje UE. Bus od 1,2 €/km, TIR od 1,5 €/km, doładunek od jednej palety.',
+          'Transport Ukraina – Polska, Niemcy, Czechy, Słowenia i inne kraje UE. Bus od 1,2 €/km, TIR od 1,5 €/km, doładunek o dowolnej wadze.',
       },
       card: { icon: 'europe', title: 'Europa', text: 'Ukraina ↔ UE i kursy po Europie', price: 'od 1,2 €/km' },
       h1: 'Transport Ukraina – Europa',
-      lead: 'Wozimy ładunki z Ukrainy do krajów UE i z powrotem, a także między krajami Europy. Autem na wyłączność albo w doładunku od jednej palety.',
-      bullets: ['Bus, TIR, niskopodwoziówka, autolaweta', 'Doładunek od jednej palety', 'CMR i odprawa celna'],
+      lead: 'Wozimy ładunki z Ukrainy do krajów UE i z powrotem, a także między krajami Europy. Autem na wyłączność albo w doładunku o dowolnej wadze.',
+      bullets: ['Bus, TIR, niskopodwoziówka, autolaweta', 'Doładunek o dowolnej wadze', 'CMR i odprawa celna'],
       priceFrom: 'od 1,2 €/km',
       intro: {
         title: 'Transport między Ukrainą a UE',
@@ -1126,13 +1126,13 @@ export const pl: LangContent = {
       meta: {
         title: 'Transport z Chin morzem i samolotem',
         description:
-          'Kompleksowy import towarów z Chin: morzem od 55 dni, samolotem od 14 dni, od 50 kg. Kontenery zbiorcze i pełne, odprawa celna, dostawa pod drzwi.',
+          'Kompleksowy import towarów z Chin: morzem od 55 dni, samolotem od 14 dni. Kontenery zbiorcze i pełne, odprawa celna, dostawa pod drzwi.',
       },
-      card: { icon: 'china', title: 'Transport z Chin', text: 'Morze i samolot kompleksowo', price: 'od 50 kg' },
+      card: { icon: 'china', title: 'Transport z Chin', text: 'Morze i samolot kompleksowo', price: 'na zapytanie' },
       h1: 'Transport ładunków z Chin',
       lead: 'Odbierzemy towar od dostawcy w Chinach, wyślemy morzem albo samolotem przez Europę, odprawimy i przywieziemy do Twojego magazynu.',
-      bullets: ['Od 50 kg', 'Morze od 55 dni, samolot od 14', 'Odprawa celna i dostawa pod drzwi'],
-      priceFrom: 'od 50 kg',
+      bullets: ['Dowolna waga', 'Morze od 55 dni, samolot od 14', 'Odprawa celna i dostawa pod drzwi'],
+      priceFrom: 'na zapytanie',
       intro: {
         title: 'Import z Chin kompleksowo',
         paragraphs: [
@@ -1180,7 +1180,7 @@ export const pl: LangContent = {
       faq: [
         {
           q: 'Jaka jest minimalna partia?',
-          a: 'Od 50 kg w ładunku zbiorczym. Przy dużych partiach bardziej opłaca się pełny kontener.',
+          a: 'Dowolna waga, w ładunku zbiorczym. Przy dużych partiach bardziej opłaca się pełny kontener.',
         },
         {
           q: 'Co wybrać: morze czy samolot?',
@@ -1277,12 +1277,12 @@ export const pl: LangContent = {
       meta: {
         title: 'Transport Polska – Ukraina i Ukraina – Polska',
         description:
-          'Transport towarów z Polski do Ukrainy i z Ukrainy do Polski: Warszawa, Wrocław, Poznań, Gdańsk, Lublin. TIR od 1 000 €, bus od 400 €, doładunek od jednej palety.',
+          'Transport towarów z Polski do Ukrainy i z Ukrainy do Polski: Warszawa, Wrocław, Poznań, Gdańsk, Lublin. TIR od 1 000 €, bus od 400 €, doładunek o dowolnej wadze.',
       },
       card: { icon: 'flag', title: 'Polska', text: 'Najpopularniejszy kierunek', price: 'od 400 €' },
       h1: 'Transport Polska – Ukraina',
       lead: 'Co tydzień wozimy ładunki z Polski do Ukrainy i z powrotem: busem, TIR-em albo w doładunku. Warszawa, Wrocław, Poznań, Kraków, Gdańsk, Lublin i inne miasta.',
-      bullets: ['Bus od 400 €, TIR od 1 000 €', 'Doładunek od jednej palety', 'CMR i odprawa celna'],
+      bullets: ['Bus od 400 €, TIR od 1 000 €', 'Doładunek o dowolnej wadze', 'CMR i odprawa celna'],
       priceFrom: 'od 400 €',
       cargo: {
         title: 'Co przewozimy',

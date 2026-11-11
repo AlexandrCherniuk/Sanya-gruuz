@@ -386,7 +386,7 @@ export const en: LangContent = {
         },
         {
           q: 'Can I send a small shipment?',
-          a: 'Yes, from one pallet as groupage in a shared truck. From China, from 50 kg in a shared container or by air.',
+          a: 'Yes, any weight as groupage in a shared truck. From China, in a shared container or by air.',
         },
       ],
     },
@@ -812,7 +812,7 @@ export const en: LangContent = {
       card: { icon: 'groupage', title: 'Groupage', text: 'Pay only for your space', price: 'from UAH 15/km' },
       h1: 'Groupage and part loads',
       lead: 'A small consignment does not need its own vehicle. We add your cargo to a trip going your way, and you pay only for the space it takes.',
-      bullets: ['From one pallet', 'Within Ukraine and to Europe', 'Cheaper than a dedicated vehicle'],
+      bullets: ['No minimum weight', 'Within Ukraine and to Europe', 'Cheaper than a dedicated vehicle'],
       priceFrom: 'from UAH 15/km',
       sections: [
         {
@@ -1065,12 +1065,12 @@ export const en: LangContent = {
       meta: {
         title: 'Freight Transport between Ukraine and Europe',
         description:
-          'Freight between Ukraine and Poland, Germany, Czechia, Slovenia and other EU countries. Van from €1.2/km, full truck from €1.5/km, groupage from one pallet.',
+          'Freight between Ukraine and Poland, Germany, Czechia, Slovenia and other EU countries. Van from €1.2/km, full truck from €1.5/km, groupage of any weight.',
       },
       card: { icon: 'europe', title: 'Europe', text: 'Ukraine ↔ EU and trips within Europe', price: 'from €1.2/km' },
       h1: 'Freight transport Ukraine – Europe',
-      lead: 'We carry cargo from Ukraine to EU countries and back, and between European countries. In a dedicated vehicle or as groupage from one pallet.',
-      bullets: ['Van, full truck, low-loader, car transporter', 'Groupage from one pallet', 'CMR and customs clearance'],
+      lead: 'We carry cargo from Ukraine to EU countries and back, and between European countries. In a dedicated vehicle or as groupage of any weight.',
+      bullets: ['Van, full truck, low-loader, car transporter', 'Groupage of any weight', 'CMR and customs clearance'],
       priceFrom: 'from €1.2/km',
       intro: {
         title: 'Transport between Ukraine and the EU',
@@ -1126,13 +1126,13 @@ export const en: LangContent = {
       meta: {
         title: 'Shipping from China to Ukraine by Sea and Air',
         description:
-          'Door-to-door delivery of goods from China: by sea from 55 days, by air from 14 days, from 50 kg. Shared and full containers, customs clearance, delivery to your door.',
+          'Door-to-door delivery of goods from China: by sea from 55 days, by air from 14 days. Shared and full containers, customs clearance, delivery to your door.',
       },
-      card: { icon: 'china', title: 'Shipping from China', text: 'Sea and air, door-to-door', price: 'from 50 kg' },
+      card: { icon: 'china', title: 'Shipping from China', text: 'Sea and air, door-to-door', price: 'on request' },
       h1: 'Shipping from China',
       lead: 'We collect goods from your supplier in China, ship them by sea or air via Europe, clear customs and deliver to your warehouse.',
-      bullets: ['From 50 kg', 'Sea from 55 days, air from 14', 'Customs clearance and delivery to your door'],
-      priceFrom: 'from 50 kg',
+      bullets: ['Any weight', 'Sea from 55 days, air from 14', 'Customs clearance and delivery to your door'],
+      priceFrom: 'on request',
       intro: {
         title: 'Door-to-door imports from China',
         paragraphs: [
@@ -1180,7 +1180,7 @@ export const en: LangContent = {
       faq: [
         {
           q: 'What is the minimum shipment?',
-          a: 'From 50 kg as shared cargo. For large consignments a full container is better value.',
+          a: 'Any weight, as shared cargo. For large consignments a full container is better value.',
         },
         {
           q: 'Sea or air?',
@@ -1277,12 +1277,12 @@ export const en: LangContent = {
       meta: {
         title: 'Freight Transport Ukraine – Poland and Poland – Ukraine',
         description:
-          'Freight to and from Poland: Warsaw, Wrocław, Poznań, Gdańsk, Lublin. Full truck from €1,000, van from €400, groupage from one pallet.',
+          'Freight to and from Poland: Warsaw, Wrocław, Poznań, Gdańsk, Lublin. Full truck from €1,000, van from €400, groupage of any weight.',
       },
       card: { icon: 'flag', title: 'Poland', text: 'Our most popular route', price: 'from €400' },
       h1: 'Freight transport Ukraine – Poland',
       lead: 'We carry cargo to and from Poland every week: by van, full truck or groupage. Warsaw, Wrocław, Poznań, Kraków, Gdańsk, Lublin and other cities.',
-      bullets: ['Van from €400, full truck from €1,000', 'Groupage from one pallet', 'CMR and customs'],
+      bullets: ['Van from €400, full truck from €1,000', 'Groupage of any weight', 'CMR and customs'],
       priceFrom: 'from €400',
       cargo: {
         title: 'What we carry',
