@@ -1769,6 +1769,10 @@ ol {
 .truck-trailer {
   fill: var(--truck-trailer);
 }
+.truck-beam {
+  opacity: 0;
+  pointer-events: none;
+}
 
 /* ——— Переключатель темы ———
    Капсула с бегунком: солнце ↔ луна, бегунок пружинит, в тёмной — «звёзды» на треке. */
@@ -1884,4 +1888,7 @@ ol {
   .theme-tg {
     transition: none !important;
   }
+}
+:root:not([data-theme='dark']) .truck-beam {
+  display: none;
 }
