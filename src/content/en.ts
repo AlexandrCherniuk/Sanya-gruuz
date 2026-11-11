@@ -129,7 +129,7 @@ export const en: LangContent = {
     h1: 'Freight transport',
     h1Accent: 'across Ukraine and abroad',
     lead: "We match the vehicle to your cargo and get it to any pickup point within 2 hours. We carry across Ukraine and Europe, ship by sea and air from Asia and the USA, and handle customs clearance.",
-    bullets: ['Van from €1.2/km, truck from €1.5/km in Europe', 'Dedicated vehicle or groupage', 'Backhaul and shared-load shipping', 'Terms fixed in the contract'],
+    bullets: ['Van from €1.2/km, truck from €1.5/km in Europe', 'Dedicated vehicle or groupage', 'Logistics manager available 24/7', 'Terms fixed in the contract'],
     faq: [
       {
         q: 'How do I find out the price?',

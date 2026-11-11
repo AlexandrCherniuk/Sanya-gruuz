@@ -129,7 +129,7 @@ export const sl: LangContent = {
     h1: 'Prevoz tovora',
     h1Accent: 'po Ukrajini in v tujino',
     lead: "Vozilo izberemo glede na vaš tovor in ga v 2 urah pripeljemo na katero koli lokacijo. Vozimo po vsej Ukrajini in Evropi, po morju in letalsko dostavljamo iz Azije in ZDA ter uredimo carinjenje.",
-    bullets: ['Kombi od 1,2 €/km, tovornjak od 1,5 €/km v Evropi', 'Samostojno vozilo ali zbirni prevoz', 'Prevoz tovora na poti', 'Pogoji zapisani v naročilu'],
+    bullets: ['Kombi od 1,2 €/km, tovornjak od 1,5 €/km v Evropi', 'Samostojno vozilo ali zbirni prevoz', 'Logist dosegljiv 24 ur na dan', 'Pogoji zapisani v naročilu'],
     faq: [
       {
         q: 'Kako izvem ceno prevoza?',
