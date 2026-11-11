@@ -59,7 +59,7 @@ export const sl: LangContent = {
         { title: 'Povpraševanje', text: 'Izpolnite obrazec, pokličite ali pišite: od kod, kam in kaj prevažamo.' },
         { title: 'Ponudba in naročilo', text: 'Logist izbere vozilo in pot ter pove ceno. Pogoje zapišemo v naročilo za prevoz.' },
         { title: 'Prihod vozila', text: 'Vozilo pride na nakladanje ob dogovorjenem času. Voznik poskrbi za zanesljivo pritrditev tovora.' },
-        { title: 'Dostava', text: 'Do razkladanja smo na zvezi in vam povemo, kje je tovor.' },
+        { title: 'Dostava', text: 'Redno vas obveščamo, kje je tovor. Dosegljivi smo vedno, ob vsakem času.' },
       ],
       note: 'Za rezervacijo vozila lahko logist prosi za predplačilo. Način plačila zapišemo v naročilo za prevoz.',
     },

@@ -59,7 +59,7 @@ export const en: LangContent = {
         { title: 'Request', text: 'Fill in the form, call us or send a message: where from, where to and what we are moving.' },
         { title: 'Quote and contract', text: 'Your manager picks the vehicle and route and gives you a price. We put the terms in a transport order.' },
         { title: 'Pickup', text: 'The vehicle arrives for loading at the agreed time. The driver ensures the cargo is reliably secured.' },
-        { title: 'Delivery', text: 'We keep you posted until unloading and tell you where your cargo is.' },
+        { title: 'Delivery', text: 'We regularly update you on where your cargo is. We are reachable any time, day or night.' },
       ],
       note: 'To reserve a vehicle, your manager may ask for a prepayment. Payment terms are set out in the transport order.',
     },
