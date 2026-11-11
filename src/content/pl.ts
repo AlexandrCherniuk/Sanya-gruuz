@@ -129,7 +129,7 @@ export const pl: LangContent = {
     h1: 'Transport towarów',
     h1Accent: 'po Ukrainie i za granicę',
     lead: "Dobierzemy auto do ładunku i podstawimy je w dowolne miejsce w 2 godziny. Wozimy po całej Ukrainie i Europie, morzem i samolotem dostarczamy z Azji i USA, zajmujemy się odprawą celną.",
-    bullets: ['Bus od 1,2 €/km, TIR od 1,5 €/km w Europie', 'Auto na wyłączność albo doładunek', 'Logistyk dostępny całą dobę', 'Warunki zapisane w zleceniu'],
+    bullets: ['Bus od 1,2 €/km, TIR od 1,5 €/km w Europie', 'Auto na wyłączność albo auto jadące po drodze', 'Logistyk dostępny całą dobę', 'Warunki zapisane w zleceniu'],
     faq: [
       {
         q: 'Jak poznać cenę transportu?',
