@@ -25,7 +25,7 @@ export const languages: LangInfo[] = [
 export const defaultLang: Lang = 'ua'
 
 export const brand = {
-  name: 'CR Logistics',
+  name: 'GR Logistics',
   city: 'Київ',
   secondLocation: 'Словенія',
 }

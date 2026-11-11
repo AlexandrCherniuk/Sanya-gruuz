@@ -22,7 +22,7 @@ export const en: LangContent = {
     perKm: 'UAH/km',
     orderVehicle: 'Book',
     footerAbout:
-      'Road freight within Ukraine and across Europe: from vans to full trucks, oversized loads, car transporters and special vehicles. Sea and air freight from China.',
+      'Road freight within Ukraine and across Europe: from vans to full trucks, oversized loads, car transporters and special vehicles. Sea and air freight from Asia and the USA.',
     footerNote: 'Prices on the website are indicative. Your manager confirms the exact price after your request and fixes it in the contract.',
     rights: 'All rights reserved.',
     notFound: {
@@ -37,14 +37,14 @@ export const en: LangContent = {
   blocks: {
     trustStrip: [
       { title: 'From vans to low-loaders', text: 'A vehicle matched to weight and volume' },
-      { title: 'Ukraine, Europe, China, USA', text: 'Road, sea and air' },
+      { title: 'Ukraine, Europe, Asia, USA', text: 'Road, sea and air' },
       { title: 'Price in the contract', text: 'Agreed before loading' },
       { title: 'One manager', text: 'From request to delivery' },
     ],
     directions: {
       eyebrow: 'Services',
       title: 'We move any kind of cargo',
-      sub: 'Domestic transport anywhere in Ukraine, deliveries to and from Europe, imports from China.',
+      sub: 'Domestic transport anywhere in Ukraine, deliveries to and from Europe, imports from Asia and the USA.',
     },
     transport: {
       eyebrow: 'Vehicles',
@@ -59,21 +59,22 @@ export const en: LangContent = {
         { title: 'Request', text: 'Fill in the form, call us or send a message: where from, where to and what we are moving.' },
         { title: 'Quote and contract', text: 'Your manager picks the vehicle and route and gives you a price. We put the terms in a transport order.' },
         { title: 'Pickup', text: 'The vehicle arrives for loading at the agreed time. The driver ensures the cargo is reliably secured.' },
-        { title: 'Delivery', text: 'We keep you posted until unloading and tell you where your cargo is.' },
+        { title: 'Delivery', text: 'We regularly update you on where your cargo is. We are reachable any time, day or night, to deal quickly with any force majeure or problem.' },
       ],
-      note: 'To reserve a vehicle, your manager may ask for a prepayment. Payment terms are set out in the transport order.',
+      note: 'Full payment is made on unloading. A prepayment may be needed to book the vehicle.',
     },
     why: {
       eyebrow: 'Why it is easy with us',
       title: 'Your cargo under control',
       sub: 'No empty promises: here is what we actually do to keep your shipment on track.',
       items: [
+        { icon: 'check', title: 'We solve any problem', text: 'Our experience helps us sort out most issues that come up on the road: documents, permits, delays at the border and at customs.' },
         { icon: 'contract', title: 'No price changes on the road', text: 'Route, timing and price go into the transport order before loading.' },
         { icon: 'chat', title: 'Your manager stays in touch', text: 'Phone, Viber, Telegram, WhatsApp. We tell you where the truck is and when to expect it.' },
         { icon: 'truck', title: 'Pay only for the space you need', text: 'We match the vehicle to your cargo and offer groupage for small shipments.' },
         { icon: 'clock', title: 'A vehicle right away', text: 'In 95% of shared-load orders the vehicle arrives at the pickup point within 2 hours. You can reach a logistics manager any time: we work 24/7.' },
-        { icon: 'shield', title: 'Cargo insurance', text: 'We insure cargo against damage through trusted partners, with cover from UAH 10,000. Higher cover is available for an extra fee.' },
-        { icon: 'docs', title: 'Border paperwork', text: 'CMR, shipping documents and customs clearance through a broker on international routes.' },
+        { icon: 'shield', title: 'Cargo insurance', text: 'We insure cargo against damage through trusted partners, with cover of up to €1,000,000.' },
+        { icon: 'docs', title: 'Documents for international shipments', text: 'CMR, shipping documents and customs clearance through a broker on international routes.' },
         { icon: 'route', title: 'Door-to-door', text: 'We collect and deliver at the addresses you give us, with no reloading on the way.' },
       ],
     },
@@ -101,7 +102,7 @@ export const en: LangContent = {
       logosTitle: 'Among our clients',
       items: [
         { icon: 'business', title: 'Small and medium businesses', text: 'Regular supplies, palletised goods, deliveries to customers across Ukraine.' },
-        { icon: 'store', title: 'Sole traders and online shops', text: 'Shipments from China and Europe, delivered to a warehouse or straight to the buyer.' },
+        { icon: 'store', title: 'Sole traders and online shops', text: 'Shipments from Asia, the USA and Europe, delivered to a warehouse or straight to the buyer.' },
         { icon: 'factory', title: 'Manufacturers', text: 'Raw materials to the plant, finished goods to distributors, equipment.' },
         { icon: 'build', title: 'Construction companies', text: 'Building materials, machinery on low-loaders, crane trucks and mobile cranes on site.' },
         { icon: 'agro', title: 'Agribusiness', text: 'Farm machinery, grain, fertilisers, bulk cargo in tippers.' },
@@ -113,6 +114,7 @@ export const en: LangContent = {
       text: 'Leave your phone number and route. A logistics manager will call you back, pick a vehicle and give you a price.',
       button: 'Get a quote',
       or: 'or message us',
+      orMobile: 'Message us on',
     },
     related: 'Other services',
     cargoTitle: 'What we carry',
@@ -121,15 +123,15 @@ export const en: LangContent = {
 
   home: {
     meta: {
-      title: 'Freight Transport Ukraine – Europe and within Ukraine | CR Logistics',
+      title: 'Freight Transport Ukraine – Europe and within Ukraine | GR Logistics',
       description:
-        'Road freight between Ukraine and Europe and across Ukraine: vans, full trucks, oversized loads, car transporters. Sea and air freight from China. Quote after your request.',
+        'Road freight between Ukraine and Europe and across Ukraine: vans, full trucks, oversized loads, car transporters. Sea and air freight from Asia and the USA. Quote after your request.',
     },
     eyebrow: "Road freight · Air · Sea",
     h1: 'Freight transport',
     h1Accent: 'across Ukraine and abroad',
     lead: "We match the vehicle to your cargo and get it to any pickup point within 2 hours. We carry across Ukraine and Europe, ship by sea and air from Asia and the USA, and handle customs clearance.",
-    bullets: ['Van from €1.2/km, truck from €1.5/km in Europe', 'Dedicated vehicle or groupage', 'Backhaul and shared-load shipping', 'Terms fixed in the contract'],
+    bullets: ['Van from €1.2/km, truck from €1.5/km in Europe', 'Dedicated vehicle or one already going your way', 'Logistics manager available 24/7', 'Terms fixed in the contract'],
     faq: [
       {
         q: 'How do I find out the price?',
@@ -161,7 +163,7 @@ export const en: LangContent = {
       },
       {
         q: 'Do you work outside Ukraine?',
-        a: 'Yes. We carry cargo from Ukraine to European countries and back, within Europe, and we deliver goods from China by sea and air.',
+        a: 'Yes. We carry cargo from Ukraine to European countries and back, within Europe, and we deliver goods from Asia and the USA by sea and air.',
       },
     ],
   },
@@ -354,13 +356,13 @@ export const en: LangContent = {
     {
       slug: 'international',
       meta: {
-        title: 'International Freight: Ukraine – Europe, China, Sea and Air',
+        title: 'International Freight: Ukraine – Europe, Asia, USA, Sea and Air',
         description:
-          'Freight from Ukraine to Europe and back, transport within Europe, imports from China by sea and air. Dedicated vehicle, groupage, containers.',
+          'Freight from Ukraine to Europe and back, transport within Europe, imports from Asia and the USA by sea and air. Dedicated vehicle, groupage, containers.',
       },
       h1: 'International freight transport',
-      lead: 'We carry cargo from Ukraine to Europe and back, within Europe, and arrange delivery of goods from China by sea or air.',
-      bullets: ['Ukraine ↔ Europe, trips within the EU', 'Imports from China: sea, air', 'Documents and customs clearance'],
+      lead: 'We carry cargo from Ukraine to Europe and back, within Europe, and arrange delivery of goods from Asia and the USA by sea or air.',
+      bullets: ['Ukraine ↔ Europe, trips within the EU', 'Imports from Asia and the USA: sea, air', 'Documents and customs clearance'],
       sections: [
         {
           title: 'Destinations',
@@ -1465,13 +1467,13 @@ export const en: LangContent = {
   contactsPage: {
     meta: {
       title: 'Contact Us: Phone, Viber, Telegram, WhatsApp',
-      description: 'Phone, Viber, Telegram, WhatsApp and email of CR Logistics. Kyiv, Ukraine, and Slovenia.',
+      description: 'Phone, Viber, Telegram, WhatsApp and email of GR Logistics. Kyiv, Ukraine, and Slovenia.',
     },
     h1: 'Contact us',
     lead: 'Call us or message us on your favourite messenger. For a quote, tell us the route, weight and volume of your cargo.',
     aboutTitle: 'About us',
     about: [
-      "CR Logistics arranges freight transport within Ukraine and abroad: by road, sea and air. We match the vehicle to the cargo: from a van to a full truck, low-bed trailer, car transporter or crane truck. We also handle customs clearance in Ukraine and Europe.",
+      "GR Logistics arranges freight transport within Ukraine and abroad: by road, sea and air. We match the vehicle to the cargo: from a van to a full truck, low-bed trailer, car transporter or crane truck. We also handle customs clearance in Ukraine and Europe.",
       "We are based in Ukraine, Poland and Slovenia. We work with both businesses and private clients.",
     ],
     hours: 'Requests from the website reach us instantly on Telegram',

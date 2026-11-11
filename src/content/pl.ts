@@ -22,7 +22,7 @@ export const pl: LangContent = {
     perKm: 'UAH/km',
     orderVehicle: 'Zamów',
     footerAbout:
-      'Transport towarów po Ukrainie i za granicę: od busa po TIR-a, ładunki ponadgabarytowe, autolawety, HDS i dźwigi. Transport z Chin morzem i samolotem.',
+      'Transport towarów po Ukrainie i za granicę: od busa po TIR-a, ładunki ponadgabarytowe, autolawety, HDS i dźwigi. Transport z Azji i USA morzem i samolotem.',
     footerNote: 'Ceny na stronie są orientacyjne. Dokładną kwotę podajemy po zapytaniu i wpisujemy do zlecenia transportowego.',
     rights: 'Wszelkie prawa zastrzeżone.',
     notFound: {
@@ -37,14 +37,14 @@ export const pl: LangContent = {
   blocks: {
     trustStrip: [
       { title: 'Od busa po niskopodwoziówkę', text: 'Auto dobrane do wagi i objętości' },
-      { title: 'Ukraina, Europa, Chiny, USA', text: 'Drogą, morzem, samolotem' },
+      { title: 'Ukraina, Europa, Azja, USA', text: 'Drogą, morzem, samolotem' },
       { title: 'Cena w zleceniu', text: 'Ustalona przed załadunkiem' },
       { title: 'Jeden opiekun', text: 'Od zapytania do rozładunku' },
     ],
     directions: {
       eyebrow: 'Usługi',
       title: 'Przewieziemy każdy ładunek',
-      sub: 'Transport krajowy w całej Ukrainie, przewozy do i z Europy, import z Chin.',
+      sub: 'Transport krajowy w całej Ukrainie, przewozy do i z Europy, import z Azji i USA.',
     },
     transport: {
       eyebrow: 'Flota',
@@ -59,21 +59,22 @@ export const pl: LangContent = {
         { title: 'Zapytanie', text: 'Wypełnij formularz, zadzwoń lub napisz na komunikatorze: skąd, dokąd i co wieziemy.' },
         { title: 'Wycena i zlecenie', text: 'Logistyk dobiera auto i trasę, podaje cenę. Warunki zapisujemy w zleceniu transportowym.' },
         { title: 'Podstawienie auta', text: 'Auto przyjeżdża na załadunek o umówionej godzinie. Kierowca zapewnia solidne zabezpieczenie ładunku.' },
-        { title: 'Dostawa', text: 'Jesteśmy w kontakcie aż do rozładunku i mówimy, gdzie jest teraz ładunek.' },
+        { title: 'Dostawa', text: 'Regularnie informujemy, gdzie jest teraz ładunek. Jesteśmy w kontakcie zawsze, o każdej porze, żeby szybko rozwiązać każdą sytuację awaryjną i każdy problem.' },
       ],
-      note: 'Przy rezerwacji auta logistyk może poprosić o przedpłatę. Sposób płatności zapisujemy w zleceniu transportowym.',
+      note: 'Pełna płatność przy rozładunku. Przy rezerwacji auta może być potrzebna przedpłata.',
     },
     why: {
       eyebrow: 'Dlaczego z nami spokojnie',
       title: 'Ładunek pod kontrolą',
       sub: 'Bez pustych obietnic: oto co konkretnie robimy, żeby transport przebiegł bez niespodzianek.',
       items: [
+        { icon: 'check', title: 'Rozwiązujemy każdy problem', text: 'Doświadczenie pomaga nam rozwiązać większość spraw, które pojawiają się w trasie: dokumenty, zezwolenia, opóźnienia na granicy i w urzędzie celnym.' },
         { icon: 'contract', title: 'Cena nie zmieni się w trasie', text: 'Trasę, terminy i koszt wpisujemy do zlecenia jeszcze przed załadunkiem.' },
         { icon: 'chat', title: 'Logistyk zawsze pod telefonem', text: 'Telefon, Viber, Telegram, WhatsApp. Powiemy, gdzie jest auto i kiedy dojedzie.' },
         { icon: 'truck', title: 'Nie przepłacasz za przestrzeń', text: 'Dobieramy nadwozie do ładunku, a dla małych partii proponujemy doładunek.' },
         { icon: 'clock', title: 'Auto od ręki', text: 'W 95% zleceń przewozu ładunku po drodze auto przyjeżdża na miejsce w ciągu 2 godzin. Z logistykiem skontaktujesz się o każdej porze: pracujemy całą dobę.' },
-        { icon: 'shield', title: 'Ubezpieczenie ładunku', text: 'Ubezpieczamy ładunek od uszkodzenia przez sprawdzonych partnerów, na kwotę od 10 000 UAH. Za dopłatą zwiększymy sumę ubezpieczenia.' },
-        { icon: 'docs', title: 'Dokumenty na granicę', text: 'CMR, dokumenty przewozowe, odprawa celna przez agencję celną na trasach międzynarodowych.' },
+        { icon: 'shield', title: 'Ubezpieczenie ładunku', text: 'Ubezpieczamy ładunek od uszkodzenia przez sprawdzonych partnerów, na kwotę do 1 000 000 €.' },
+        { icon: 'docs', title: 'Dokumenty w transporcie międzynarodowym', text: 'CMR, dokumenty przewozowe, odprawa celna przez agencję celną na trasach międzynarodowych.' },
         { icon: 'route', title: 'Od drzwi do drzwi', text: 'Odbieramy i dowozimy pod wskazane adresy, bez przeładunków po drodze.' },
       ],
     },
@@ -101,7 +102,7 @@ export const pl: LangContent = {
       logosTitle: 'Wśród naszych klientów',
       items: [
         { icon: 'business', title: 'Małe i średnie firmy', text: 'Regularne dostawy, towar na paletach, dostawy do klientów w Ukrainie.' },
-        { icon: 'store', title: 'JDG i sklepy internetowe', text: 'Partie towaru z Chin i Europy, dostawa do magazynu lub prosto do kupującego.' },
+        { icon: 'store', title: 'JDG i sklepy internetowe', text: 'Partie towaru z Azji, USA i Europy, dostawa do magazynu lub prosto do kupującego.' },
         { icon: 'factory', title: 'Producenci', text: 'Surowce do zakładu, gotowe wyroby do dystrybutora, maszyny i urządzenia.' },
         { icon: 'build', title: 'Firmy budowlane', text: 'Materiały budowlane, maszyny na niskopodwoziówce, HDS i dźwig na budowę.' },
         { icon: 'agro', title: 'Rolnictwo', text: 'Maszyny rolnicze, zboże, nawozy, ładunki sypkie wywrotkami.' },
@@ -113,6 +114,7 @@ export const pl: LangContent = {
       text: 'Zostaw numer telefonu i trasę. Logistyk oddzwoni, dobierze auto i poda cenę.',
       button: 'Wycena transportu',
       or: 'albo napisz do nas',
+      orMobile: 'Napisz do nas na komunikatorze',
     },
     related: 'Inne usługi',
     cargoTitle: 'Co przewozimy',
@@ -121,15 +123,15 @@ export const pl: LangContent = {
 
   home: {
     meta: {
-      title: 'Transport do Ukrainy z Polski i Europy oraz po Ukrainie | CR Logistics',
+      title: 'Transport do Ukrainy z Polski i Europy oraz po Ukrainie | GR Logistics',
       description:
-        'Transport towarów: Polska – Ukraina, Europa, cała Ukraina. Bus, TIR, ładunki ponadgabarytowe, autolawety. Import z Chin morzem i samolotem. Wycena po zapytaniu.',
+        'Transport towarów: Polska – Ukraina, Europa, cała Ukraina. Bus, TIR, ładunki ponadgabarytowe, autolawety. Import z Azji i USA morzem i samolotem. Wycena po zapytaniu.',
     },
     eyebrow: "Transport drogowy · Lotniczy · Morski",
     h1: 'Transport towarów',
     h1Accent: 'po Ukrainie i za granicę',
     lead: "Dobierzemy auto do ładunku i podstawimy je w dowolne miejsce w 2 godziny. Wozimy po całej Ukrainie i Europie, morzem i samolotem dostarczamy z Azji i USA, zajmujemy się odprawą celną.",
-    bullets: ['Bus od 1,2 €/km, TIR od 1,5 €/km w Europie', 'Auto na wyłączność albo doładunek', 'Przewozy ładunków po drodze', 'Warunki zapisane w zleceniu'],
+    bullets: ['Bus od 1,2 €/km, TIR od 1,5 €/km w Europie', 'Auto na wyłączność albo auto jadące po drodze', 'Logistyk dostępny całą dobę', 'Warunki zapisane w zleceniu'],
     faq: [
       {
         q: 'Jak poznać cenę transportu?',
@@ -161,7 +163,7 @@ export const pl: LangContent = {
       },
       {
         q: 'Czy jeździcie za granicę?',
-        a: 'Tak. Wozimy z Ukrainy do krajów Europy i z powrotem, po Europie, a także sprowadzamy ładunki z Chin morzem i samolotem.',
+        a: 'Tak. Wozimy z Ukrainy do krajów Europy i z powrotem, po Europie, a także sprowadzamy ładunki z Azji i USA morzem i samolotem.',
       },
     ],
   },
@@ -354,13 +356,13 @@ export const pl: LangContent = {
     {
       slug: 'international',
       meta: {
-        title: 'Transport międzynarodowy: Ukraina – Europa, Chiny, morze, samolot',
+        title: 'Transport międzynarodowy: Ukraina – Europa, Azja, USA, morze, samolot',
         description:
-          'Transport z Polski i Europy do Ukrainy i z powrotem, przewozy po Europie, import z Chin morzem i samolotem. Auto na wyłączność, doładunek, kontenery.',
+          'Transport z Polski i Europy do Ukrainy i z powrotem, przewozy po Europie, import z Azji i USA morzem i samolotem. Auto na wyłączność, doładunek, kontenery.',
       },
       h1: 'Transport międzynarodowy',
-      lead: 'Przewieziemy ładunek z Ukrainy do Europy i z powrotem, po Europie, a także zorganizujemy dostawę towarów z Chin morzem albo samolotem.',
-      bullets: ['Ukraina ↔ Europa, kursy po UE', 'Import z Chin: morze, samolot', 'Dokumenty i odprawa celna'],
+      lead: 'Przewieziemy ładunek z Ukrainy do Europy i z powrotem, po Europie, a także zorganizujemy dostawę towarów z Azji i USA morzem albo samolotem.',
+      bullets: ['Ukraina ↔ Europa, kursy po UE', 'Import z Azji i USA: morze, samolot', 'Dokumenty i odprawa celna'],
       sections: [
         {
           title: 'Kierunki',
@@ -1465,13 +1467,13 @@ export const pl: LangContent = {
   contactsPage: {
     meta: {
       title: 'Kontakt: telefon, Viber, Telegram, WhatsApp',
-      description: 'Telefon, Viber, Telegram, WhatsApp i e-mail CR Logistics. Kijów, Ukraina, a także Słowenia.',
+      description: 'Telefon, Viber, Telegram, WhatsApp i e-mail GR Logistics. Kijów, Ukraina, a także Słowenia.',
     },
     h1: 'Kontakt',
     lead: 'Zadzwoń albo napisz na wygodnym komunikatorze. Do wyceny podaj trasę, wagę i objętość ładunku.',
     aboutTitle: 'O firmie',
     about: [
-      "CR Logistics organizuje transport ładunków po Ukrainie i za granicę: drogowy, morski i lotniczy. Dobieramy transport do ładunku: od busa po TIR, niskopodwozie, autolawetę czy HDS. Zajmujemy się też odprawą celną na Ukrainie i w Europie.",
+      "GR Logistics organizuje transport ładunków po Ukrainie i za granicę: drogowy, morski i lotniczy. Dobieramy transport do ładunku: od busa po TIR, niskopodwozie, autolawetę czy HDS. Zajmujemy się też odprawą celną na Ukrainie i w Europie.",
       "Działamy na Ukrainie, w Polsce i w Słowenii. Pracujemy zarówno z firmami, jak i z klientami prywatnymi.",
     ],
     hours: 'Zapytania ze strony trafiają do nas od razu na Telegram',

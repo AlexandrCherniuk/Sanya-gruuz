@@ -89,6 +89,9 @@ export function QuoteForm({ id = 'zapyt', successUrl, lang = 'ua' }: Props) {
       document.getElementById(`${uid}-${first}`)?.focus()
       return
     }
+    // Прячем клавиатуру до перехода на «спасибо»: иначе во встроенных браузерах iOS (Telegram и др.)
+    // новая страница открывается с высотой экрана «как с клавиатурой», и нижняя панель висит посреди экрана.
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur()
     setStatus('sending')
     const result = await sendLead(draft, honeypot, lang)
     if (result.ok) {

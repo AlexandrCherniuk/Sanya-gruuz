@@ -22,7 +22,7 @@ export const sl: LangContent = {
     perKm: 'UAH/km',
     orderVehicle: 'Naroči',
     footerAbout:
-      'Prevoz tovora po Ukrajini in v tujino: od kombija do tovornjaka s polprikolico, izredni prevozi, avtotransporterji, dvigala. Dostava iz Kitajske po morju in letalsko.',
+      'Prevoz tovora po Ukrajini in v tujino: od kombija do tovornjaka s polprikolico, izredni prevozi, avtotransporterji, dvigala. Dostava iz Azije in ZDA po morju in letalsko.',
     footerNote: 'Cene na spletni strani so okvirne. Točno ceno vam logist pove po povpraševanju in jo zapiše v naročilo za prevoz.',
     rights: 'Vse pravice pridržane.',
     notFound: {
@@ -37,14 +37,14 @@ export const sl: LangContent = {
   blocks: {
     trustStrip: [
       { title: 'Od kombija do nizkopodnika', text: 'Vozilo glede na težo in prostornino' },
-      { title: 'Ukrajina, Evropa, Kitajska, ZDA', text: 'Cestno, morsko, letalsko' },
+      { title: 'Ukrajina, Evropa, Azija, ZDA', text: 'Cestno, morsko, letalsko' },
       { title: 'Cena v naročilu', text: 'Dogovorjena pred nakladanjem' },
       { title: 'En logist', text: 'Od povpraševanja do razkladanja' },
     ],
     directions: {
       eyebrow: 'Storitve',
       title: 'Prepeljemo vsak tovor',
-      sub: 'Prevozi po vsej Ukrajini, dostava v Evropo in iz nje, uvoz iz Kitajske.',
+      sub: 'Prevozi po vsej Ukrajini, dostava v Evropo in iz nje, uvoz iz Azije in ZDA.',
     },
     transport: {
       eyebrow: 'Vozila',
@@ -59,21 +59,22 @@ export const sl: LangContent = {
         { title: 'Povpraševanje', text: 'Izpolnite obrazec, pokličite ali pišite: od kod, kam in kaj prevažamo.' },
         { title: 'Ponudba in naročilo', text: 'Logist izbere vozilo in pot ter pove ceno. Pogoje zapišemo v naročilo za prevoz.' },
         { title: 'Prihod vozila', text: 'Vozilo pride na nakladanje ob dogovorjenem času. Voznik poskrbi za zanesljivo pritrditev tovora.' },
-        { title: 'Dostava', text: 'Do razkladanja smo na zvezi in vam povemo, kje je tovor.' },
+        { title: 'Dostava', text: 'Redno vas obveščamo, kje je tovor. Dosegljivi smo vedno, ob vsakem času, da hitro rešimo vsako višjo silo in vsako težavo.' },
       ],
-      note: 'Za rezervacijo vozila lahko logist prosi za predplačilo. Način plačila zapišemo v naročilo za prevoz.',
+      note: 'Celotno plačilo ob razkladanju. Za rezervacijo vozila je lahko potrebno predplačilo.',
     },
     why: {
       eyebrow: 'Zakaj z nami',
       title: 'Tovor pod nadzorom',
       sub: 'Brez praznih obljub: to je tisto, kar zares naredimo, da prevoz poteka gladko.',
       items: [
+        { icon: 'check', title: 'Rešimo vsako težavo', text: 'Izkušnje nam pomagajo rešiti večino vprašanj, ki se pojavijo na poti: dokumente, dovoljenja, zamude na meji in carini.' },
         { icon: 'contract', title: 'Cena se na poti ne spremeni', text: 'Pot, roke in ceno zapišemo v naročilo še pred nakladanjem.' },
         { icon: 'chat', title: 'Logist je vedno dosegljiv', text: 'Telefon, Viber, Telegram, WhatsApp. Povemo, kje je vozilo in kdaj prispe.' },
         { icon: 'truck', title: 'Ne plačate preveč za prostor', text: 'Vozilo izberemo glede na tovor, za manjše pošiljke ponudimo zbirni prevoz.' },
         { icon: 'clock', title: 'Vozilo takoj', text: 'Pri 95 % naročil prevoza tovora na poti vozilo pride na dogovorjeno mesto v 2 urah. Logista lahko pokličete kadar koli: delamo 24 ur na dan.' },
-        { icon: 'shield', title: 'Zavarovanje tovora', text: 'Tovor zavarujemo pred poškodbami prek zanesljivih partnerjev, s kritjem od 10 000 UAH. Za doplačilo povečamo zavarovalno vsoto.' },
-        { icon: 'docs', title: 'Dokumenti za mejo', text: 'CMR, spremni dokumenti in carinjenje prek špediterja na mednarodnih relacijah.' },
+        { icon: 'shield', title: 'Zavarovanje tovora', text: 'Tovor zavarujemo pred poškodbami prek zanesljivih partnerjev, s kritjem do 1 000 000 €.' },
+        { icon: 'docs', title: 'Dokumenti za mednarodne prevoze', text: 'CMR, spremni dokumenti in carinjenje prek špediterja na mednarodnih relacijah.' },
         { icon: 'route', title: 'Od vrat do vrat', text: 'Tovor prevzamemo in dostavimo na navedena naslova, brez pretovarjanja na poti.' },
       ],
     },
@@ -101,7 +102,7 @@ export const sl: LangContent = {
       logosTitle: 'Med našimi strankami',
       items: [
         { icon: 'business', title: 'Mala in srednja podjetja', text: 'Redne dobave, blago na paletah, dostava strankam po Ukrajini.' },
-        { icon: 'store', title: 'Samostojni podjetniki in spletne trgovine', text: 'Pošiljke iz Kitajske in Evrope, dostava v skladišče ali neposredno kupcu.' },
+        { icon: 'store', title: 'Samostojni podjetniki in spletne trgovine', text: 'Pošiljke iz Azije, ZDA in Evrope, dostava v skladišče ali neposredno kupcu.' },
         { icon: 'factory', title: 'Proizvajalci', text: 'Surovine v tovarno, končni izdelki distributerju, oprema.' },
         { icon: 'build', title: 'Gradbena podjetja', text: 'Gradbeni material, stroji na nizkopodniku, tovornjak z dvigalom in avtodvigalo na gradbišče.' },
         { icon: 'agro', title: 'Kmetijstvo', text: 'Kmetijski stroji, žito, gnojila, sipki tovor s prekucniki.' },
@@ -113,6 +114,7 @@ export const sl: LangContent = {
       text: 'Pustite telefonsko številko in relacijo. Logist vas bo poklical, izbral vozilo in povedal ceno.',
       button: 'Izračun cene',
       or: 'ali nam pišite',
+      orMobile: 'Pišite nam v aplikaciji',
     },
     related: 'Druge storitve',
     cargoTitle: 'Kaj prevažamo',
@@ -121,15 +123,15 @@ export const sl: LangContent = {
 
   home: {
     meta: {
-      title: 'Prevoz tovora Slovenija – Ukrajina, po Evropi in Ukrajini | CR Logistics',
+      title: 'Prevoz tovora Slovenija – Ukrajina, po Evropi in Ukrajini | GR Logistics',
       description:
-        'Prevoz tovora med Slovenijo, Evropo in Ukrajino ter po vsej Ukrajini: kombi, tovornjak, izredni prevozi, avtotransporter. Uvoz iz Kitajske po morju in letalsko.',
+        'Prevoz tovora med Slovenijo, Evropo in Ukrajino ter po vsej Ukrajini: kombi, tovornjak, izredni prevozi, avtotransporter. Uvoz iz Azije in ZDA po morju in letalsko.',
     },
     eyebrow: "Cestni prevoz · Letalski · Pomorski",
     h1: 'Prevoz tovora',
     h1Accent: 'po Ukrajini in v tujino',
     lead: "Vozilo izberemo glede na vaš tovor in ga v 2 urah pripeljemo na katero koli lokacijo. Vozimo po vsej Ukrajini in Evropi, po morju in letalsko dostavljamo iz Azije in ZDA ter uredimo carinjenje.",
-    bullets: ['Kombi od 1,2 €/km, tovornjak od 1,5 €/km v Evropi', 'Samostojno vozilo ali zbirni prevoz', 'Prevoz tovora na poti', 'Pogoji zapisani v naročilu'],
+    bullets: ['Kombi od 1,2 €/km, tovornjak od 1,5 €/km v Evropi', 'Samostojno vozilo ali vozilo, ki že gre v vašo smer', 'Logist dosegljiv 24 ur na dan', 'Pogoji zapisani v naročilu'],
     faq: [
       {
         q: 'Kako izvem ceno prevoza?',
@@ -161,7 +163,7 @@ export const sl: LangContent = {
       },
       {
         q: 'Ali vozite tudi v tujino?',
-        a: 'Da. Vozimo iz Ukrajine v evropske države in nazaj, po Evropi, uvažamo pa tudi tovor iz Kitajske po morju in letalsko.',
+        a: 'Da. Vozimo iz Ukrajine v evropske države in nazaj, po Evropi, uvažamo pa tudi tovor iz Azije in ZDA po morju in letalsko.',
       },
     ],
   },
@@ -354,13 +356,13 @@ export const sl: LangContent = {
     {
       slug: 'international',
       meta: {
-        title: 'Mednarodni prevoz tovora: Ukrajina – Evropa, Kitajska, morje, letalo',
+        title: 'Mednarodni prevoz tovora: Ukrajina – Evropa, Azija, ZDA, morje, letalo',
         description:
-          'Prevoz iz Slovenije in Evrope v Ukrajino in nazaj, prevozi po Evropi, uvoz iz Kitajske po morju in letalsko. Samostojno vozilo, zbirni prevoz, kontejnerji.',
+          'Prevoz iz Slovenije in Evrope v Ukrajino in nazaj, prevozi po Evropi, uvoz iz Azije in ZDA po morju in letalsko. Samostojno vozilo, zbirni prevoz, kontejnerji.',
       },
       h1: 'Mednarodni prevoz tovora',
-      lead: 'Prepeljemo tovor iz Ukrajine v Evropo in nazaj, po Evropi, organiziramo pa tudi dostavo blaga iz Kitajske po morju ali letalsko.',
-      bullets: ['Ukrajina ↔ Evropa, prevozi po EU', 'Uvoz iz Kitajske: morje, letalo', 'Dokumenti in carinjenje'],
+      lead: 'Prepeljemo tovor iz Ukrajine v Evropo in nazaj, po Evropi, organiziramo pa tudi dostavo blaga iz Azije in ZDA po morju ali letalsko.',
+      bullets: ['Ukrajina ↔ Evropa, prevozi po EU', 'Uvoz iz Azije in ZDA: morje, letalo', 'Dokumenti in carinjenje'],
       sections: [
         {
           title: 'Smeri',
@@ -1465,13 +1467,13 @@ export const sl: LangContent = {
   contactsPage: {
     meta: {
       title: 'Kontakt: telefon, Viber, Telegram, WhatsApp',
-      description: 'Telefon, Viber, Telegram, WhatsApp in e-pošta CR Logistics. Kijev, Ukrajina, in Slovenija.',
+      description: 'Telefon, Viber, Telegram, WhatsApp in e-pošta GR Logistics. Kijev, Ukrajina, in Slovenija.',
     },
     h1: 'Kontakt',
     lead: 'Pokličite ali pišite v aplikaciji, ki vam ustreza. Za izračun povejte relacijo, težo in prostornino tovora.',
     aboutTitle: 'O podjetju',
     about: [
-      "CR Logistics organizira prevoz tovora po Ukrajini in v tujino: cestni, morski in letalski. Prevoz izberemo glede na tovor: od kombija do tovornjaka, nizko-podvoznika, avtotransporterja ali vozila z dvigalom. Uredimo tudi carinjenje v Ukrajini in Evropi.",
+      "GR Logistics organizira prevoz tovora po Ukrajini in v tujino: cestni, morski in letalski. Prevoz izberemo glede na tovor: od kombija do tovornjaka, nizko-podvoznika, avtotransporterja ali vozila z dvigalom. Uredimo tudi carinjenje v Ukrajini in Evropi.",
       "Imamo sedež v Ukrajini, na Poljskem in v Sloveniji. Delamo tako s podjetji kot s fizičnimi osebami.",
     ],
     hours: 'Povpraševanja s spletne strani prejmemo takoj v Telegram',

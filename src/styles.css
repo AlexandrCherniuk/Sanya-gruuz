@@ -1,4 +1,4 @@
-/* CR Logistics: светлый, лёгкий интерфейс. Мятный — только акцент (кнопки, отметки). */
+/* GR Logistics: светлый, лёгкий интерфейс. Мятный — только акцент (кнопки, отметки). */
 :root {
   --ink: #0b0d0e;
   --ink-2: #1d2125;
@@ -1381,7 +1381,17 @@ ol {
     grid-template-columns: 1fr 1fr;
   }
 }
+.hero-alt .alt-m {
+  display: none;
+}
+
 @media (max-width: 880px) {
+  .hero-alt .alt-d {
+    display: none;
+  }
+  .hero-alt .alt-m {
+    display: inline;
+  }
   .hero-grid,
   .svc-grid,
   .faq-grid,
