@@ -15,7 +15,7 @@ export const sl: LangContent = {
     write: 'Piši',
     breadcrumbHome: 'Domov',
     city: 'Kijev',
-    location: 'Kijev, Ukrajina · Slovenija',
+    location: "Ukrajina · Poljska · Slovenija",
     from: 'od',
     more: 'Več',
     allServices: 'Vse storitve',
@@ -124,10 +124,10 @@ export const sl: LangContent = {
       description:
         'Prevoz tovora od 1 tone med Slovenijo, Evropo in Ukrajino ter po vsej Ukrajini: kombi, tovornjak, izredni prevozi, avtotransporter. Uvoz iz Kitajske po morju in letalsko.',
     },
-    eyebrow: 'Prevoz tovora · Kijev · Slovenija',
+    eyebrow: "Prevozi · Ukrajina, Poljska, Slovenija",
     h1: 'Prevoz tovora v Ukrajino in po Evropi',
     h1Accent: 'od 1 tone',
-    lead: 'Izberemo vozilo za vaš tovor: kombi, tovornjak s polprikolico, nizkopodnik, avtotransporter ali tovornjak z dvigalom. Vozimo med Slovenijo, Evropo in Ukrajino, po vsej Ukrajini in uvažamo blago iz Kitajske.',
+    lead: "Vozilo izberemo glede na vaš tovor: kombi, tovornjak, nizko-podvoznik, avtotransporter ali vozilo z dvigalom. Vozimo po vsej Ukrajini in Evropi, po morju in letalsko dostavljamo iz Azije in ZDA ter uredimo carinjenje.",
     bullets: ['Kombi od 1,2 €/km, tovornjak od 1,5 €/km v Evropi', 'Samostojno vozilo ali zbirni prevoz', 'Pogoji zapisani v naročilu'],
     faq: [
       {

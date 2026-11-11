@@ -15,7 +15,7 @@ export const pl: LangContent = {
     write: 'Napisz',
     breadcrumbHome: 'Strona główna',
     city: 'Kijów',
-    location: 'Kijów, Ukraina · Słowenia',
+    location: "Ukraina · Polska · Słowenia",
     from: 'od',
     more: 'Szczegóły',
     allServices: 'Wszystkie usługi',
@@ -124,10 +124,10 @@ export const pl: LangContent = {
       description:
         'Transport towarów od 1 tony: Polska – Ukraina, Europa, cała Ukraina. Bus, TIR, ładunki ponadgabarytowe, autolawety. Import z Chin morzem i samolotem. Wycena po zapytaniu.',
     },
-    eyebrow: 'Transport towarów · Kijów · Słowenia',
+    eyebrow: "Transport · Ukraina, Polska, Słowenia",
     h1: 'Transport towarów do Ukrainy i po Europie',
     h1Accent: 'od 1 tony',
-    lead: 'Dobierzemy auto pod Twój ładunek: bus, TIR, niskopodwoziówkę, autolawetę albo HDS. Wozimy między Polską, Europą i Ukrainą, po całej Ukrainie, sprowadzamy też towary z Chin.',
+    lead: "Dobierzemy auto do ładunku: bus, TIR, niskopodwozie, autolawetę lub HDS. Wozimy po całej Ukrainie i Europie, morzem i samolotem dostarczamy z Azji i USA, zajmujemy się odprawą celną.",
     bullets: ['Bus od 1,2 €/km, TIR od 1,5 €/km w Europie', 'Auto na wyłączność albo doładunek', 'Warunki zapisane w zleceniu'],
     faq: [
       {

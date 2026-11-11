@@ -15,7 +15,7 @@ export const en: LangContent = {
     write: 'Message us',
     breadcrumbHome: 'Home',
     city: 'Kyiv',
-    location: 'Kyiv, Ukraine · Slovenia',
+    location: "Ukraine · Poland · Slovenia",
     from: 'from',
     more: 'Learn more',
     allServices: 'All services',
@@ -124,10 +124,10 @@ export const en: LangContent = {
       description:
         'Road freight from 1 tonne between Ukraine and Europe and across Ukraine: vans, full trucks, oversized loads, car transporters. Sea and air freight from China. Quote after your request.',
     },
-    eyebrow: 'Freight transport · Kyiv · Slovenia',
+    eyebrow: "Freight · Ukraine, Poland, Slovenia",
     h1: 'Freight transport between Ukraine and Europe',
     h1Accent: 'from 1 tonne',
-    lead: 'We pick the right vehicle for your cargo: a van, a full truck, a low-loader, a car transporter or a crane truck. We carry goods between Ukraine and the EU, anywhere within Ukraine, and bring shipments from China.',
+    lead: "We match the vehicle to your cargo: van, full truck, low-bed, car transporter or crane truck. We carry across Ukraine and Europe, ship by sea and air from Asia and the USA, and handle customs clearance.",
     bullets: ['Van from €1.2/km, truck from €1.5/km in Europe', 'Dedicated vehicle or groupage', 'Terms fixed in the contract'],
     faq: [
       {
