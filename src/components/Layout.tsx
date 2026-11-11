@@ -72,6 +72,25 @@ function LangSwitch({ lang, available, path, label }: { lang: Lang; available: L
   )
 }
 
+function ThemeToggle({ label }: { label: string }) {
+  // Состояние (aria-checked, тема) выставляет client.tsx: страница пререндерена,
+  // а выбор посетителя известен только в браузере.
+  return (
+    <button type="button" className="theme-tg" role="switch" aria-checked="false" aria-label={label} title={label} data-theme-toggle>
+      <span className="theme-tg-stars" aria-hidden="true" />
+      <span className="theme-tg-knob" aria-hidden="true">
+        <svg className="theme-tg-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+          <circle cx="12" cy="12" r="4.2" fill="currentColor" stroke="none" />
+          <path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" />
+        </svg>
+        <svg className="theme-tg-moon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a.6.6 0 0 0-.8-.7A9.6 9.6 0 1 0 21.2 15.4a.6.6 0 0 0-.7-.8Z" />
+        </svg>
+      </span>
+    </button>
+  )
+}
+
 export function Header({ lang, c, path, available, quoteHref }: Ctx) {
   const ukr = mainServices(c, 'ukraine')
   const intl = mainServices(c, 'international')
@@ -118,6 +137,7 @@ export function Header({ lang, c, path, available, quoteHref }: Ctx) {
           <a className="hdr-phone" href={links.tel}>
             {contacts.phoneDisplay}
           </a>
+          <ThemeToggle label={c.ui.theme} />
           <LangSwitch lang={lang} available={available} path={path} label={c.ui.langSwitch} />
           <a className="btn btn--acc btn--sm hdr-cta" href={quoteHref}>
             {c.ui.ctaShort}
@@ -297,7 +317,7 @@ function TruckRoad({ label }: { label: string }) {
             <g className="truck-body">
               <g className="truck-idle">
                 {/* прицеп */}
-                <rect x="2" y="6" width="100" height="34" rx="3" fill="#1d2125" />
+                <rect className="truck-trailer" x="2" y="6" width="100" height="34" rx="3" />
                 <rect x="2" y="30" width="100" height="3" fill="#04ffa3" />
                 <rect x="6" y="10" width="2" height="18" rx="1" fill="#2a3036" />
                 <text x="14" y="24" fill="#04ffa3" fontSize="12" fontWeight="800" letterSpacing="0.5">

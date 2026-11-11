@@ -31,6 +31,7 @@ export const sl: LangContent = {
     },
     routesHead: { route: 'Relacija', km: 'Razdalja', bus: 'Kombi do 2 t', fura: 'Tovornjak 22 t' },
     langSwitch: 'Jezik strani',
+    theme: 'Temna tema',
     units: { km: 'km', uah: 'UAH' },
   },
 

@@ -31,6 +31,7 @@ export const pl: LangContent = {
     },
     routesHead: { route: 'Trasa', km: 'Odległość', bus: 'Bus do 2 t', fura: 'TIR 22 t' },
     langSwitch: 'Język strony',
+    theme: 'Ciemny motyw',
     units: { km: 'km', uah: 'UAH' },
   },
 
