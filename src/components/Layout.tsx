@@ -363,8 +363,8 @@ function TruckRoad({ label }: { label: string }) {
             ))}
             {/* Фары: свет включается при запуске, заметен в тёмной теме */}
             <g className="truck-beam">
-              <path d="M146 33.2 L214 22 L214 50 L146 36.4 Z" fill="url(#truck-beam)" />
-              <ellipse cx="186" cy="53.5" rx="30" ry="3" fill="url(#truck-spot)" />
+              <path d="M146 33.2 L232 20 L232 52 L146 36.4 Z" fill="url(#truck-beam)" />
+              <ellipse cx="194" cy="53.5" rx="36" ry="3" fill="url(#truck-spot)" />
               <circle cx="145" cy="34.5" r="3.2" fill="#fff6d6" opacity="0.7" />
             </g>
           </svg>
