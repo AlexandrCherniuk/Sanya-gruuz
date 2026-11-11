@@ -58,7 +58,7 @@ export const pl: LangContent = {
       items: [
         { title: 'Zapytanie', text: 'Wypełnij formularz, zadzwoń lub napisz na komunikatorze: skąd, dokąd i co wieziemy.' },
         { title: 'Wycena i zlecenie', text: 'Logistyk dobiera auto i trasę, podaje cenę. Warunki zapisujemy w zleceniu transportowym.' },
-        { title: 'Podstawienie auta', text: 'Auto przyjeżdża na załadunek o umówionej godzinie. Kierowca sprawdza zabezpieczenie ładunku.' },
+        { title: 'Podstawienie auta', text: 'Auto przyjeżdża na załadunek o umówionej godzinie. Kierowca zapewnia solidne zabezpieczenie ładunku.' },
         { title: 'Dostawa', text: 'Jesteśmy w kontakcie aż do rozładunku i mówimy, gdzie jest teraz ładunek.' },
       ],
       note: 'Przy rezerwacji auta logistyk może poprosić o przedpłatę. Sposób płatności zapisujemy w zleceniu transportowym.',
