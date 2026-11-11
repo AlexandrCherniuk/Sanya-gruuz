@@ -68,6 +68,7 @@ export const sl: LangContent = {
       title: 'Tovor pod nadzorom',
       sub: 'Brez praznih obljub: to je tisto, kar zares naredimo, da prevoz poteka gladko.',
       items: [
+        { icon: 'check', title: 'Rešimo vsako težavo', text: 'Izkušnje nam pomagajo rešiti večino vprašanj, ki se pojavijo na poti: dokumente, dovoljenja, zamude na meji in carini.' },
         { icon: 'contract', title: 'Cena se na poti ne spremeni', text: 'Pot, roke in ceno zapišemo v naročilo še pred nakladanjem.' },
         { icon: 'chat', title: 'Logist je vedno dosegljiv', text: 'Telefon, Viber, Telegram, WhatsApp. Povemo, kje je vozilo in kdaj prispe.' },
         { icon: 'truck', title: 'Ne plačate preveč za prostor', text: 'Vozilo izberemo glede na tovor, za manjše pošiljke ponudimo zbirni prevoz.' },

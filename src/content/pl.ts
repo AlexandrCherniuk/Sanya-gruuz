@@ -68,6 +68,7 @@ export const pl: LangContent = {
       title: 'Ładunek pod kontrolą',
       sub: 'Bez pustych obietnic: oto co konkretnie robimy, żeby transport przebiegł bez niespodzianek.',
       items: [
+        { icon: 'check', title: 'Rozwiązujemy każdy problem', text: 'Doświadczenie pomaga nam rozwiązać większość spraw, które pojawiają się w trasie: dokumenty, zezwolenia, opóźnienia na granicy i w urzędzie celnym.' },
         { icon: 'contract', title: 'Cena nie zmieni się w trasie', text: 'Trasę, terminy i koszt wpisujemy do zlecenia jeszcze przed załadunkiem.' },
         { icon: 'chat', title: 'Logistyk zawsze pod telefonem', text: 'Telefon, Viber, Telegram, WhatsApp. Powiemy, gdzie jest auto i kiedy dojedzie.' },
         { icon: 'truck', title: 'Nie przepłacasz za przestrzeń', text: 'Dobieramy nadwozie do ładunku, a dla małych partii proponujemy doładunek.' },

@@ -68,6 +68,7 @@ export const en: LangContent = {
       title: 'Your cargo under control',
       sub: 'No empty promises: here is what we actually do to keep your shipment on track.',
       items: [
+        { icon: 'check', title: 'We solve any problem', text: 'Our experience helps us sort out most issues that come up on the road: documents, permits, delays at the border and at customs.' },
         { icon: 'contract', title: 'No price changes on the road', text: 'Route, timing and price go into the transport order before loading.' },
         { icon: 'chat', title: 'Your manager stays in touch', text: 'Phone, Viber, Telegram, WhatsApp. We tell you where the truck is and when to expect it.' },
         { icon: 'truck', title: 'Pay only for the space you need', text: 'We match the vehicle to your cargo and offer groupage for small shipments.' },
