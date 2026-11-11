@@ -128,7 +128,7 @@ export const pl: LangContent = {
     h1: 'Transport towarów do Ukrainy i po Europie',
     h1Accent: 'od 1 tony',
     lead: 'Dobierzemy auto pod Twój ładunek: bus, TIR, niskopodwoziówkę, autolawetę albo HDS. Wozimy między Polską, Europą i Ukrainą, po całej Ukrainie, sprowadzamy też towary z Chin.',
-    bullets: ['Bus od 0,6 €/km, TIR od 1,1 €/km w Europie', 'Auto na wyłączność albo doładunek', 'Warunki zapisane w zleceniu'],
+    bullets: ['Bus od 1,2 €/km, TIR od 1,5 €/km w Europie', 'Auto na wyłączność albo doładunek', 'Warunki zapisane w zleceniu'],
     faq: [
       {
         q: 'Jak poznać cenę transportu?',
@@ -176,7 +176,7 @@ export const pl: LangContent = {
         { label: 'Przestrzeń, D×S×W', value: 'do 4,8×2,2×2,2 m' },
         { label: 'Palety', value: 'do 8–10' },
       ],
-      price: 'od 20 UAH/km',
+      price: 'od 60 UAH/km',
     },
     {
       id: 't5',
@@ -188,7 +188,7 @@ export const pl: LangContent = {
         { label: 'Przestrzeń, D×S×W', value: 'do 7,2×2,45×2,5 m' },
         { label: 'Palety', value: 'do 15–18' },
       ],
-      price: 'od 30 UAH/km',
+      price: 'od 80 UAH/km',
     },
     {
       id: 't10',
@@ -200,7 +200,7 @@ export const pl: LangContent = {
         { label: 'Przestrzeń, D×S×W', value: 'do 9×2,45×2,7 m' },
         { label: 'Palety', value: 'do 22' },
       ],
-      price: 'od 35 UAH/km',
+      price: 'od 100 UAH/km',
     },
     {
       id: 'fura',
@@ -212,7 +212,7 @@ export const pl: LangContent = {
         { label: 'Przestrzeń, D×S×W', value: '13,6×2,45×2,7 m' },
         { label: 'Palety', value: 'do 33–34' },
       ],
-      price: 'od 45 UAH/km',
+      price: 'od 70 UAH/km',
     },
     {
       id: 'coupler',
@@ -224,7 +224,7 @@ export const pl: LangContent = {
         { label: 'Przestrzeń', value: '2 × 7,7 m' },
         { label: 'Palety', value: 'do 36–38' },
       ],
-      price: 'od 50 UAH/km',
+      price: 'od 80 UAH/km',
     },
     {
       id: 'carrier',
@@ -235,7 +235,7 @@ export const pl: LangContent = {
         { label: 'Warianty', value: 'laweta, otwarta, zamknięta' },
         { label: 'Także', value: 'motocykle, auta powypadkowe' },
       ],
-      price: 'od 25 UAH/km',
+      price: 'od 40 UAH/km',
     },
     {
       id: 'lowbed',
@@ -246,7 +246,7 @@ export const pl: LangContent = {
         { label: 'Platforma', value: 'niskopodwoziowa, teleskopowa' },
         { label: 'Zezwolenia', value: 'załatwiamy pod trasę' },
       ],
-      price: 'od 75 UAH/km',
+      price: 'od 100 UAH/km',
     },
     {
       id: 'manipulator',
@@ -257,7 +257,7 @@ export const pl: LangContent = {
         { label: 'Żuraw', value: 'od 3 do 7 t' },
         { label: 'Przewóz', value: 'do 10 t' },
       ],
-      price: 'od 60 UAH/km',
+      price: 'od 100 UAH/km',
     },
     {
       id: 'reefer',
@@ -268,7 +268,7 @@ export const pl: LangContent = {
         { label: 'Temperatura', value: 'od −20 do +20 °C' },
         { label: 'Palety', value: 'do 33' },
       ],
-      price: 'od 50 UAH/km',
+      price: 'od 80 UAH/km',
     },
     {
       id: 'tipper',
@@ -279,7 +279,7 @@ export const pl: LangContent = {
         { label: 'Ładowność', value: 'do 25–40 t' },
         { label: 'Rozładunek', value: 'wywrotem' },
       ],
-      price: 'od 60 UAH/km',
+      price: 'od 100 UAH/km',
     },
     {
       id: 'tanker',
@@ -289,7 +289,7 @@ export const pl: LangContent = {
         { label: 'Objętość', value: '20–40 m³' },
         { label: 'Rodzaje', value: 'spożywcza, chemiczna, paliwowa' },
       ],
-      price: 'od 60 UAH/km',
+      price: 'od 100 UAH/km',
     },
     {
       id: 'crane',
@@ -309,7 +309,7 @@ export const pl: LangContent = {
       meta: {
         title: 'Transport towarów po Ukrainie od 1 tony',
         description:
-          'Transport między miastami Ukrainy: bus do 2 t, ciężarówki 5–10 t, TIR 22 t, ponadgabaryty. Stawki od 20 UAH/km, auto na wyłączność albo doładunek.',
+          'Transport między miastami Ukrainy: bus do 2 t, ciężarówki 5–10 t, TIR 22 t, ponadgabaryty. Stawki od 60 UAH/km, auto na wyłączność albo doładunek.',
       },
       h1: 'Transport towarów po Ukrainie',
       lead: 'Wozimy między dowolnymi miastami i wsiami Ukrainy: od kilku kartonów w doładunku po pełnego TIR-a albo ponadgabaryt na niskopodwoziówce.',
@@ -334,7 +334,7 @@ export const pl: LangContent = {
       faq: [
         {
           q: 'Ile kosztuje transport po Ukrainie?',
-          a: 'Bus do 2 t na wyłączność od 20 UAH/km, ciężarówka 5 t od 30, 10 t od 35, TIR 22 t od 45 UAH/km. Dokładna cena zależy od ładunku i trasy.',
+          a: 'Bus do 2 t na wyłączność od 60 UAH/km, ciężarówka 5 t od 50, 10 t od 60, TIR 22 t od 70 UAH/km. Dokładna cena zależy od ładunku i trasy.',
         },
         {
           q: 'Jak szybko można podstawić auto?',
@@ -378,7 +378,7 @@ export const pl: LangContent = {
       faq: [
         {
           q: 'Jak liczy się cenę transportu międzynarodowego?',
-          a: 'Drogą: za kilometr albo ryczałtem za trasę. Bus do 2 t orientacyjnie 0,6–0,8 €/km, TIR 22 t 1,1–1,5 €/km, paleta w doładunku od 0,2 €/km. Morze i samolot: za metr sześcienny albo kilogram.',
+          a: 'Drogą: za kilometr albo ryczałtem za trasę. Bus do 2 t orientacyjnie 1,2 €/km, TIR 22 t 1,5 €/km, paleta w doładunku od 0,4 €/km. Morze i samolot: za metr sześcienny albo kilogram.',
         },
         {
           q: 'Kto zajmuje się odprawą celną?',
@@ -398,15 +398,15 @@ export const pl: LangContent = {
       slug: 'bus',
       group: 'ukraine',
       meta: {
-        title: 'Transport busem do 2 ton po Ukrainie od 20 UAH/km',
+        title: 'Transport busem do 2 ton po Ukrainie od 60 UAH/km',
         description:
           'Bus dostawczy do 2 t i 20 m³ na przeprowadzki, meble i małe partie towaru. Auto na wyłączność albo doładunek, przejazd z ładunkiem, tragarze.',
       },
-      card: { icon: 'bus', title: 'Bus do 2 t', text: 'Przeprowadzki, meble, AGD, małe partie', price: 'od 20 UAH/km' },
+      card: { icon: 'bus', title: 'Bus do 2 t', text: 'Przeprowadzki, meble, AGD, małe partie', price: 'od 60 UAH/km' },
       h1: 'Transport busem do 2 ton',
       lead: 'Bus dostawczy typu Sprinter, Crafter albo Master: pojemny, szybki i tani przy małych ładunkach po Ukrainie.',
       bullets: ['Do 2 t i do 20 m³', 'Możesz jechać razem z ładunkiem', 'Tragarze w razie potrzeby'],
-      priceFrom: 'od 20 UAH/km',
+      priceFrom: 'od 60 UAH/km',
       intro: {
         title: 'Bus do małych ładunków',
         paragraphs: [
@@ -431,9 +431,9 @@ export const pl: LangContent = {
       prices: {
         title: 'Ceny busa',
         rows: [
-          { label: 'Bus do 2 t na wyłączność', value: 'od 20 UAH/km' },
-          { label: 'Rzeczy i meble (przeprowadzka)', value: 'od 12 UAH/km' },
-          { label: 'Doładunek', value: 'od 10 UAH/km' },
+          { label: 'Bus do 2 t na wyłączność', value: 'od 60 UAH/km' },
+          { label: 'Rzeczy i meble (przeprowadzka)', value: 'od 60 UAH/km' },
+          { label: 'Doładunek', value: 'od 15 UAH/km' },
           { label: 'Tragarz', value: 'od 250 UAH/godz.', note: 'minimum 2 godziny' },
         ],
         note: 'Stawki orientacyjne. Dokładną cenę logistyk poda po zapytaniu.',
@@ -458,15 +458,15 @@ export const pl: LangContent = {
       slug: 'trucks',
       group: 'ukraine',
       meta: {
-        title: 'Transport ciężarówką 5 i 10 ton po Ukrainie od 30 UAH/km',
+        title: 'Transport ciężarówką 5 i 10 ton po Ukrainie od 80 UAH/km',
         description:
-          'Ciężarówki 5 t i 10 t do ładunków handlowych, palet, maszyn i materiałów budowlanych. Plandeka, izoterma, winda. Stawki od 30 UAH/km.',
+          'Ciężarówki 5 t i 10 t do ładunków handlowych, palet, maszyn i materiałów budowlanych. Plandeka, izoterma, winda. Stawki od 80 UAH/km.',
       },
-      card: { icon: 'truck', title: 'Ciężarówki 5–10 t', text: 'Ładunki handlowe, palety, maszyny', price: 'od 30 UAH/km' },
+      card: { icon: 'truck', title: 'Ciężarówki 5–10 t', text: 'Ładunki handlowe, palety, maszyny', price: 'od 80 UAH/km' },
       h1: 'Transport ciężarówką 5 i 10 ton',
       lead: 'Średnie ciężarówki dla firm: partie towaru, palety, maszyny, materiały budowlane. Dobierzemy nadwozie do ładunku i sposobu załadunku.',
       bullets: ['Do 10 t i do 50 m³', 'Plandeka, izoterma, winda', 'Załadunek z góry, z boku, z tyłu'],
-      priceFrom: 'od 30 UAH/km',
+      priceFrom: 'od 80 UAH/km',
       intro: {
         title: 'Ciężarówki dla firm',
         paragraphs: [
@@ -491,8 +491,8 @@ export const pl: LangContent = {
       prices: {
         title: 'Ceny ciężarówek',
         rows: [
-          { label: 'Ciężarówka do 5 t', value: 'od 30 UAH/km' },
-          { label: 'Ciężarówka do 10 t', value: 'od 35 UAH/km' },
+          { label: 'Ciężarówka do 5 t', value: 'od 80 UAH/km' },
+          { label: 'Ciężarówka do 10 t', value: 'od 100 UAH/km' },
           { label: 'Doładunek', value: 'do uzgodnienia' },
         ],
         note: 'Stawki orientacyjne. Na cenę wpływają waga, objętość, rodzaj nadwozia i kierunek.',
@@ -517,15 +517,15 @@ export const pl: LangContent = {
       slug: 'fura',
       group: 'ukraine',
       meta: {
-        title: 'Transport TIR-em 22 t po Ukrainie od 45 UAH/km',
+        title: 'Transport TIR-em 22 t po Ukrainie od 70 UAH/km',
         description:
-          'TIR 22 t, 86–92 m³, 33 palety, a także zestawy z przyczepą do 120 m³. Ładunki całopojazdowe po Ukrainie i do Europy. Stawki od 45 UAH/km.',
+          'TIR 22 t, 86–92 m³, 33 palety, a także zestawy z przyczepą do 120 m³. Ładunki całopojazdowe po Ukrainie i do Europy. Stawki od 70 UAH/km.',
       },
-      card: { icon: 'trailer', title: 'TIR 22 t i tandem', text: 'Całe auta, do 34 palet', price: 'od 45 UAH/km' },
+      card: { icon: 'trailer', title: 'TIR 22 t i tandem', text: 'Całe auta, do 34 palet', price: 'od 70 UAH/km' },
       h1: 'Transport TIR-em 22 tony',
       lead: 'Naczepy plandekowe i zestawy z przyczepą do dużych partii: do 22 ton, do 34 palet albo do 120 m³ lekkiego, objętościowego ładunku.',
       bullets: ['Do 22 t, 86–120 m³', 'Do 33–38 palet', 'Pełne rozsunięcie plandeki'],
-      priceFrom: 'od 45 UAH/km',
+      priceFrom: 'od 70 UAH/km',
       intro: {
         title: 'Cały ładunek jednym autem',
         paragraphs: [
@@ -550,9 +550,9 @@ export const pl: LangContent = {
       prices: {
         title: 'Ceny TIR-a',
         rows: [
-          { label: 'TIR 22 t (plandeka)', value: 'od 45 UAH/km' },
-          { label: 'Tandem do 120 m³', value: 'od 50 UAH/km' },
-          { label: 'TIR po Europie', value: '1,1–1,5 €/km' },
+          { label: 'TIR 22 t (plandeka)', value: 'od 70 UAH/km' },
+          { label: 'Tandem do 120 m³', value: 'od 80 UAH/km' },
+          { label: 'TIR po Europie', value: 'od 1,5 €/km' },
         ],
         note: 'Stawki orientacyjne. Cena zależy od trasy, sezonu i dostępności ładunku powrotnego.',
       },
@@ -568,7 +568,7 @@ export const pl: LangContent = {
         },
         {
           q: 'Czy jeździcie TIR-em za granicę?',
-          a: 'Tak, nasze auta jeżdżą do krajów Europy i z powrotem. Orientacyjna stawka to 1,1–1,5 €/km.',
+          a: 'Tak, nasze auta jeżdżą do krajów Europy i z powrotem. Orientacyjna stawka to 1,5 €/km.',
         },
       ],
     },
@@ -576,15 +576,15 @@ export const pl: LangContent = {
       slug: 'negabaryt',
       group: 'ukraine',
       meta: {
-        title: 'Transport ponadgabarytowy niskopodwoziówką od 75 UAH/km',
+        title: 'Transport ponadgabarytowy niskopodwoziówką od 100 UAH/km',
         description:
           'Ponadgabaryty i ładunki ciężkie do 80 t: maszyny budowlane i rolnicze, urządzenia, domy modułowe. Niskopodwoziówki, platformy, zezwolenia i trasa.',
       },
-      card: { icon: 'oversized', title: 'Ponadgabaryty', text: 'Maszyny i urządzenia do 80 t', price: 'od 75 UAH/km' },
+      card: { icon: 'oversized', title: 'Ponadgabaryty', text: 'Maszyny i urządzenia do 80 t', price: 'od 100 UAH/km' },
       h1: 'Transport ponadgabarytowy',
       lead: 'Niskopodwoziówkami i platformami wozimy to, co nie mieści się w zwykłym nadwoziu: maszyny, urządzenia, konstrukcje. Załatwiamy zezwolenia i planujemy trasę.',
       bullets: ['Do 60–80 t', 'Naczepy niskopodwoziowe i teleskopowe', 'Zezwolenia i trasa pod ładunek'],
-      priceFrom: 'od 75 UAH/km',
+      priceFrom: 'od 100 UAH/km',
       cargo: {
         title: 'Co przewozimy',
         items: ['Koparki, ładowarki, spycharki', 'Ciągniki i kombajny', 'Maszyny drogowe', 'Urządzenia i linie przemysłowe', 'Konstrukcje stalowe, zbiorniki', 'Kioski, kontenery, domy modułowe', 'Prefabrykaty betonowe, płyty'],
@@ -604,7 +604,7 @@ export const pl: LangContent = {
       prices: {
         title: 'Ceny ponadgabarytów',
         rows: [
-          { label: 'Niskopodwoziówka po Ukrainie', value: 'od 75 UAH/km' },
+          { label: 'Niskopodwoziówka po Ukrainie', value: 'od 100 UAH/km' },
           { label: 'Zezwolenia i pilotaż', value: 'liczone osobno' },
         ],
         note: 'Cenę liczymy indywidualnie: zależy od wymiarów, wagi i trasy.',
@@ -633,11 +633,11 @@ export const pl: LangContent = {
         description:
           'Przewóz aut autolawetą i lawetą po Ukrainie i z Europy: osobowe, motocykle, elektryki, auta powypadkowe. Lawety otwarte i zamknięte.',
       },
-      card: { icon: 'car', title: 'Autolaweta', text: 'Auta po Ukrainie i z Europy', price: 'od 25 UAH/km' },
+      card: { icon: 'car', title: 'Autolaweta', text: 'Auta po Ukrainie i z Europy', price: 'od 40 UAH/km' },
       h1: 'Transport samochodów autolawetą',
       lead: 'Przewieziemy jedno auto lawetą albo kilka autolawetą: po Ukrainie, z Europy do Ukrainy i z powrotem.',
       bullets: ['Laweta na 1–2 auta, autolaweta do 8', 'Lawety otwarte i zamknięte', 'Auta powypadkowe i niejezdne'],
-      priceFrom: 'od 25 UAH/km',
+      priceFrom: 'od 40 UAH/km',
       cargo: {
         title: 'Co przewozimy',
         items: ['Samochody osobowe', 'SUV-y i minivany', 'Samochody elektryczne', 'Motocykle i quady', 'Auta powypadkowe', 'Nowe auta z salonu'],
@@ -655,7 +655,7 @@ export const pl: LangContent = {
       prices: {
         title: 'Ceny autolawety',
         rows: [
-          { label: 'Po Ukrainie', value: 'od 25 UAH/km' },
+          { label: 'Po Ukrainie', value: 'od 40 UAH/km' },
           { label: 'Z Litwy do Ukrainy', value: 'od 850 €' },
         ],
         note: 'Cena zależy od modelu, wagi, trasy i liczby aut.',
@@ -680,11 +680,11 @@ export const pl: LangContent = {
         description:
           'Samochód z HDS, skrzynią 6–8 m i żurawiem do 7 t: załadunek i przewóz bloczków, kiosków, urządzeń, materiałów budowlanych bez osobnego dźwigu.',
       },
-      card: { icon: 'manipulator', title: 'HDS', text: 'Sam załaduje i przywiezie', price: 'od 60 UAH/km' },
+      card: { icon: 'manipulator', title: 'HDS', text: 'Sam załaduje i przywiezie', price: 'od 100 UAH/km' },
       h1: 'Usługi HDS',
       lead: 'Ciężarówka z żurawiem HDS sama załaduje, przywiezie i rozładuje ładunek tam, gdzie nie ma wózka widłowego ani osobnego dźwigu.',
       bullets: ['Skrzynia 6–8 m', 'Żuraw od 3 do 7 t', 'Kijów, obwód i cała Ukraina'],
-      priceFrom: 'od 60 UAH/km',
+      priceFrom: 'od 100 UAH/km',
       cargo: {
         title: 'Co przewozimy',
         items: ['Materiały budowlane na paletach', 'Kręgi betonowe, bloczki, płyty', 'Kioski, kontenery budowlane', 'Agregaty, urządzenia', 'Kontenery', 'Sejfy i ciężkie przedmioty'],
@@ -698,7 +698,7 @@ export const pl: LangContent = {
       prices: {
         title: 'Ceny',
         rows: [
-          { label: 'HDS (przewóz)', value: 'od 60 UAH/km' },
+          { label: 'HDS (przewóz)', value: 'od 100 UAH/km' },
           { label: 'Praca w mieście', value: 'za godzinę, na zapytanie' },
         ],
         note: 'Cena zależy od udźwigu żurawia, czasu pracy i odległości.',
@@ -747,13 +747,13 @@ export const pl: LangContent = {
       meta: {
         title: 'Przeprowadzki mieszkań i biur po Ukrainie i do Europy',
         description:
-          'Przeprowadzki kompleksowe: bus 15–20 m³, tragarze od 250 UAH/godz., pakowanie, przeprowadzki między miastami i za granicę. Auto na wyłączność od 12 UAH/km.',
+          'Przeprowadzki kompleksowe: bus 15–20 m³, tragarze od 250 UAH/godz., pakowanie, przeprowadzki między miastami i za granicę. Auto na wyłączność od 60 UAH/km.',
       },
-      card: { icon: 'moving', title: 'Przeprowadzki', text: 'Mieszkanie, biuro, między miastami i za granicę', price: 'od 12 UAH/km' },
+      card: { icon: 'moving', title: 'Przeprowadzki', text: 'Mieszkanie, biuro, między miastami i za granicę', price: 'od 60 UAH/km' },
       h1: 'Przeprowadzki mieszkań i biur',
       lead: 'Przewieziemy rzeczy, meble i AGD do innego miasta lub kraju. Można zamówić auto z tragarzami, pakowanie i demontaż mebli.',
-      bullets: ['Auto na wyłączność od 12 UAH/km', 'Tragarze od 250 UAH/godz.', 'Po Ukrainie i do Europy'],
-      priceFrom: 'od 12 UAH/km',
+      bullets: ['Auto na wyłączność od 60 UAH/km', 'Tragarze od 250 UAH/godz.', 'Po Ukrainie i do Europy'],
+      priceFrom: 'od 60 UAH/km',
       intro: {
         title: 'Przeprowadzka bez stresu',
         paragraphs: [
@@ -778,8 +778,8 @@ export const pl: LangContent = {
       prices: {
         title: 'Ceny przeprowadzek',
         rows: [
-          { label: 'Auto na wyłączność 15–20 m³', value: 'od 12 UAH/km' },
-          { label: 'Doładunek', value: 'od 10 UAH/km' },
+          { label: 'Auto na wyłączność 15–20 m³', value: 'od 60 UAH/km' },
+          { label: 'Doładunek', value: 'od 15 UAH/km' },
           { label: 'Tragarz', value: 'od 250 UAH/godz.', note: 'minimum 2 godziny' },
           { label: 'Przeprowadzka do Europy', value: 'od 0,3 €/km' },
         ],
@@ -807,13 +807,13 @@ export const pl: LangContent = {
       meta: {
         title: 'Drobnica i doładunek po Ukrainie i do Europy',
         description:
-          'Doładunek (transport drobnicowy) dla małych partii: płacisz tylko za miejsce w aucie. Po Ukrainie od 10 UAH/km, do Europy od 0,2 €/km za paletę.',
+          'Doładunek (transport drobnicowy) dla małych partii: płacisz tylko za miejsce w aucie. Po Ukrainie od 15 UAH/km, do Europy od 0,4 €/km za paletę.',
       },
-      card: { icon: 'groupage', title: 'Drobnica i doładunek', text: 'Płacisz tylko za swoje miejsce', price: 'od 10 UAH/km' },
+      card: { icon: 'groupage', title: 'Drobnica i doładunek', text: 'Płacisz tylko za swoje miejsce', price: 'od 15 UAH/km' },
       h1: 'Drobnica i doładunek',
       lead: 'Mała partia nie potrzebuje osobnego auta. Dołożymy Twój ładunek do kursu w odpowiednim kierunku, a Ty zapłacisz tylko za zajęte miejsce.',
       bullets: ['Od jednej palety', 'Po Ukrainie i do Europy', 'Taniej niż auto na wyłączność'],
-      priceFrom: 'od 10 UAH/km',
+      priceFrom: 'od 15 UAH/km',
       sections: [
         {
           title: 'Dla kogo',
@@ -827,8 +827,8 @@ export const pl: LangContent = {
       prices: {
         title: 'Ceny doładunku',
         rows: [
-          { label: 'Doładunek po Ukrainie', value: 'od 10 UAH/km' },
-          { label: 'Paleta do 300 kg do Europy', value: '0,2–0,3 €/km' },
+          { label: 'Doładunek po Ukrainie', value: 'od 15 UAH/km' },
+          { label: 'Paleta do 300 kg do Europy', value: 'od 0,4 €/km' },
         ],
         note: 'Stawki orientacyjne, zależą od kierunku i ilości.',
       },
@@ -848,11 +848,11 @@ export const pl: LangContent = {
         description:
           'Transport towaru na paletach: bus do 8–10 palet, ciężarówki do 22, TIR do 34. Plandeka, izoterma, winda, załadunek z boku.',
       },
-      card: { icon: 'pallet', title: 'Palety', text: 'Od 1 do 34 palet w jednym kursie', price: 'od 20 UAH/km' },
+      card: { icon: 'pallet', title: 'Palety', text: 'Od 1 do 34 palet w jednym kursie', price: 'od 60 UAH/km' },
       h1: 'Transport towaru na paletach',
       lead: 'Od jednej palety w doładunku po pełnego TIR-a na 34 palety. Dobierzemy auto do liczby palet, wagi i sposobu załadunku.',
       bullets: ['1–34 palety', 'Winda i rozsuwana plandeka', 'Izoterma do żywności'],
-      priceFrom: 'od 20 UAH/km',
+      priceFrom: 'od 60 UAH/km',
       cargo: {
         title: 'Co przewozimy na paletach',
         items: ['Żywność i napoje', 'Materiały budowlane', 'AGD', 'Towary dla sieci handlowych', 'Elektrotechnika, kable', 'Surowce i gotowe wyroby'],
@@ -878,7 +878,7 @@ export const pl: LangContent = {
       meta: {
         title: 'Transport w Kijowie: miasto, obwód i cała Ukraina',
         description:
-          'Transport towarów w Kijowie i obwodzie kijowskim: bus od 350 UAH/godz., tragarze, przeprowadzki. Z Kijowa po Ukrainie od 20 UAH/km.',
+          'Transport towarów w Kijowie i obwodzie kijowskim: bus od 350 UAH/godz., tragarze, przeprowadzki. Z Kijowa po Ukrainie od 60 UAH/km.',
       },
       card: { icon: 'city', title: 'Transport w Kijowie', text: 'Miasto, obwód i kursy z Kijowa', price: 'od 350 UAH/godz.' },
       h1: 'Transport w Kijowie',
@@ -914,7 +914,7 @@ export const pl: LangContent = {
           { label: 'Ciężarówka 3–5 t w mieście', value: 'od 600 UAH/godz.', note: 'minimum 2 godziny' },
           { label: 'Poza miasto', value: 'od 17 UAH/km' },
           { label: 'Tragarz', value: 'od 250 UAH/godz.' },
-          { label: 'Z Kijowa po Ukrainie', value: 'od 20 UAH/km' },
+          { label: 'Z Kijowa po Ukrainie', value: 'od 60 UAH/km' },
         ],
         note: 'Stawki orientacyjne. Dokładną cenę logistyk poda po zapytaniu.',
       },
@@ -940,13 +940,13 @@ export const pl: LangContent = {
       meta: {
         title: 'Transport chłodniczy po Ukrainie i do Europy',
         description:
-          'Przewóz żywności i ładunków wymagających temperatury chłodniami od 1,5 do 22 t. Od −20 do +20 °C. Po Ukrainie od 50 UAH/km.',
+          'Przewóz żywności i ładunków wymagających temperatury chłodniami od 1,5 do 22 t. Od −20 do +20 °C. Po Ukrainie od 80 UAH/km.',
       },
-      card: { icon: 'reefer', title: 'Chłodnia', text: 'Żywność i ładunki w temperaturze', price: 'od 50 UAH/km' },
+      card: { icon: 'reefer', title: 'Chłodnia', text: 'Żywność i ładunki w temperaturze', price: 'od 80 UAH/km' },
       h1: 'Transport chłodniczy',
       lead: 'Przewieziemy żywność, leki, kwiaty i inne ładunki, które potrzebują stałej temperatury: po Ukrainie i do krajów Europy.',
       bullets: ['Od 1,5 do 22 t', 'Od −20 do +20 °C', 'Schłodzenie przed załadunkiem'],
-      priceFrom: 'od 50 UAH/km',
+      priceFrom: 'od 80 UAH/km',
       cargo: {
         title: 'Co przewozimy',
         items: ['Mięso i ryby', 'Nabiał', 'Warzywa i owoce', 'Mrożonki', 'Wyroby cukiernicze', 'Leki', 'Kwiaty i rośliny', 'Napoje'],
@@ -968,8 +968,8 @@ export const pl: LangContent = {
       prices: {
         title: 'Ceny chłodni',
         rows: [
-          { label: 'Chłodnia do 5 t', value: 'od 35 UAH/km' },
-          { label: 'Chłodnia 22 t', value: 'od 50 UAH/km' },
+          { label: 'Chłodnia do 5 t', value: 'od 100 UAH/km' },
+          { label: 'Chłodnia 22 t', value: 'od 80 UAH/km' },
         ],
         note: 'Stawki orientacyjne, zależą od temperatury i trasy.',
       },
@@ -991,13 +991,13 @@ export const pl: LangContent = {
       meta: {
         title: 'Transport ładunków sypkich wywrotkami i zbożówkami',
         description:
-          'Piasek, kruszywo, ziemia, zboże, nawozy: wywrotki i zbożówki 20–60 m³ po Ukrainie. Stawki od 60 UAH/km, pełne załadunki.',
+          'Piasek, kruszywo, ziemia, zboże, nawozy: wywrotki i zbożówki 20–60 m³ po Ukrainie. Stawki od 100 UAH/km, pełne załadunki.',
       },
-      card: { icon: 'bulk', title: 'Ładunki sypkie', text: 'Wywrotki i zbożówki 20–60 m³', price: 'od 60 UAH/km' },
+      card: { icon: 'bulk', title: 'Ładunki sypkie', text: 'Wywrotki i zbożówki 20–60 m³', price: 'od 100 UAH/km' },
       h1: 'Transport ładunków sypkich',
       lead: 'Wywrotki i zbożówki do sypkich materiałów budowlanych, zboża i nawozów. Pełny załadunek, dostawa na budowę, do elewatora lub magazynu.',
       bullets: ['Skrzynia 20–60 m³', 'Wywrotki i zbożówki', 'W całej Ukrainie'],
-      priceFrom: 'od 60 UAH/km',
+      priceFrom: 'od 100 UAH/km',
       cargo: {
         title: 'Co przewozimy',
         items: ['Piasek, tłuczeń, przesiewka, żwir', 'Ziemia i czarnoziem', 'Keramzyt', 'Pszenica, kukurydza, jęczmień', 'Słonecznik, rzepak, soja', 'Nawozy mineralne', 'Cement, sól', 'Torf, węgiel'],
@@ -1010,7 +1010,7 @@ export const pl: LangContent = {
       ],
       prices: {
         title: 'Ceny',
-        rows: [{ label: 'Wywrotka / zbożówka', value: 'od 60 UAH/km' }],
+        rows: [{ label: 'Wywrotka / zbożówka', value: 'od 100 UAH/km' }],
         note: 'Cena zależy od ilości, odległości i liczby kursów.',
       },
       vehicles: ['tipper'],
@@ -1029,11 +1029,11 @@ export const pl: LangContent = {
         description:
           'Płyny spożywcze i techniczne, olej, woda, paliwo: cysterny 20–40 m³ po Ukrainie i do Europy. Cysterna dobrana do rodzaju ładunku.',
       },
-      card: { icon: 'liquid', title: 'Ładunki płynne', text: 'Cysterny 20–40 m³', price: 'od 60 UAH/km' },
+      card: { icon: 'liquid', title: 'Ładunki płynne', text: 'Cysterny 20–40 m³', price: 'od 100 UAH/km' },
       h1: 'Transport ładunków płynnych',
       lead: 'Dobierzemy cysternę do rodzaju płynu, jego właściwości i ilości: spożywczą, chemiczną albo paliwową. Pełne załadunki po Ukrainie i do UE.',
       bullets: ['Cysterny 20–40 m³', 'Spożywcze, chemiczne, paliwowe', 'Po Ukrainie i do Europy'],
-      priceFrom: 'od 60 UAH/km',
+      priceFrom: 'od 100 UAH/km',
       cargo: {
         title: 'Co przewozimy',
         items: ['Olej roślinny', 'Mleko i surowiec mleczarski', 'Melasa', 'Woda pitna i techniczna', 'Płyny techniczne', 'Nawozy płynne', 'Paliwa i produkty naftowe', 'Asfalt'],
@@ -1046,7 +1046,7 @@ export const pl: LangContent = {
       ],
       prices: {
         title: 'Ceny',
-        rows: [{ label: 'Cysterna', value: 'od 60 UAH/km' }],
+        rows: [{ label: 'Cysterna', value: 'od 100 UAH/km' }],
         note: 'Cena zależy od rodzaju cysterny, ilości i trasy.',
       },
       vehicles: ['tanker'],
@@ -1065,13 +1065,13 @@ export const pl: LangContent = {
       meta: {
         title: 'Transport Ukraina – Europa i z Europy do Ukrainy',
         description:
-          'Transport Ukraina – Polska, Niemcy, Czechy, Słowenia i inne kraje UE. Bus od 0,6 €/km, TIR od 1,1 €/km, doładunek od jednej palety.',
+          'Transport Ukraina – Polska, Niemcy, Czechy, Słowenia i inne kraje UE. Bus od 1,2 €/km, TIR od 1,5 €/km, doładunek od jednej palety.',
       },
-      card: { icon: 'europe', title: 'Europa', text: 'Ukraina ↔ UE i kursy po Europie', price: 'od 0,6 €/km' },
+      card: { icon: 'europe', title: 'Europa', text: 'Ukraina ↔ UE i kursy po Europie', price: 'od 1,2 €/km' },
       h1: 'Transport Ukraina – Europa',
       lead: 'Wozimy ładunki z Ukrainy do krajów UE i z powrotem, a także między krajami Europy. Autem na wyłączność albo w doładunku od jednej palety.',
       bullets: ['Bus, TIR, niskopodwoziówka, autolaweta', 'Doładunek od jednej palety', 'CMR i odprawa celna'],
-      priceFrom: 'od 0,6 €/km',
+      priceFrom: 'od 1,2 €/km',
       intro: {
         title: 'Transport między Ukrainą a UE',
         paragraphs: [
@@ -1096,10 +1096,10 @@ export const pl: LangContent = {
       prices: {
         title: 'Ceny orientacyjne',
         rows: [
-          { label: 'Bus do 2 t', value: '0,6–0,8 €/km' },
-          { label: 'TIR 22 t', value: '1,1–1,5 €/km' },
-          { label: 'Paleta do 300 kg (doładunek)', value: '0,2–0,3 €/km' },
-          { label: 'Ukraina – Polska, TIR', value: 'od 900 €' },
+          { label: 'Bus do 2 t', value: 'od 1,2 €/km' },
+          { label: 'TIR 22 t', value: 'od 1,5 €/km' },
+          { label: 'Paleta do 300 kg (doładunek)', value: 'od 0,4 €/km' },
+          { label: 'Ukraina – Polska, TIR', value: 'od 1 000 €' },
           { label: 'Ukraina – Niemcy, TIR', value: 'od 1800 €' },
         ],
         note: 'Ceny orientacyjne: zależą od ilości, trasy, sezonu i dostępności ładunku powrotnego.',
@@ -1277,12 +1277,12 @@ export const pl: LangContent = {
       meta: {
         title: 'Transport Polska – Ukraina i Ukraina – Polska',
         description:
-          'Transport towarów z Polski do Ukrainy i z Ukrainy do Polski: Warszawa, Wrocław, Poznań, Gdańsk, Lublin. TIR od 900 €, bus od 400 €, doładunek od jednej palety.',
+          'Transport towarów z Polski do Ukrainy i z Ukrainy do Polski: Warszawa, Wrocław, Poznań, Gdańsk, Lublin. TIR od 1 000 €, bus od 400 €, doładunek od jednej palety.',
       },
       card: { icon: 'flag', title: 'Polska', text: 'Najpopularniejszy kierunek', price: 'od 400 €' },
       h1: 'Transport Polska – Ukraina',
       lead: 'Co tydzień wozimy ładunki z Polski do Ukrainy i z powrotem: busem, TIR-em albo w doładunku. Warszawa, Wrocław, Poznań, Kraków, Gdańsk, Lublin i inne miasta.',
-      bullets: ['Bus od 400 €, TIR od 900 €', 'Doładunek od jednej palety', 'CMR i odprawa celna'],
+      bullets: ['Bus od 400 €, TIR od 1 000 €', 'Doładunek od jednej palety', 'CMR i odprawa celna'],
       priceFrom: 'od 400 €',
       cargo: {
         title: 'Co przewozimy',
@@ -1302,8 +1302,8 @@ export const pl: LangContent = {
         title: 'Ceny orientacyjne',
         rows: [
           { label: 'Bus do 2 t', value: 'od 400 €' },
-          { label: 'TIR 22 t', value: 'od 900 €' },
-          { label: 'Doładunek', value: 'od 0,2 €/km za paletę' },
+          { label: 'TIR 22 t', value: 'od 1 000 €' },
+          { label: 'Doładunek', value: 'od 0,4 €/km za paletę' },
         ],
         note: 'Cena zależy od miasta, ilości i dostępności ładunku powrotnego.',
       },
@@ -1377,7 +1377,7 @@ export const pl: LangContent = {
       faq: [
         {
           q: 'Ile kosztuje transport do Słowenii?',
-          a: 'Cenę liczymy pod trasę: zależy od ilości, miasta i formatu (auto na wyłączność czy doładunek). Orientacyjnie TIR po Europie to 1,1–1,5 €/km.',
+          a: 'Cenę liczymy pod trasę: zależy od ilości, miasta i formatu (auto na wyłączność czy doładunek). Orientacyjnie TIR po Europie to 1,5 €/km.',
         },
       ],
     },
@@ -1387,37 +1387,37 @@ export const pl: LangContent = {
     meta: {
       title: 'Cennik transportu towarów: stawki za km w Ukrainie i Europie',
       description:
-        'Orientacyjne stawki transportu po Ukrainie: bus od 20 UAH/km, 5 t od 30, 10 t od 35, TIR od 45. Ceny na Europę, tragarzy i przeprowadzki.',
+        'Orientacyjne stawki transportu po Ukrainie: bus od 60 UAH/km, 5 t od 50, 10 t od 60, TIR od 70. Ceny na Europę, tragarzy i przeprowadzki.',
     },
     h1: 'Cennik transportu towarów',
     lead: 'Orientacyjne stawki do zaplanowania budżetu. Dokładną cenę logistyk podaje po zapytaniu i wpisuje do zlecenia transportowego.',
     ukraineTitle: 'Po Ukrainie, auto na wyłączność',
     ukraineRows: [
-      { label: 'Bus do 2 t, do 20 m³', value: 'od 20 UAH/km' },
-      { label: 'Ciężarówka do 5 t', value: 'od 30 UAH/km' },
-      { label: 'Ciężarówka do 10 t', value: 'od 35 UAH/km' },
-      { label: 'TIR do 22 t', value: 'od 45 UAH/km' },
-      { label: 'Tandem do 120 m³', value: 'od 50 UAH/km' },
-      { label: 'Chłodnia 22 t', value: 'od 50 UAH/km' },
-      { label: 'Wywrotka / zbożówka', value: 'od 60 UAH/km' },
-      { label: 'Cysterna', value: 'od 60 UAH/km' },
-      { label: 'Autolaweta', value: 'od 25 UAH/km' },
-      { label: 'HDS', value: 'od 60 UAH/km' },
-      { label: 'Niskopodwoziówka (ponadgabaryt)', value: 'od 75 UAH/km' },
+      { label: 'Bus do 2 t, do 20 m³', value: 'od 60 UAH/km' },
+      { label: 'Ciężarówka do 5 t', value: 'od 80 UAH/km' },
+      { label: 'Ciężarówka do 10 t', value: 'od 100 UAH/km' },
+      { label: 'TIR do 22 t', value: 'od 70 UAH/km' },
+      { label: 'Tandem do 120 m³', value: 'od 80 UAH/km' },
+      { label: 'Chłodnia 22 t', value: 'od 80 UAH/km' },
+      { label: 'Wywrotka / zbożówka', value: 'od 100 UAH/km' },
+      { label: 'Cysterna', value: 'od 100 UAH/km' },
+      { label: 'Autolaweta', value: 'od 40 UAH/km' },
+      { label: 'HDS', value: 'od 100 UAH/km' },
+      { label: 'Niskopodwoziówka (ponadgabaryt)', value: 'od 100 UAH/km' },
       { label: 'Dźwig samojezdny', value: 'na zapytanie' },
     ],
     extraTitle: 'Przeprowadzki i usługi dodatkowe',
     extraRows: [
-      { label: 'Przeprowadzka, auto 15–20 m³', value: 'od 12 UAH/km' },
-      { label: 'Doładunek po Ukrainie', value: 'od 10 UAH/km' },
+      { label: 'Przeprowadzka, auto 15–20 m³', value: 'od 60 UAH/km' },
+      { label: 'Doładunek po Ukrainie', value: 'od 15 UAH/km' },
       { label: 'Tragarz', value: 'od 250 UAH/godz.', note: 'minimum 2 godziny' },
     ],
     europeTitle: 'Europa',
     europeRows: [
-      { label: 'Bus do 2 t', value: '0,6–0,8 €/km' },
-      { label: 'TIR 22 t', value: '1,1–1,5 €/km' },
-      { label: 'Paleta do 300 kg (doładunek)', value: '0,2–0,3 €/km' },
-      { label: 'Ukraina – Polska, TIR', value: 'od 900 €' },
+      { label: 'Bus do 2 t', value: 'od 1,2 €/km' },
+      { label: 'TIR 22 t', value: 'od 1,5 €/km' },
+      { label: 'Paleta do 300 kg (doładunek)', value: 'od 0,4 €/km' },
+      { label: 'Ukraina – Polska, TIR', value: 'od 1 000 €' },
       { label: 'Ukraina – Niemcy, TIR', value: 'od 1800 €' },
     ],
     note: 'Ceny są orientacyjne i mogą się zmieniać. Ostateczna kwota zależy od ładunku, trasy i terminu.',

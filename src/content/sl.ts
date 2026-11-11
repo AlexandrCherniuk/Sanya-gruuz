@@ -128,7 +128,7 @@ export const sl: LangContent = {
     h1: 'Prevoz tovora v Ukrajino in po Evropi',
     h1Accent: 'od 1 tone',
     lead: 'Izberemo vozilo za vaš tovor: kombi, tovornjak s polprikolico, nizkopodnik, avtotransporter ali tovornjak z dvigalom. Vozimo med Slovenijo, Evropo in Ukrajino, po vsej Ukrajini in uvažamo blago iz Kitajske.',
-    bullets: ['Kombi od 0,6 €/km, tovornjak od 1,1 €/km v Evropi', 'Samostojno vozilo ali zbirni prevoz', 'Pogoji zapisani v naročilu'],
+    bullets: ['Kombi od 1,2 €/km, tovornjak od 1,5 €/km v Evropi', 'Samostojno vozilo ali zbirni prevoz', 'Pogoji zapisani v naročilu'],
     faq: [
       {
         q: 'Kako izvem ceno prevoza?',
@@ -176,7 +176,7 @@ export const sl: LangContent = {
         { label: 'Tovorni prostor, D×Š×V', value: 'do 4,8×2,2×2,2 m' },
         { label: 'Palete', value: 'do 8–10' },
       ],
-      price: 'od 20 UAH/km',
+      price: 'od 60 UAH/km',
     },
     {
       id: 't5',
@@ -188,7 +188,7 @@ export const sl: LangContent = {
         { label: 'Tovorni prostor, D×Š×V', value: 'do 7,2×2,45×2,5 m' },
         { label: 'Palete', value: 'do 15–18' },
       ],
-      price: 'od 30 UAH/km',
+      price: 'od 80 UAH/km',
     },
     {
       id: 't10',
@@ -200,7 +200,7 @@ export const sl: LangContent = {
         { label: 'Tovorni prostor, D×Š×V', value: 'do 9×2,45×2,7 m' },
         { label: 'Palete', value: 'do 22' },
       ],
-      price: 'od 35 UAH/km',
+      price: 'od 100 UAH/km',
     },
     {
       id: 'fura',
@@ -212,7 +212,7 @@ export const sl: LangContent = {
         { label: 'Tovorni prostor, D×Š×V', value: '13,6×2,45×2,7 m' },
         { label: 'Palete', value: 'do 33–34' },
       ],
-      price: 'od 45 UAH/km',
+      price: 'od 70 UAH/km',
     },
     {
       id: 'coupler',
@@ -224,7 +224,7 @@ export const sl: LangContent = {
         { label: 'Tovorni prostor', value: '2 × 7,7 m' },
         { label: 'Palete', value: 'do 36–38' },
       ],
-      price: 'od 50 UAH/km',
+      price: 'od 80 UAH/km',
     },
     {
       id: 'carrier',
@@ -235,7 +235,7 @@ export const sl: LangContent = {
         { label: 'Možnosti', value: 'avtovleka, odprt, zaprt' },
         { label: 'Tudi', value: 'motorji, poškodovana vozila' },
       ],
-      price: 'od 25 UAH/km',
+      price: 'od 40 UAH/km',
     },
     {
       id: 'lowbed',
@@ -246,7 +246,7 @@ export const sl: LangContent = {
         { label: 'Ploščad', value: 'nizkopodna, teleskopska' },
         { label: 'Dovoljenja', value: 'uredimo za relacijo' },
       ],
-      price: 'od 75 UAH/km',
+      price: 'od 100 UAH/km',
     },
     {
       id: 'manipulator',
@@ -257,7 +257,7 @@ export const sl: LangContent = {
         { label: 'Dvigalo', value: 'od 3 do 7 t' },
         { label: 'Prevoz', value: 'do 10 t' },
       ],
-      price: 'od 60 UAH/km',
+      price: 'od 100 UAH/km',
     },
     {
       id: 'reefer',
@@ -268,7 +268,7 @@ export const sl: LangContent = {
         { label: 'Temperatura', value: 'od −20 do +20 °C' },
         { label: 'Palete', value: 'do 33' },
       ],
-      price: 'od 50 UAH/km',
+      price: 'od 80 UAH/km',
     },
     {
       id: 'tipper',
@@ -279,7 +279,7 @@ export const sl: LangContent = {
         { label: 'Nosilnost', value: 'do 25–40 t' },
         { label: 'Razkladanje', value: 's prekucnikom' },
       ],
-      price: 'od 60 UAH/km',
+      price: 'od 100 UAH/km',
     },
     {
       id: 'tanker',
@@ -289,7 +289,7 @@ export const sl: LangContent = {
         { label: 'Prostornina', value: '20–40 m³' },
         { label: 'Vrste', value: 'živilska, kemična, za gorivo' },
       ],
-      price: 'od 60 UAH/km',
+      price: 'od 100 UAH/km',
     },
     {
       id: 'crane',
@@ -309,7 +309,7 @@ export const sl: LangContent = {
       meta: {
         title: 'Prevoz tovora po Ukrajini od 1 tone',
         description:
-          'Prevoz tovora med mesti v Ukrajini: kombi do 2 t, tovornjaki 5–10 t, tovornjak 22 t, izredni prevozi. Postavke od 20 UAH/km, samostojno vozilo ali zbirni prevoz.',
+          'Prevoz tovora med mesti v Ukrajini: kombi do 2 t, tovornjaki 5–10 t, tovornjak 22 t, izredni prevozi. Postavke od 60 UAH/km, samostojno vozilo ali zbirni prevoz.',
       },
       h1: 'Prevoz tovora po Ukrajini',
       lead: 'Vozimo med katerimi koli mesti in vasmi v Ukrajini: od nekaj škatel v zbirnem prevozu do polnega tovornjaka ali izrednega tovora na nizkopodniku.',
@@ -334,7 +334,7 @@ export const sl: LangContent = {
       faq: [
         {
           q: 'Koliko stane prevoz po Ukrajini?',
-          a: 'Samostojni kombi do 2 t od 20 UAH/km, tovornjak 5 t od 30, 10 t od 35, tovornjak 22 t od 45 UAH/km. Točna cena je odvisna od tovora in relacije.',
+          a: 'Samostojni kombi do 2 t od 60 UAH/km, tovornjak 5 t od 50, 10 t od 60, tovornjak 22 t od 70 UAH/km. Točna cena je odvisna od tovora in relacije.',
         },
         {
           q: 'Kako hitro lahko pride vozilo?',
@@ -378,7 +378,7 @@ export const sl: LangContent = {
       faq: [
         {
           q: 'Kako se izračuna cena mednarodnega prevoza?',
-          a: 'Cestno na kilometer ali v pavšalu za relacijo: kombi do 2 t okvirno 0,6–0,8 €/km, tovornjak 22 t 1,1–1,5 €/km, paleta v zbirnem prevozu od 0,2 €/km. Morje in letalo: na kubični meter ali kilogram.',
+          a: 'Cestno na kilometer ali v pavšalu za relacijo: kombi do 2 t okvirno 1,2 €/km, tovornjak 22 t 1,5 €/km, paleta v zbirnem prevozu od 0,4 €/km. Morje in letalo: na kubični meter ali kilogram.',
         },
         {
           q: 'Kdo poskrbi za carino?',
@@ -398,15 +398,15 @@ export const sl: LangContent = {
       slug: 'bus',
       group: 'ukraine',
       meta: {
-        title: 'Prevoz s kombijem do 2 t po Ukrajini od 20 UAH/km',
+        title: 'Prevoz s kombijem do 2 t po Ukrajini od 60 UAH/km',
         description:
           'Dostavni kombi do 2 t in 20 m³ za selitve, pohištvo in manjše pošiljke. Samostojno vozilo ali zbirni prevoz, potovanje s tovorom, delavci za prenos.',
       },
-      card: { icon: 'bus', title: 'Kombi do 2 t', text: 'Selitve, pohištvo, aparati, manjše pošiljke', price: 'od 20 UAH/km' },
+      card: { icon: 'bus', title: 'Kombi do 2 t', text: 'Selitve, pohištvo, aparati, manjše pošiljke', price: 'od 60 UAH/km' },
       h1: 'Prevoz s kombijem do 2 toni',
       lead: 'Dostavni kombi tipa Sprinter, Crafter ali Master: prostoren, hiter in ugoden za manjše tovore po Ukrajini.',
       bullets: ['Do 2 t in do 20 m³', 'S tovorom lahko potujete tudi vi', 'Delavci za prenos po potrebi'],
-      priceFrom: 'od 20 UAH/km',
+      priceFrom: 'od 60 UAH/km',
       intro: {
         title: 'Kombi za manjše tovore',
         paragraphs: [
@@ -431,9 +431,9 @@ export const sl: LangContent = {
       prices: {
         title: 'Cene kombija',
         rows: [
-          { label: 'Samostojni kombi do 2 t', value: 'od 20 UAH/km' },
-          { label: 'Stvari in pohištvo (selitev)', value: 'od 12 UAH/km' },
-          { label: 'Zbirni prevoz', value: 'od 10 UAH/km' },
+          { label: 'Samostojni kombi do 2 t', value: 'od 60 UAH/km' },
+          { label: 'Stvari in pohištvo (selitev)', value: 'od 60 UAH/km' },
+          { label: 'Zbirni prevoz', value: 'od 15 UAH/km' },
           { label: 'Delavec za prenos', value: 'od 250 UAH/uro', note: 'najmanj 2 uri' },
         ],
         note: 'Postavke so okvirne. Točno ceno vam logist pove po povpraševanju.',
@@ -458,15 +458,15 @@ export const sl: LangContent = {
       slug: 'trucks',
       group: 'ukraine',
       meta: {
-        title: 'Prevoz s tovornjakom 5 in 10 t po Ukrajini od 30 UAH/km',
+        title: 'Prevoz s tovornjakom 5 in 10 t po Ukrajini od 80 UAH/km',
         description:
-          'Tovornjaki 5 t in 10 t za komercialni tovor, palete, opremo in gradbeni material. Ponjava, izotermična nadgradnja, dvižna ploščad. Postavke od 30 UAH/km.',
+          'Tovornjaki 5 t in 10 t za komercialni tovor, palete, opremo in gradbeni material. Ponjava, izotermična nadgradnja, dvižna ploščad. Postavke od 80 UAH/km.',
       },
-      card: { icon: 'truck', title: 'Tovornjaki 5–10 t', text: 'Komercialni tovor, palete, oprema', price: 'od 30 UAH/km' },
+      card: { icon: 'truck', title: 'Tovornjaki 5–10 t', text: 'Komercialni tovor, palete, oprema', price: 'od 80 UAH/km' },
       h1: 'Prevoz s tovornjakom 5 in 10 ton',
       lead: 'Srednje veliki tovornjaki za podjetja: pošiljke blaga, palete, oprema, gradbeni material. Izberemo nadgradnjo glede na tovor in način nakladanja.',
       bullets: ['Do 10 t in do 50 m³', 'Ponjava, izoterma, dvižna ploščad', 'Nakladanje od zgoraj, s strani, zadaj'],
-      priceFrom: 'od 30 UAH/km',
+      priceFrom: 'od 80 UAH/km',
       intro: {
         title: 'Tovornjaki za podjetja',
         paragraphs: [
@@ -491,8 +491,8 @@ export const sl: LangContent = {
       prices: {
         title: 'Cene tovornjakov',
         rows: [
-          { label: 'Tovornjak do 5 t', value: 'od 30 UAH/km' },
-          { label: 'Tovornjak do 10 t', value: 'od 35 UAH/km' },
+          { label: 'Tovornjak do 5 t', value: 'od 80 UAH/km' },
+          { label: 'Tovornjak do 10 t', value: 'od 100 UAH/km' },
           { label: 'Zbirni prevoz', value: 'po dogovoru' },
         ],
         note: 'Postavke so okvirne. Na ceno vplivajo teža, prostornina, vrsta nadgradnje in relacija.',
@@ -517,15 +517,15 @@ export const sl: LangContent = {
       slug: 'fura',
       group: 'ukraine',
       meta: {
-        title: 'Prevoz s tovornjakom 22 t po Ukrajini od 45 UAH/km',
+        title: 'Prevoz s tovornjakom 22 t po Ukrajini od 70 UAH/km',
         description:
-          'Tovornjak s polprikolico 22 t, 86–92 m³, 33 palet ter tandemi do 120 m³. Celotni tovori po Ukrajini in v Evropo. Postavke od 45 UAH/km.',
+          'Tovornjak s polprikolico 22 t, 86–92 m³, 33 palet ter tandemi do 120 m³. Celotni tovori po Ukrajini in v Evropo. Postavke od 70 UAH/km.',
       },
-      card: { icon: 'trailer', title: 'Tovornjak 22 t in tandem', text: 'Celotni tovori, do 34 palet', price: 'od 45 UAH/km' },
+      card: { icon: 'trailer', title: 'Tovornjak 22 t in tandem', text: 'Celotni tovori, do 34 palet', price: 'od 70 UAH/km' },
       h1: 'Prevoz s tovornjakom 22 ton',
       lead: 'Polprikolice s ponjavo in tandemi za velike pošiljke: do 22 ton, do 34 palet ali do 120 m³ lahkega, voluminoznega tovora.',
       bullets: ['Do 22 t, 86–120 m³', 'Do 33–38 palet', 'Ponjava se odpre v celoti'],
-      priceFrom: 'od 45 UAH/km',
+      priceFrom: 'od 70 UAH/km',
       intro: {
         title: 'Celoten tovor z enim vozilom',
         paragraphs: [
@@ -550,9 +550,9 @@ export const sl: LangContent = {
       prices: {
         title: 'Cene tovornjaka 22 t',
         rows: [
-          { label: 'Tovornjak 22 t (ponjava)', value: 'od 45 UAH/km' },
-          { label: 'Tandem do 120 m³', value: 'od 50 UAH/km' },
-          { label: 'Tovornjak po Evropi', value: '1,1–1,5 €/km' },
+          { label: 'Tovornjak 22 t (ponjava)', value: 'od 70 UAH/km' },
+          { label: 'Tandem do 120 m³', value: 'od 80 UAH/km' },
+          { label: 'Tovornjak po Evropi', value: 'od 1,5 €/km' },
         ],
         note: 'Postavke so okvirne. Cena je odvisna od relacije, sezone in povratnega tovora.',
       },
@@ -568,7 +568,7 @@ export const sl: LangContent = {
         },
         {
           q: 'Ali vozite s tovornjakom v tujino?',
-          a: 'Da, naši tovornjaki vozijo v evropske države in nazaj. Okvirna postavka je 1,1–1,5 €/km.',
+          a: 'Da, naši tovornjaki vozijo v evropske države in nazaj. Okvirna postavka je 1,5 €/km.',
         },
       ],
     },
@@ -576,15 +576,15 @@ export const sl: LangContent = {
       slug: 'negabaryt',
       group: 'ukraine',
       meta: {
-        title: 'Izredni prevozi z nizkopodnikom od 75 UAH/km',
+        title: 'Izredni prevozi z nizkopodnikom od 100 UAH/km',
         description:
           'Izredni in težki tovori do 80 t: gradbeni in kmetijski stroji, oprema, montažne hiše. Nizkopodniki, ploščadi, dovoljenja in načrt poti.',
       },
-      card: { icon: 'oversized', title: 'Izredni prevozi', text: 'Stroji in oprema do 80 t', price: 'od 75 UAH/km' },
+      card: { icon: 'oversized', title: 'Izredni prevozi', text: 'Stroji in oprema do 80 t', price: 'od 100 UAH/km' },
       h1: 'Izredni prevozi',
       lead: 'Z nizkopodniki in ploščadmi prevažamo, kar ne gre v običajno vozilo: stroje, opremo, konstrukcije. Uredimo dovoljenja in načrtujemo pot.',
       bullets: ['Do 60–80 t', 'Nizkopodni in teleskopski priklopniki', 'Dovoljenja in pot za vaš tovor'],
-      priceFrom: 'od 75 UAH/km',
+      priceFrom: 'od 100 UAH/km',
       cargo: {
         title: 'Kaj prevažamo',
         items: ['Bagri, nakladalniki, buldožerji', 'Traktorji in kombajni', 'Cestna mehanizacija', 'Industrijska oprema in linije', 'Jeklene konstrukcije, rezervoarji', 'Kioski, zabojniki, montažne hiše', 'Betonski izdelki, plošče'],
@@ -604,7 +604,7 @@ export const sl: LangContent = {
       prices: {
         title: 'Cene izrednih prevozov',
         rows: [
-          { label: 'Nizkopodnik po Ukrajini', value: 'od 75 UAH/km' },
+          { label: 'Nizkopodnik po Ukrajini', value: 'od 100 UAH/km' },
           { label: 'Dovoljenja in spremstvo', value: 'obračunamo posebej' },
         ],
         note: 'Ceno izračunamo posebej za vsak prevoz: odvisna je od mer, teže in poti.',
@@ -633,11 +633,11 @@ export const sl: LangContent = {
         description:
           'Prevoz vozil z avtotransporterjem in avtovleko po Ukrajini in iz Evrope: osebna vozila, motorji, električna vozila, poškodovana vozila. Odprti in zaprti transporterji.',
       },
-      card: { icon: 'car', title: 'Avtotransporter', text: 'Vozila po Ukrajini in iz Evrope', price: 'od 25 UAH/km' },
+      card: { icon: 'car', title: 'Avtotransporter', text: 'Vozila po Ukrajini in iz Evrope', price: 'od 40 UAH/km' },
       h1: 'Prevoz avtomobilov',
       lead: 'Prepeljemo eno vozilo z avtovleko ali več vozil z avtotransporterjem: po Ukrajini, iz Evrope v Ukrajino in nazaj.',
       bullets: ['Avtovleka za 1–2 vozili, transporter do 8', 'Odprti in zaprti transporterji', 'Poškodovana in nevozna vozila'],
-      priceFrom: 'od 25 UAH/km',
+      priceFrom: 'od 40 UAH/km',
       cargo: {
         title: 'Kaj prevažamo',
         items: ['Osebna vozila', 'SUV-ji in enoprostorci', 'Električna vozila', 'Motorna kolesa in štirikolesniki', 'Poškodovana vozila', 'Nova vozila iz salona'],
@@ -655,7 +655,7 @@ export const sl: LangContent = {
       prices: {
         title: 'Cene prevoza vozil',
         rows: [
-          { label: 'Po Ukrajini', value: 'od 25 UAH/km' },
+          { label: 'Po Ukrajini', value: 'od 40 UAH/km' },
           { label: 'Iz Litve v Ukrajino', value: 'od 850 €' },
         ],
         note: 'Cena je odvisna od modela, teže, relacije in števila vozil.',
@@ -680,11 +680,11 @@ export const sl: LangContent = {
         description:
           'Tovornjak s kesonom 6–8 m in dvigalom do 7 t: nakladanje in prevoz blokov, kioskov, opreme in gradbenega materiala brez ločenega avtodvigala.',
       },
-      card: { icon: 'manipulator', title: 'Tovornjak z dvigalom', text: 'Sam naloži in pripelje', price: 'od 60 UAH/km' },
+      card: { icon: 'manipulator', title: 'Tovornjak z dvigalom', text: 'Sam naloži in pripelje', price: 'od 100 UAH/km' },
       h1: 'Tovornjak z dvigalom',
       lead: 'Tovornjak z nakladalnim dvigalom sam naloži, pripelje in razloži tovor tam, kjer ni viličarja ali avtodvigala.',
       bullets: ['Keson 6–8 m', 'Dvigalo od 3 do 7 t', 'Kijev, regija in vsa Ukrajina'],
-      priceFrom: 'od 60 UAH/km',
+      priceFrom: 'od 100 UAH/km',
       cargo: {
         title: 'Kaj prevažamo',
         items: ['Gradbeni material na paletah', 'Betonske cevi, bloki, plošče', 'Kioski, gradbeni zabojniki', 'Agregati, oprema', 'Zabojniki', 'Sefi in težki predmeti'],
@@ -698,7 +698,7 @@ export const sl: LangContent = {
       prices: {
         title: 'Cene',
         rows: [
-          { label: 'Tovornjak z dvigalom (prevoz)', value: 'od 60 UAH/km' },
+          { label: 'Tovornjak z dvigalom (prevoz)', value: 'od 100 UAH/km' },
           { label: 'Delo v mestu', value: 'na uro, po dogovoru' },
         ],
         note: 'Cena je odvisna od nosilnosti dvigala, trajanja dela in razdalje.',
@@ -747,13 +747,13 @@ export const sl: LangContent = {
       meta: {
         title: 'Selitve stanovanj in pisarn po Ukrajini in v Evropo',
         description:
-          'Celovite selitve: kombi 15–20 m³, delavci od 250 UAH/uro, pakiranje, selitve med mesti in v tujino. Samostojno vozilo od 12 UAH/km.',
+          'Celovite selitve: kombi 15–20 m³, delavci od 250 UAH/uro, pakiranje, selitve med mesti in v tujino. Samostojno vozilo od 60 UAH/km.',
       },
-      card: { icon: 'moving', title: 'Selitve', text: 'Stanovanje, pisarna, med mesti in v tujino', price: 'od 12 UAH/km' },
+      card: { icon: 'moving', title: 'Selitve', text: 'Stanovanje, pisarna, med mesti in v tujino', price: 'od 60 UAH/km' },
       h1: 'Selitve stanovanj in pisarn',
       lead: 'Prepeljemo stvari, pohištvo in aparate v drugo mesto ali državo. Naročite lahko vozilo z delavci, pakiranje in razstavljanje pohištva.',
-      bullets: ['Samostojno vozilo od 12 UAH/km', 'Delavci od 250 UAH/uro', 'Po Ukrajini in v Evropo'],
-      priceFrom: 'od 12 UAH/km',
+      bullets: ['Samostojno vozilo od 60 UAH/km', 'Delavci od 250 UAH/uro', 'Po Ukrajini in v Evropo'],
+      priceFrom: 'od 60 UAH/km',
       intro: {
         title: 'Selitev brez skrbi',
         paragraphs: [
@@ -778,8 +778,8 @@ export const sl: LangContent = {
       prices: {
         title: 'Cene selitev',
         rows: [
-          { label: 'Samostojno vozilo 15–20 m³', value: 'od 12 UAH/km' },
-          { label: 'Zbirni prevoz', value: 'od 10 UAH/km' },
+          { label: 'Samostojno vozilo 15–20 m³', value: 'od 60 UAH/km' },
+          { label: 'Zbirni prevoz', value: 'od 15 UAH/km' },
           { label: 'Delavec za prenos', value: 'od 250 UAH/uro', note: 'najmanj 2 uri' },
           { label: 'Selitev v Evropo', value: 'od 0,3 €/km' },
         ],
@@ -807,13 +807,13 @@ export const sl: LangContent = {
       meta: {
         title: 'Zbirni prevoz tovora po Ukrajini in v Evropo',
         description:
-          'Zbirni prevoz za manjše pošiljke: plačate le prostor v vozilu. Po Ukrajini od 10 UAH/km, v Evropo od 0,2 €/km na paleto.',
+          'Zbirni prevoz za manjše pošiljke: plačate le prostor v vozilu. Po Ukrajini od 15 UAH/km, v Evropo od 0,4 €/km na paleto.',
       },
-      card: { icon: 'groupage', title: 'Zbirni prevoz', text: 'Plačate le svoj prostor', price: 'od 10 UAH/km' },
+      card: { icon: 'groupage', title: 'Zbirni prevoz', text: 'Plačate le svoj prostor', price: 'od 15 UAH/km' },
       h1: 'Zbirni prevoz tovora',
       lead: 'Manjša pošiljka ne potrebuje svojega vozila. Vaš tovor dodamo prevozu v pravi smeri, plačate pa le zasedeni prostor.',
       bullets: ['Od ene palete', 'Po Ukrajini in v Evropo', 'Ceneje od samostojnega vozila'],
-      priceFrom: 'od 10 UAH/km',
+      priceFrom: 'od 15 UAH/km',
       sections: [
         {
           title: 'Za koga je primeren',
@@ -827,8 +827,8 @@ export const sl: LangContent = {
       prices: {
         title: 'Cene zbirnega prevoza',
         rows: [
-          { label: 'Zbirni prevoz po Ukrajini', value: 'od 10 UAH/km' },
-          { label: 'Paleta do 300 kg v Evropo', value: '0,2–0,3 €/km' },
+          { label: 'Zbirni prevoz po Ukrajini', value: 'od 15 UAH/km' },
+          { label: 'Paleta do 300 kg v Evropo', value: 'od 0,4 €/km' },
         ],
         note: 'Postavke so okvirne, odvisne od relacije in količine.',
       },
@@ -848,11 +848,11 @@ export const sl: LangContent = {
         description:
           'Prevoz blaga na paletah: kombi do 8–10 palet, tovornjaki do 22, polprikolica do 34. Ponjava, izoterma, dvižna ploščad, nakladanje s strani.',
       },
-      card: { icon: 'pallet', title: 'Palete', text: 'Od 1 do 34 palet v enem prevozu', price: 'od 20 UAH/km' },
+      card: { icon: 'pallet', title: 'Palete', text: 'Od 1 do 34 palet v enem prevozu', price: 'od 60 UAH/km' },
       h1: 'Prevoz blaga na paletah',
       lead: 'Od ene palete v zbirnem prevozu do polnega tovornjaka s 34 paletami. Vozilo izberemo glede na število palet, težo in način nakladanja.',
       bullets: ['1–34 palet', 'Dvižna ploščad in odprta ponjava', 'Izoterma za živila'],
-      priceFrom: 'od 20 UAH/km',
+      priceFrom: 'od 60 UAH/km',
       cargo: {
         title: 'Kaj prevažamo na paletah',
         items: ['Živila in pijače', 'Gradbeni material', 'Gospodinjski aparati', 'Blago za trgovske verige', 'Elektro material, kabli', 'Surovine in končni izdelki'],
@@ -878,7 +878,7 @@ export const sl: LangContent = {
       meta: {
         title: 'Prevoz tovora v Kijevu: mesto, regija in vsa Ukrajina',
         description:
-          'Prevoz tovora v Kijevu in Kijevski regiji: kombi od 350 UAH/uro, delavci, selitve. Iz Kijeva po Ukrajini od 20 UAH/km.',
+          'Prevoz tovora v Kijevu in Kijevski regiji: kombi od 350 UAH/uro, delavci, selitve. Iz Kijeva po Ukrajini od 60 UAH/km.',
       },
       card: { icon: 'city', title: 'Prevoz po Kijevu', text: 'Mesto, regija in prevozi iz Kijeva', price: 'od 350 UAH/uro' },
       h1: 'Prevoz tovora v Kijevu',
@@ -914,7 +914,7 @@ export const sl: LangContent = {
           { label: 'Tovornjak 3–5 t v mestu', value: 'od 600 UAH/uro', note: 'najmanj 2 uri' },
           { label: 'Zunaj mesta', value: 'od 17 UAH/km' },
           { label: 'Delavec za prenos', value: 'od 250 UAH/uro' },
-          { label: 'Iz Kijeva po Ukrajini', value: 'od 20 UAH/km' },
+          { label: 'Iz Kijeva po Ukrajini', value: 'od 60 UAH/km' },
         ],
         note: 'Postavke so okvirne. Točno ceno vam logist pove po povpraševanju.',
       },
@@ -940,13 +940,13 @@ export const sl: LangContent = {
       meta: {
         title: 'Hladilni prevozi po Ukrajini in v Evropo',
         description:
-          'Prevoz živil in temperaturno občutljivega tovora s hladilnimi vozili od 1,5 do 22 t. Od −20 do +20 °C. Po Ukrajini od 50 UAH/km.',
+          'Prevoz živil in temperaturno občutljivega tovora s hladilnimi vozili od 1,5 do 22 t. Od −20 do +20 °C. Po Ukrajini od 80 UAH/km.',
       },
-      card: { icon: 'reefer', title: 'Hladilno vozilo', text: 'Živila in temperaturni tovor', price: 'od 50 UAH/km' },
+      card: { icon: 'reefer', title: 'Hladilno vozilo', text: 'Živila in temperaturni tovor', price: 'od 80 UAH/km' },
       h1: 'Hladilni prevozi',
       lead: 'Prepeljemo živila, zdravila, cvetje in drug tovor, ki potrebuje stalno temperaturo: po Ukrajini in v evropske države.',
       bullets: ['Od 1,5 do 22 t', 'Od −20 do +20 °C', 'Ohlajeno pred nakladanjem'],
-      priceFrom: 'od 50 UAH/km',
+      priceFrom: 'od 80 UAH/km',
       cargo: {
         title: 'Kaj prevažamo',
         items: ['Meso in ribe', 'Mlečni izdelki', 'Sadje in zelenjava', 'Zamrznjena živila', 'Slaščice', 'Zdravila', 'Cvetje in rastline', 'Pijače'],
@@ -968,8 +968,8 @@ export const sl: LangContent = {
       prices: {
         title: 'Cene hladilnih vozil',
         rows: [
-          { label: 'Hladilno vozilo do 5 t', value: 'od 35 UAH/km' },
-          { label: 'Hladilno vozilo 22 t', value: 'od 50 UAH/km' },
+          { label: 'Hladilno vozilo do 5 t', value: 'od 100 UAH/km' },
+          { label: 'Hladilno vozilo 22 t', value: 'od 80 UAH/km' },
         ],
         note: 'Postavke so okvirne, odvisne od temperature in relacije.',
       },
@@ -991,13 +991,13 @@ export const sl: LangContent = {
       meta: {
         title: 'Prevoz sipkega tovora s prekucniki in vozili za žito',
         description:
-          'Pesek, gramoz, zemlja, žito, gnojila: prekucniki in vozila za žito 20–60 m³ po Ukrajini. Postavke od 60 UAH/km, polna naložitev.',
+          'Pesek, gramoz, zemlja, žito, gnojila: prekucniki in vozila za žito 20–60 m³ po Ukrajini. Postavke od 100 UAH/km, polna naložitev.',
       },
-      card: { icon: 'bulk', title: 'Sipki tovor', text: 'Prekucniki in vozila za žito 20–60 m³', price: 'od 60 UAH/km' },
+      card: { icon: 'bulk', title: 'Sipki tovor', text: 'Prekucniki in vozila za žito 20–60 m³', price: 'od 100 UAH/km' },
       h1: 'Prevoz sipkega tovora',
       lead: 'Prekucniki in vozila za žito za sipke gradbene materiale, žito in gnojila. Polna naložitev, dostava na gradbišče, v silos ali skladišče.',
       bullets: ['Keson 20–60 m³', 'Prekucniki in vozila za žito', 'Po vsej Ukrajini'],
-      priceFrom: 'od 60 UAH/km',
+      priceFrom: 'od 100 UAH/km',
       cargo: {
         title: 'Kaj prevažamo',
         items: ['Pesek, gramoz, tampon, prod', 'Zemlja in črnica', 'Keramzit', 'Pšenica, koruza, ječmen', 'Sončnice, oljna ogrščica, soja', 'Mineralna gnojila', 'Cement, sol', 'Šota, premog'],
@@ -1010,7 +1010,7 @@ export const sl: LangContent = {
       ],
       prices: {
         title: 'Cene',
-        rows: [{ label: 'Prekucnik / vozilo za žito', value: 'od 60 UAH/km' }],
+        rows: [{ label: 'Prekucnik / vozilo za žito', value: 'od 100 UAH/km' }],
         note: 'Cena je odvisna od količine, razdalje in števila prevozov.',
       },
       vehicles: ['tipper'],
@@ -1029,11 +1029,11 @@ export const sl: LangContent = {
         description:
           'Živilske in tehnične tekočine, olje, voda, gorivo: cisterne 20–40 m³ po Ukrajini in v Evropo. Cisterna glede na vrsto tovora.',
       },
-      card: { icon: 'liquid', title: 'Tekoči tovor', text: 'Cisterne 20–40 m³', price: 'od 60 UAH/km' },
+      card: { icon: 'liquid', title: 'Tekoči tovor', text: 'Cisterne 20–40 m³', price: 'od 100 UAH/km' },
       h1: 'Prevoz tekočega tovora',
       lead: 'Cisterno izberemo glede na vrsto tekočine, njene lastnosti in količino: živilsko, kemično ali za gorivo. Polna naložitev po Ukrajini in v EU.',
       bullets: ['Cisterne 20–40 m³', 'Živilske, kemične, za gorivo', 'Po Ukrajini in v Evropo'],
-      priceFrom: 'od 60 UAH/km',
+      priceFrom: 'od 100 UAH/km',
       cargo: {
         title: 'Kaj prevažamo',
         items: ['Rastlinsko olje', 'Mleko in mlečne surovine', 'Melasa', 'Pitna in tehnološka voda', 'Tehnične tekočine', 'Tekoča gnojila', 'Gorivo in naftni derivati', 'Bitumen'],
@@ -1046,7 +1046,7 @@ export const sl: LangContent = {
       ],
       prices: {
         title: 'Cene',
-        rows: [{ label: 'Cisterna', value: 'od 60 UAH/km' }],
+        rows: [{ label: 'Cisterna', value: 'od 100 UAH/km' }],
         note: 'Cena je odvisna od vrste cisterne, količine in relacije.',
       },
       vehicles: ['tanker'],
@@ -1065,13 +1065,13 @@ export const sl: LangContent = {
       meta: {
         title: 'Prevoz tovora Ukrajina – Evropa in iz Evrope v Ukrajino',
         description:
-          'Prevoz Ukrajina – Poljska, Nemčija, Češka, Slovenija in druge države EU. Kombi od 0,6 €/km, tovornjak od 1,1 €/km, zbirni prevoz od ene palete.',
+          'Prevoz Ukrajina – Poljska, Nemčija, Češka, Slovenija in druge države EU. Kombi od 1,2 €/km, tovornjak od 1,5 €/km, zbirni prevoz od ene palete.',
       },
-      card: { icon: 'europe', title: 'Evropa', text: 'Ukrajina ↔ EU in prevozi po Evropi', price: 'od 0,6 €/km' },
+      card: { icon: 'europe', title: 'Evropa', text: 'Ukrajina ↔ EU in prevozi po Evropi', price: 'od 1,2 €/km' },
       h1: 'Prevoz tovora Ukrajina – Evropa',
       lead: 'Tovor vozimo iz Ukrajine v države EU in nazaj ter med evropskimi državami. S samostojnim vozilom ali v zbirnem prevozu od ene palete.',
       bullets: ['Kombi, tovornjak, nizkopodnik, avtotransporter', 'Zbirni prevoz od ene palete', 'CMR in carinjenje'],
-      priceFrom: 'od 0,6 €/km',
+      priceFrom: 'od 1,2 €/km',
       intro: {
         title: 'Prevoz med Ukrajino in EU',
         paragraphs: [
@@ -1096,11 +1096,11 @@ export const sl: LangContent = {
       prices: {
         title: 'Okvirne cene',
         rows: [
-          { label: 'Kombi do 2 t', value: '0,6–0,8 €/km' },
-          { label: 'Tovornjak 22 t', value: '1,1–1,5 €/km' },
-          { label: 'Paleta do 300 kg (zbirni prevoz)', value: '0,2–0,3 €/km' },
-          { label: 'Ukrajina – Poljska, tovornjak', value: 'od 900 €' },
-          { label: 'Ukrajina – Nemčija, tovornjak', value: 'od 1.800 €' },
+          { label: 'Kombi do 2 t', value: 'od 1,2 €/km' },
+          { label: 'Tovornjak 22 t', value: 'od 1,5 €/km' },
+          { label: 'Paleta do 300 kg (zbirni prevoz)', value: 'od 0,4 €/km' },
+          { label: 'Ukrajina – Poljska, tovornjak', value: 'od 1 000 €' },
+          { label: 'Ukrajina – Nemčija, tovornjak', value: 'od 2.000 €' },
         ],
         note: 'Cene so okvirne: odvisne so od količine, relacije, sezone in povratnega tovora.',
       },
@@ -1277,12 +1277,12 @@ export const sl: LangContent = {
       meta: {
         title: 'Prevoz tovora Ukrajina – Poljska in Poljska – Ukrajina',
         description:
-          'Prevoz tovora na Poljsko in s Poljske: Varšava, Vroclav, Poznanj, Gdansk, Lublin. Tovornjak od 900 €, kombi od 400 €, zbirni prevoz od ene palete.',
+          'Prevoz tovora na Poljsko in s Poljske: Varšava, Vroclav, Poznanj, Gdansk, Lublin. Tovornjak od 1 000 €, kombi od 400 €, zbirni prevoz od ene palete.',
       },
       card: { icon: 'flag', title: 'Poljska', text: 'Najbolj priljubljena smer', price: 'od 400 €' },
       h1: 'Prevoz tovora Ukrajina – Poljska',
       lead: 'Tovor na Poljsko in s Poljske vozimo vsak teden: s kombijem, tovornjakom ali v zbirnem prevozu. Varšava, Vroclav, Poznanj, Krakov, Gdansk, Lublin in druga mesta.',
-      bullets: ['Kombi od 400 €, tovornjak od 900 €', 'Zbirni prevoz od ene palete', 'CMR in carina'],
+      bullets: ['Kombi od 400 €, tovornjak od 1 000 €', 'Zbirni prevoz od ene palete', 'CMR in carina'],
       priceFrom: 'od 400 €',
       cargo: {
         title: 'Kaj prevažamo',
@@ -1302,8 +1302,8 @@ export const sl: LangContent = {
         title: 'Okvirne cene',
         rows: [
           { label: 'Kombi do 2 t', value: 'od 400 €' },
-          { label: 'Tovornjak 22 t', value: 'od 900 €' },
-          { label: 'Zbirni prevoz', value: 'od 0,2 €/km na paleto' },
+          { label: 'Tovornjak 22 t', value: 'od 1 000 €' },
+          { label: 'Zbirni prevoz', value: 'od 0,4 €/km na paleto' },
         ],
         note: 'Cena je odvisna od mesta, količine in povratnega tovora.',
       },
@@ -1377,7 +1377,7 @@ export const sl: LangContent = {
       faq: [
         {
           q: 'Koliko stane prevoz iz Slovenije v Ukrajino?',
-          a: 'Ceno izračunamo za relacijo: odvisna je od količine, mesta in načina (samostojno vozilo ali zbirni prevoz). Okvirno velja za tovornjak po Evropi 1,1–1,5 €/km.',
+          a: 'Ceno izračunamo za relacijo: odvisna je od količine, mesta in načina (samostojno vozilo ali zbirni prevoz). Okvirno velja za tovornjak po Evropi 1,5 €/km.',
         },
       ],
     },
@@ -1387,38 +1387,38 @@ export const sl: LangContent = {
     meta: {
       title: 'Cenik prevoza tovora: postavke na km v Ukrajini in Evropi',
       description:
-        'Okvirne postavke za prevoz po Ukrajini: kombi od 20 UAH/km, 5 t od 30, 10 t od 35, tovornjak od 45. Cene za Evropo, delavce in selitve.',
+        'Okvirne postavke za prevoz po Ukrajini: kombi od 60 UAH/km, 5 t od 50, 10 t od 60, tovornjak od 70. Cene za Evropo, delavce in selitve.',
     },
     h1: 'Cenik prevoza tovora',
     lead: 'Okvirne postavke za načrtovanje proračuna. Točno ceno vam logist pove po povpraševanju in jo zapiše v naročilo za prevoz.',
     ukraineTitle: 'Po Ukrajini, samostojno vozilo',
     ukraineRows: [
-      { label: 'Kombi do 2 t, do 20 m³', value: 'od 20 UAH/km' },
-      { label: 'Tovornjak do 5 t', value: 'od 30 UAH/km' },
-      { label: 'Tovornjak do 10 t', value: 'od 35 UAH/km' },
-      { label: 'Tovornjak do 22 t', value: 'od 45 UAH/km' },
-      { label: 'Tandem do 120 m³', value: 'od 50 UAH/km' },
-      { label: 'Hladilno vozilo 22 t', value: 'od 50 UAH/km' },
-      { label: 'Prekucnik / vozilo za žito', value: 'od 60 UAH/km' },
-      { label: 'Cisterna', value: 'od 60 UAH/km' },
-      { label: 'Avtotransporter', value: 'od 25 UAH/km' },
-      { label: 'Tovornjak z dvigalom', value: 'od 60 UAH/km' },
-      { label: 'Nizkopodnik (izredni prevoz)', value: 'od 75 UAH/km' },
+      { label: 'Kombi do 2 t, do 20 m³', value: 'od 60 UAH/km' },
+      { label: 'Tovornjak do 5 t', value: 'od 80 UAH/km' },
+      { label: 'Tovornjak do 10 t', value: 'od 100 UAH/km' },
+      { label: 'Tovornjak do 22 t', value: 'od 70 UAH/km' },
+      { label: 'Tandem do 120 m³', value: 'od 80 UAH/km' },
+      { label: 'Hladilno vozilo 22 t', value: 'od 80 UAH/km' },
+      { label: 'Prekucnik / vozilo za žito', value: 'od 100 UAH/km' },
+      { label: 'Cisterna', value: 'od 100 UAH/km' },
+      { label: 'Avtotransporter', value: 'od 40 UAH/km' },
+      { label: 'Tovornjak z dvigalom', value: 'od 100 UAH/km' },
+      { label: 'Nizkopodnik (izredni prevoz)', value: 'od 100 UAH/km' },
       { label: 'Avtodvigalo', value: 'po dogovoru' },
     ],
     extraTitle: 'Selitve in dodatne storitve',
     extraRows: [
-      { label: 'Selitev, samostojno vozilo 15–20 m³', value: 'od 12 UAH/km' },
-      { label: 'Zbirni prevoz po Ukrajini', value: 'od 10 UAH/km' },
+      { label: 'Selitev, samostojno vozilo 15–20 m³', value: 'od 60 UAH/km' },
+      { label: 'Zbirni prevoz po Ukrajini', value: 'od 15 UAH/km' },
       { label: 'Delavec za prenos', value: 'od 250 UAH/uro', note: 'najmanj 2 uri' },
     ],
     europeTitle: 'Evropa',
     europeRows: [
-      { label: 'Kombi do 2 t', value: '0,6–0,8 €/km' },
-      { label: 'Tovornjak 22 t', value: '1,1–1,5 €/km' },
-      { label: 'Paleta do 300 kg (zbirni prevoz)', value: '0,2–0,3 €/km' },
-      { label: 'Ukrajina – Poljska, tovornjak', value: 'od 900 €' },
-      { label: 'Ukrajina – Nemčija, tovornjak', value: 'od 1.800 €' },
+      { label: 'Kombi do 2 t', value: 'od 1,2 €/km' },
+      { label: 'Tovornjak 22 t', value: 'od 1,5 €/km' },
+      { label: 'Paleta do 300 kg (zbirni prevoz)', value: 'od 0,4 €/km' },
+      { label: 'Ukrajina – Poljska, tovornjak', value: 'od 1 000 €' },
+      { label: 'Ukrajina – Nemčija, tovornjak', value: 'od 2.000 €' },
     ],
     note: 'Cene so okvirne in se lahko spremenijo. Končni znesek je odvisen od tovora, relacije in datuma.',
     factorsTitle: 'Kaj vpliva na ceno',

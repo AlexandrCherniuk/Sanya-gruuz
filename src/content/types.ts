@@ -59,7 +59,7 @@ export type Vehicle = {
   /** Короткое назначение: для чего подходит. */
   use: string
   specs: { label: string; value: string }[]
-  /** «від 20 грн/км» или «за запитом». */
+  /** «від 35 грн/км» или «за запитом». */
   price: string
 }
 
