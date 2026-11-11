@@ -141,7 +141,7 @@
   }
 }
 
-/* Телефон: код страны слева. Нативный select поверх значка: на телефоне открывается системный список с поиском по буквам. */
+/* Телефон: свой список кодов стран слева от номера. */
 .quote-phone-field {
   display: grid;
   gap: 6px;
@@ -153,46 +153,252 @@
 }
 .quote-phone {
   display: grid;
-  grid-template-columns: 112px minmax(0, 1fr);
+  grid-template-columns: 116px minmax(0, 1fr);
   gap: 8px;
-  position: relative;
 }
-.quote-cc {
-  grid-column: 1;
-  grid-row: 1;
-  display: inline-flex;
+
+.cc {
+  position: relative;
+  min-width: 0;
+}
+.cc-btn {
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  width: 100%;
   min-height: 48px;
-  padding: 0 26px 0 12px;
+  padding: 0 12px;
   border: 1px solid var(--line-2);
   border-radius: 12px;
-  font-weight: 600;
-  white-space: nowrap;
-  background: var(--bg)
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%235b6670' stroke-width='1.6'/%3E%3C/svg%3E")
-    no-repeat right 10px center;
-  pointer-events: none;
-}
-.quote-cc-flag {
-  font-size: 1.15rem;
-  line-height: 1;
-}
-.quote-cc-select {
-  grid-column: 1;
-  grid-row: 1;
-  width: 100%;
-  min-width: 0;
-  min-height: 48px;
-  opacity: 0;
+  background: var(--bg);
   cursor: pointer;
-  font-size: 16px;
+  white-space: nowrap;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
-.quote-phone:has(.quote-cc-select:focus-visible) .quote-cc {
+.cc-btn:hover {
+  border-color: var(--ink-3);
+}
+.cc-btn:focus-visible,
+.cc--open .cc-btn {
+  outline: none;
   border-color: var(--ink);
   box-shadow: 0 0 0 3px var(--acc-soft);
 }
-.quote-phone input {
-  grid-column: 2;
-  grid-row: 1;
+.cc-chev {
+  margin-left: auto;
+  color: var(--muted);
+  transition: transform 0.2s;
+}
+.cc--open .cc-chev {
+  transform: rotate(180deg);
+}
+.cc-flag {
+  flex: none;
+  width: 21px;
+  height: 14px;
+  border-radius: 3px;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px rgb(11 13 14 / 10%);
+  background: var(--tint);
+}
+
+.cc-backdrop {
+  display: none;
+}
+.cc-pop {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 8px);
+  left: 0;
+  width: min(360px, calc(100vw - 32px));
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 2px 6px rgb(11 13 14 / 6%), 0 24px 56px -16px rgb(11 13 14 / 28%);
+  overflow: hidden;
+  animation: cc-in 0.16s ease-out;
+}
+@keyframes cc-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+.cc-head {
+  display: none;
+}
+.cc-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+}
+.cc-search svg {
+  position: absolute;
+  left: 22px;
+  pointer-events: none;
+}
+.quote-card .cc-search input {
+  min-height: 42px;
+  padding: 8px 12px 8px 38px;
+  font-size: 16px;
+  border-radius: 10px;
+  background: var(--tint);
+  border-color: transparent;
+}
+.quote-card .cc-search input:focus {
+  background: var(--bg);
+}
+.cc-search input::-webkit-search-cancel-button {
+  cursor: pointer;
+}
+.cc-list,
+.cc-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.cc-list {
+  max-height: 320px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 6px;
+}
+.cc-group {
+  padding: 10px 10px 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cc-opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+.cc-opt.is-active {
+  background: var(--tint);
+}
+.cc-opt.is-selected {
+  font-weight: 700;
+}
+.cc-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cc-dial {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.cc-check {
+  flex: none;
+  color: var(--acc-ink);
+}
+.cc-opt:not(.is-selected) .cc-dial {
+  margin-right: 24px;
+}
+.cc-empty {
+  padding: 18px 10px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* Телефон: список выезжает снизу на весь экран по ширине. */
+@media (max-width: 600px) {
+  .cc-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    background: rgb(11 13 14 / 45%);
+    animation: cc-fade 0.2s ease-out;
+  }
+  .cc-pop {
+    position: fixed;
+    z-index: 91;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    max-height: 82dvh;
+    border-radius: 20px 20px 0 0;
+    border: 0;
+    padding-bottom: env(safe-area-inset-bottom);
+    animation: cc-up 0.22s ease-out;
+  }
+  .cc-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 14px 4px 18px;
+  }
+  .cc-title {
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+  .cc-x {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--tint);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .cc-search {
+    border-bottom: 0;
+    padding: 8px 14px;
+  }
+  .cc-search svg {
+    left: 26px;
+  }
+  .cc-list {
+    max-height: none;
+    flex: 1;
+    min-height: 0;
+    padding: 0 8px 12px;
+  }
+  .cc-opt {
+    min-height: 48px;
+    font-size: 1rem;
+  }
+}
+@keyframes cc-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes cc-up {
+  from {
+    transform: translateY(100%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cc-pop,
+  .cc-backdrop {
+    animation: none;
+  }
 }

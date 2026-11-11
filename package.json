@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@fontsource-variable/manrope": "^5.1.0",
+    "country-flag-icons": "^1.5.19",
     "lucide-react": "^0.460.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
