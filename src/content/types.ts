@@ -156,7 +156,7 @@ export type LangContent = {
     routes: { eyebrow: string; title: string; sub: string; note: string; list: Route[] }
     faq: { eyebrow: string; title: string }
     clients: { eyebrow: string; title: string; sub: string; items: Card[]; logosTitle: string }
-    cta: { title: string; text: string; button: string; or: string }
+    cta: { title: string; text: string; button: string; or: string; orMobile: string }
     related: string
     /** Заголовок блока со страницами маршрутов на разделах «По Україні» и «Міжнародні». */
     routePages?: string
