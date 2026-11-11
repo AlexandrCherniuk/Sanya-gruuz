@@ -1471,7 +1471,7 @@ export const en: LangContent = {
     aboutTitle: 'About us',
     about: [
       "CR Logistics arranges freight transport within Ukraine and abroad: by road, sea and air. We match the vehicle to the cargo: from a van to a full truck, low-bed trailer, car transporter or crane truck. We also handle customs clearance in Ukraine and Europe.",
-      "We are based in Ukraine, Poland and Slovenia. We work with businesses and private clients.",
+      "We are based in Ukraine, Poland and Slovenia. We work with both businesses and private clients.",
     ],
     hours: 'Requests from the website reach us instantly on Telegram',
   },

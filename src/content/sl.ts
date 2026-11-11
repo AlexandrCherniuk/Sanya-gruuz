@@ -1471,7 +1471,7 @@ export const sl: LangContent = {
     aboutTitle: 'O podjetju',
     about: [
       "CR Logistics organizira prevoz tovora po Ukrajini in v tujino: cestni, morski in letalski. Prevoz izberemo glede na tovor: od kombija do tovornjaka, nizko-podvoznika, avtotransporterja ali vozila z dvigalom. Uredimo tudi carinjenje v Ukrajini in Evropi.",
-      "Imamo sedež v Ukrajini, na Poljskem in v Sloveniji. Delamo s podjetji in fizičnimi osebami.",
+      "Imamo sedež v Ukrajini, na Poljskem in v Sloveniji. Delamo tako s podjetji kot s fizičnimi osebami.",
     ],
     hours: 'Povpraševanja s spletne strani prejmemo takoj v Telegram',
   },
