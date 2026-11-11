@@ -120,7 +120,7 @@ export const sl: LangContent = {
 
   home: {
     meta: {
-      title: 'Prevoz tovora Slovenija – Ukrajina, po Evropi in Ukrajini | CR Logistics',
+      title: 'Prevoz tovora Slovenija – Ukrajina, po Evropi in Ukrajini | CG Logistics',
       description:
         'Prevoz tovora od 1 tone med Slovenijo, Evropo in Ukrajino ter po vsej Ukrajini: kombi, tovornjak, izredni prevozi, avtotransporter. Uvoz iz Kitajske po morju in letalsko.',
     },
@@ -1452,13 +1452,13 @@ export const sl: LangContent = {
   contactsPage: {
     meta: {
       title: 'Kontakt: telefon, Viber, Telegram, WhatsApp',
-      description: 'Telefon, Viber, Telegram, WhatsApp in e-pošta CR Logistics. Kijev, Ukrajina, in Slovenija.',
+      description: 'Telefon, Viber, Telegram, WhatsApp in e-pošta CG Logistics. Kijev, Ukrajina, in Slovenija.',
     },
     h1: 'Kontakt',
     lead: 'Pokličite ali pišite v aplikaciji, ki vam ustreza. Za izračun povejte relacijo, težo in prostornino tovora.',
     aboutTitle: 'O podjetju',
     about: [
-      'CR Logistics organizira prevoze tovora po Ukrajini in v tujino. Vozilo izberemo glede na tovor: od kombija do tovornjaka, nizkopodnika, avtotransporterja ali tovornjaka z dvigalom.',
+      'CG Logistics organizira prevoze tovora po Ukrajini in v tujino. Vozilo izberemo glede na tovor: od kombija do tovornjaka, nizkopodnika, avtotransporterja ali tovornjaka z dvigalom.',
       'Delujemo iz Kijeva in smo prisotni v Sloveniji. Vozimo za mala in srednja podjetja, samostojne podjetnike in fizične osebe.',
     ],
     hours: 'Povpraševanja s spletne strani prejmemo takoj v Telegram',

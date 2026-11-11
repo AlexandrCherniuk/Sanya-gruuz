@@ -120,7 +120,7 @@ export const pl: LangContent = {
 
   home: {
     meta: {
-      title: 'Transport do Ukrainy z Polski i Europy oraz po Ukrainie | CR Logistics',
+      title: 'Transport do Ukrainy z Polski i Europy oraz po Ukrainie | CG Logistics',
       description:
         'Transport towarów od 1 tony: Polska – Ukraina, Europa, cała Ukraina. Bus, TIR, ładunki ponadgabarytowe, autolawety. Import z Chin morzem i samolotem. Wycena po zapytaniu.',
     },
@@ -1452,13 +1452,13 @@ export const pl: LangContent = {
   contactsPage: {
     meta: {
       title: 'Kontakt: telefon, Viber, Telegram, WhatsApp',
-      description: 'Telefon, Viber, Telegram, WhatsApp i e-mail CR Logistics. Kijów, Ukraina, a także Słowenia.',
+      description: 'Telefon, Viber, Telegram, WhatsApp i e-mail CG Logistics. Kijów, Ukraina, a także Słowenia.',
     },
     h1: 'Kontakt',
     lead: 'Zadzwoń albo napisz na wygodnym komunikatorze. Do wyceny podaj trasę, wagę i objętość ładunku.',
     aboutTitle: 'O firmie',
     about: [
-      'CR Logistics organizuje transport towarów po Ukrainie i za granicę. Dobieramy auto do ładunku: od busa po TIR-a, niskopodwoziówkę, autolawetę albo HDS.',
+      'CG Logistics organizuje transport towarów po Ukrainie i za granicę. Dobieramy auto do ładunku: od busa po TIR-a, niskopodwoziówkę, autolawetę albo HDS.',
       'Działamy z Kijowa i jesteśmy obecni w Słowenii. Wozimy dla małych i średnich firm, jednoosobowych działalności i klientów prywatnych.',
     ],
     hours: 'Zapytania ze strony trafiają do nas od razu na Telegram',

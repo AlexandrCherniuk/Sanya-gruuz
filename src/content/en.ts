@@ -120,7 +120,7 @@ export const en: LangContent = {
 
   home: {
     meta: {
-      title: 'Freight Transport Ukraine – Europe and within Ukraine | CR Logistics',
+      title: 'Freight Transport Ukraine – Europe and within Ukraine | CG Logistics',
       description:
         'Road freight from 1 tonne between Ukraine and Europe and across Ukraine: vans, full trucks, oversized loads, car transporters. Sea and air freight from China. Quote after your request.',
     },
@@ -1452,13 +1452,13 @@ export const en: LangContent = {
   contactsPage: {
     meta: {
       title: 'Contact Us: Phone, Viber, Telegram, WhatsApp',
-      description: 'Phone, Viber, Telegram, WhatsApp and email of CR Logistics. Kyiv, Ukraine, and Slovenia.',
+      description: 'Phone, Viber, Telegram, WhatsApp and email of CG Logistics. Kyiv, Ukraine, and Slovenia.',
     },
     h1: 'Contact us',
     lead: 'Call us or message us on your favourite messenger. For a quote, tell us the route, weight and volume of your cargo.',
     aboutTitle: 'About us',
     about: [
-      'CR Logistics organises freight transport within Ukraine and abroad. We match the vehicle to the cargo: from a van to a full truck, low-loader, car transporter or crane truck.',
+      'CG Logistics organises freight transport within Ukraine and abroad. We match the vehicle to the cargo: from a van to a full truck, low-loader, car transporter or crane truck.',
       'We are based in Kyiv and have a presence in Slovenia. We work for small and medium businesses, sole traders and private clients.',
     ],
     hours: 'Requests from the website reach us instantly on Telegram',

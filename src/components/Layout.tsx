@@ -29,9 +29,9 @@ export function routePages(c: LangContent) {
 
 function Logo({ lang }: { lang: Lang }) {
   return (
-    <a className="logo" href={url(lang)} aria-label="CR Logistics">
+    <a className="logo" href={url(lang)} aria-label="CG Logistics">
       <span className="logo-mark">
-        <img src={asset('brand/logo-cr.png')} width="300" height="125" alt="" />
+        <img src={asset('brand/logo-cg.svg')} width="300" height="120" alt="" />
       </span>
       <span className="logo-text">Logistics</span>
     </a>
@@ -689,7 +689,7 @@ export function Footer({ lang, c }: Ctx) {
       </div>
       <div className="wrap ftr-bottom">
         <p>
-          © {year} CR Logistics. {c.ui.rights}
+          © {year} CG Logistics. {c.ui.rights}
         </p>
         <p>{c.ui.footerNote}</p>
       </div>
