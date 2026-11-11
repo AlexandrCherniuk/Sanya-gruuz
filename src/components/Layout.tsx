@@ -40,6 +40,8 @@ function Logo({ lang }: { lang: Lang }) {
 
 function LangSwitch({ lang, available, path, label }: { lang: Lang; available: Lang[]; path: string; label: string }) {
   const ready = languages.filter((l) => l.ready)
+  // В украинской версии русский — в самом низу списка.
+  if (lang === 'ua') ready.sort((a, b) => Number(a.code === 'ru') - Number(b.code === 'ru'))
   const current = ready.find((l) => l.code === lang)!
   // Выпадающий список: пять языков в шапке не помещаются на телефоне.
   // data-lang на ссылке: client.tsx запоминает выбор посетителя.

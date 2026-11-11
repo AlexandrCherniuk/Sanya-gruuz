@@ -2,7 +2,7 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { type Lang, absUrl, asset, BASE as BASE_PATH, brand, contacts, defaultLang, languages, links, SITE_URL, url } from './site/config'
 import { buildRoutes, content, langsForPath, servicePath, type Route } from './site/routes'
-import { browserLangMap, LANG_KEY } from './site/langPick'
+import { browserLangMap, LANG_KEY, UA_TIMEZONES } from './site/langPick'
 import type { LangContent, Vehicle } from './content/types'
 import {
   Chips,
@@ -447,7 +447,7 @@ ${bodyHtml}
 
 /**
  * Корень сайта: открываем язык посетителя. Сначала сохранённый выбор (переключатель или
- * плашка), потом язык браузера, иначе английский. Без JS (и для ботов) — украинская версия
+ * плашка), потом Украина → украинская, потом язык браузера, иначе английский. Без JS (и для ботов) — украинская версия
  * через noscript и ссылки на все языки. Логика та же, что в src/site/langPick.ts.
  */
 export function renderRoot() {
@@ -455,7 +455,8 @@ export function renderRoot() {
   const fallback = url(defaultLang)
   const map = Object.fromEntries(Object.entries(browserLangMap).filter(([, code]) => ready.some((l) => l.code === code)))
   const pick = `(function(){var m=${JSON.stringify(map)},c=null;try{c=localStorage.getItem(${JSON.stringify(LANG_KEY)})}catch(e){}
-if(!c||${JSON.stringify(ready.map((l) => l.code))}.indexOf(c)<0){c=null;var a=navigator.languages||[navigator.language||''];for(var i=0;i<a.length&&!c;i++){c=m[String(a[i]).toLowerCase().split('-')[0]]||null}}
+if(!c||${JSON.stringify(ready.map((l) => l.code))}.indexOf(c)<0){c=null;var a=navigator.languages||[navigator.language||''],u=false;try{u=${JSON.stringify(UA_TIMEZONES)}.indexOf(Intl.DateTimeFormat().resolvedOptions().timeZone)>=0}catch(e){}
+for(var j=0;j<a.length;j++){if(String(a[j]).toLowerCase().split('-')[0]==='uk')u=true}if(u)c='ua';for(var i=0;i<a.length&&!c;i++){c=m[String(a[i]).toLowerCase().split('-')[0]]||null}}
 location.replace(${JSON.stringify(BASE_PATH)}+(c||'en')+'/'+location.search+location.hash)})()`
   return `<!doctype html>
 <html lang="uk">
