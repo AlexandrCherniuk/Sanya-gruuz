@@ -71,7 +71,8 @@ export const pl: LangContent = {
         { icon: 'contract', title: 'Cena nie zmieni się w trasie', text: 'Trasę, terminy i koszt wpisujemy do zlecenia jeszcze przed załadunkiem.' },
         { icon: 'chat', title: 'Logistyk zawsze pod telefonem', text: 'Telefon, Viber, Telegram, WhatsApp. Powiemy, gdzie jest auto i kiedy dojedzie.' },
         { icon: 'truck', title: 'Nie przepłacasz za przestrzeń', text: 'Dobieramy nadwozie do ładunku, a dla małych partii proponujemy doładunek.' },
-        { icon: 'shield', title: 'Odpowiedzialność za ładunek', text: 'Przewoźnik odpowiada za ładunek zgodnie ze zleceniem. Na życzenie organizujemy ubezpieczenie.' },
+        { icon: 'clock', title: 'Auto od ręki', text: 'W 95% zleceń przewozu ładunku po drodze auto przyjeżdża na miejsce w ciągu 2 godzin. Z logistykiem skontaktujesz się o każdej porze: pracujemy całą dobę.' },
+        { icon: 'shield', title: 'Ubezpieczenie ładunku', text: 'Ubezpieczamy ładunek od uszkodzenia przez sprawdzonych partnerów, na kwotę od 10 000 UAH. Za dopłatą zwiększymy sumę ubezpieczenia.' },
         { icon: 'docs', title: 'Dokumenty na granicę', text: 'CMR, dokumenty przewozowe, odprawa celna przez agencję celną na trasach międzynarodowych.' },
         { icon: 'route', title: 'Od drzwi do drzwi', text: 'Odbieramy i dowozimy pod wskazane adresy, bez przeładunków po drodze.' },
       ],
@@ -124,11 +125,11 @@ export const pl: LangContent = {
       description:
         'Transport towarów: Polska – Ukraina, Europa, cała Ukraina. Bus, TIR, ładunki ponadgabarytowe, autolawety. Import z Chin morzem i samolotem. Wycena po zapytaniu.',
     },
-    eyebrow: "Transport · Ukraina, Polska, Słowenia",
+    eyebrow: "Transport lotniczy · Kolej · Transport drogowy · Morze",
     h1: 'Transport towarów',
     h1Accent: 'po Ukrainie i za granicę',
-    lead: "Dobierzemy auto do ładunku: bus, TIR, niskopodwozie, autolawetę lub HDS. Wozimy po całej Ukrainie i Europie, morzem i samolotem dostarczamy z Azji i USA, zajmujemy się odprawą celną.",
-    bullets: ['Bus od 1,2 €/km, TIR od 1,5 €/km w Europie', 'Auto na wyłączność albo doładunek', 'Warunki zapisane w zleceniu'],
+    lead: "Dobierzemy auto do ładunku i podstawimy je w dowolne miejsce w 2 godziny. Wozimy po całej Ukrainie i Europie, morzem i samolotem dostarczamy z Azji i USA, zajmujemy się odprawą celną.",
+    bullets: ['Bus od 1,2 €/km, TIR od 1,5 €/km w Europie', 'Auto na wyłączność albo doładunek', 'Przewozy ładunków po drodze', 'Warunki zapisane w zleceniu'],
     faq: [
       {
         q: 'Jak poznać cenę transportu?',
