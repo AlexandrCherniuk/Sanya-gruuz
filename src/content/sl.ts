@@ -125,7 +125,7 @@ export const sl: LangContent = {
       description:
         'Prevoz tovora med Slovenijo, Evropo in Ukrajino ter po vsej Ukrajini: kombi, tovornjak, izredni prevozi, avtotransporter. Uvoz iz Kitajske po morju in letalsko.',
     },
-    eyebrow: "Letalski prevoz · Železnica · Cestni prevoz · Morje",
+    eyebrow: "Cestni prevoz · Letalski · Pomorski",
     h1: 'Prevoz tovora',
     h1Accent: 'po Ukrajini in v tujino',
     lead: "Vozilo izberemo glede na vaš tovor in ga v 2 urah pripeljemo na katero koli lokacijo. Vozimo po vsej Ukrajini in Evropi, po morju in letalsko dostavljamo iz Azije in ZDA ter uredimo carinjenje.",

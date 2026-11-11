@@ -125,7 +125,7 @@ export const en: LangContent = {
       description:
         'Road freight between Ukraine and Europe and across Ukraine: vans, full trucks, oversized loads, car transporters. Sea and air freight from China. Quote after your request.',
     },
-    eyebrow: "Air freight · Rail · Road freight · Sea",
+    eyebrow: "Road freight · Air · Sea",
     h1: 'Freight transport',
     h1Accent: 'across Ukraine and abroad',
     lead: "We match the vehicle to your cargo and get it to any pickup point within 2 hours. We carry across Ukraine and Europe, ship by sea and air from Asia and the USA, and handle customs clearance.",
