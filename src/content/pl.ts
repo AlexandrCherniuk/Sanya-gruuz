@@ -123,7 +123,7 @@ export const pl: LangContent = {
 
   home: {
     meta: {
-      title: 'Transport do Ukrainy z Polski i Europy oraz po Ukrainie | CR Logistics',
+      title: 'Transport do Ukrainy z Polski i Europy oraz po Ukrainie | GR Logistics',
       description:
         'Transport towarów: Polska – Ukraina, Europa, cała Ukraina. Bus, TIR, ładunki ponadgabarytowe, autolawety. Import z Azji i USA morzem i samolotem. Wycena po zapytaniu.',
     },
@@ -1467,13 +1467,13 @@ export const pl: LangContent = {
   contactsPage: {
     meta: {
       title: 'Kontakt: telefon, Viber, Telegram, WhatsApp',
-      description: 'Telefon, Viber, Telegram, WhatsApp i e-mail CR Logistics. Kijów, Ukraina, a także Słowenia.',
+      description: 'Telefon, Viber, Telegram, WhatsApp i e-mail GR Logistics. Kijów, Ukraina, a także Słowenia.',
     },
     h1: 'Kontakt',
     lead: 'Zadzwoń albo napisz na wygodnym komunikatorze. Do wyceny podaj trasę, wagę i objętość ładunku.',
     aboutTitle: 'O firmie',
     about: [
-      "CR Logistics organizuje transport ładunków po Ukrainie i za granicę: drogowy, morski i lotniczy. Dobieramy transport do ładunku: od busa po TIR, niskopodwozie, autolawetę czy HDS. Zajmujemy się też odprawą celną na Ukrainie i w Europie.",
+      "GR Logistics organizuje transport ładunków po Ukrainie i za granicę: drogowy, morski i lotniczy. Dobieramy transport do ładunku: od busa po TIR, niskopodwozie, autolawetę czy HDS. Zajmujemy się też odprawą celną na Ukrainie i w Europie.",
       "Działamy na Ukrainie, w Polsce i w Słowenii. Pracujemy zarówno z firmami, jak i z klientami prywatnymi.",
     ],
     hours: 'Zapytania ze strony trafiają do nas od razu na Telegram',
