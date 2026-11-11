@@ -1316,6 +1316,25 @@ export const pl: LangContent = {
       ],
     },
     {
+      slug: 'customs',
+      group: 'international',
+      meta: { title: "Odprawa celna i magazyny przy granicy z Polską", description: "Odprawa celna importu i eksportu, T1, EUR.1, TIR, magazynowanie i przeładunek na granicy Ukraina – Polska." },
+      card: { icon: 'docs', title: "Cło i magazyny", text: "Odprawa celna, magazyn, przeładunek", price: "na zapytanie" },
+      h1: "Odprawa celna i magazyny przy granicy z Polską",
+      lead: "Razem z partnerami przy polskiej granicy załatwiamy dokumenty i przechowujemy ładunek, żeby jechał dalej bez opóźnień.",
+      bullets: ["Import, eksport, tranzyt", "T1, EUR.1, EX, TIR", "Magazyn, przeładunek, konsolidacja"],
+      sections: [
+        { title: "Odprawa celna", items: ["Dokument T1: odprawa i obsługa tranzytu", "Import: odprawa celna towarów wwożonych do UE", "Dokument EX: eksport towarów poza UE", "Świadectwo pochodzenia EUR.1", "Deklaracja tranzytowa dla ładunków spoza UE (Chiny, USA, Korea Południowa i inne)", "Karnet TIR: wystawienie i obsługa"] },
+        { title: "Magazyn i logistyka", items: ["Magazynowanie towarów", "Przeładunek", "Konsolidacja i dekonsolidacja ładunków", "Szukanie transportu", "Odbiór ładunków z lotnisk i portów morskich", "Sprzedaż towarów w tranzycie"] },
+        { title: "Dokumenty i konsultacje", items: ["Pełna obsługa dokumentów celnych i transportowych", "Konsultacje w sprawie procedur celnych i handlu międzynarodowego"] },
+      ],
+      vehicles: ['fura'],
+      faq: [
+        { q: "Ile kosztuje odprawa celna?", a: "Zależy od procedury i ładunku. Napisz, co i dokąd wieziesz, podamy cenę." },
+        { q: "Czy można zamówić odprawę lub magazyn bez transportu?", a: "Tak, odprawę celną lub magazyn można zamówić osobno." },
+      ],
+    },
+    {
       slug: 'asia',
       group: 'international',
       meta: { title: "Transport towarów z Azji na Ukrainę", description: "Transport towarów z Azji: Chiny, Turcja, Indie, Wietnam. Morzem w kontenerach i samolotem, z odprawą celną." },

@@ -1316,6 +1316,25 @@ export const en: LangContent = {
       ],
     },
     {
+      slug: 'customs',
+      group: 'international',
+      meta: { title: "Customs clearance and warehousing at the Polish border", description: "Import and export customs clearance, T1, EUR.1, TIR, warehousing and transloading at the Ukraine – Poland border." },
+      card: { icon: 'docs', title: "Customs and warehousing", text: "Customs clearance, storage, transloading", price: "on request" },
+      h1: "Customs clearance and warehousing at the Polish border",
+      lead: "Together with our partners at the Polish border, we handle the paperwork and store your cargo so it moves on without delays.",
+      bullets: ["Import, export, transit", "T1, EUR.1, EX, TIR", "Storage, transloading, consolidation"],
+      sections: [
+        { title: "Customs clearance", items: ["T1 document: transit clearance and support", "Import: customs clearance of goods entering the EU", "EX document: export of goods outside the EU", "EUR.1 certificate of origin", "Transit declaration for cargo from non-EU countries (China, USA, South Korea and others)", "TIR carnet: issuing and support"] },
+        { title: "Warehouse and logistics", items: ["Warehouse storage", "Transloading", "Cargo consolidation and deconsolidation", "Finding transport", "Cargo pickup from airports and seaports", "Sale of goods in transit"] },
+        { title: "Documents and advice", items: ["Full support with customs and transport documents", "Advice on customs procedures and international trade"] },
+      ],
+      vehicles: ['fura'],
+      faq: [
+        { q: "How much does customs clearance cost?", a: "It depends on the procedure and the cargo. Tell us what you are shipping and where, and we will quote." },
+        { q: "Can I order customs or storage without transport?", a: "Yes, customs clearance or warehousing can be ordered separately." },
+      ],
+    },
+    {
       slug: 'asia',
       group: 'international',
       meta: { title: "Freight from Asia to Ukraine", description: "Freight from Asia: China, Turkey, India, Vietnam. Sea containers and air freight, with customs clearance." },

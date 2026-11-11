@@ -1316,6 +1316,25 @@ export const sl: LangContent = {
       ],
     },
     {
+      slug: 'customs',
+      group: 'international',
+      meta: { title: "Carinjenje in skladišča ob meji s Poljsko", description: "Carinjenje uvoza in izvoza, T1, EUR.1, TIR, skladiščenje in pretovor na meji Ukrajina – Poljska." },
+      card: { icon: 'docs', title: "Carina in skladišča", text: "Carinjenje, skladiščenje, pretovor", price: "na povpraševanje" },
+      h1: "Carinjenje in skladišča ob meji s Poljsko",
+      lead: "S partnerji ob poljski meji uredimo dokumente in hranimo tovor, da brez zamud potuje naprej.",
+      bullets: ["Uvoz, izvoz, tranzit", "T1, EUR.1, EX, TIR", "Skladišče, pretovor, konsolidacija"],
+      sections: [
+        { title: "Carinjenje", items: ["Dokument T1: carinjenje in spremljanje tranzita", "Uvoz: carinjenje blaga za vnos v EU", "Dokument EX: izvoz blaga iz EU", "Potrdilo o poreklu EUR.1", "Tranzitna deklaracija za tovor iz držav zunaj EU (Kitajska, ZDA, Južna Koreja in druge)", "Zvezek TIR: izdaja in spremljanje"] },
+        { title: "Skladišče in logistika", items: ["Skladiščenje blaga", "Pretovor", "Konsolidacija in dekonsolidacija tovora", "Iskanje prevoza", "Prevzem tovora z letališč in pristanišč", "Prodaja blaga v tranzitu"] },
+        { title: "Dokumenti in svetovanje", items: ["Celovito urejanje carinskih in prevoznih dokumentov", "Svetovanje o carinskih postopkih in mednarodni trgovini"] },
+      ],
+      vehicles: ['fura'],
+      faq: [
+        { q: "Koliko stane carinjenje?", a: "Odvisno od postopka in tovora. Napišite, kaj in kam vozite, in vam povemo ceno." },
+        { q: "Lahko naročim carinjenje ali skladišče brez prevoza?", a: "Da, carinjenje ali skladiščenje lahko naročite posebej." },
+      ],
+    },
+    {
       slug: 'asia',
       group: 'international',
       meta: { title: "Prevoz blaga iz Azije v Ukrajino", description: "Prevoz blaga iz Azije: Kitajska, Turčija, Indija, Vietnam. Morsko v kontejnerjih in letalsko, s carinjenjem." },
