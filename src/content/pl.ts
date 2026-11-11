@@ -122,11 +122,11 @@ export const pl: LangContent = {
     meta: {
       title: 'Transport do Ukrainy z Polski i Europy oraz po Ukrainie | CG Logistics',
       description:
-        'Transport towarów od 1 tony: Polska – Ukraina, Europa, cała Ukraina. Bus, TIR, ładunki ponadgabarytowe, autolawety. Import z Chin morzem i samolotem. Wycena po zapytaniu.',
+        'Transport towarów: Polska – Ukraina, Europa, cała Ukraina. Bus, TIR, ładunki ponadgabarytowe, autolawety. Import z Chin morzem i samolotem. Wycena po zapytaniu.',
     },
     eyebrow: "Transport · Ukraina, Polska, Słowenia",
-    h1: 'Transport towarów do Ukrainy i po Europie',
-    h1Accent: 'od 1 tony',
+    h1: 'Transport towarów',
+    h1Accent: 'po Ukrainie i za granicę',
     lead: "Dobierzemy auto do ładunku: bus, TIR, niskopodwozie, autolawetę lub HDS. Wozimy po całej Ukrainie i Europie, morzem i samolotem dostarczamy z Azji i USA, zajmujemy się odprawą celną.",
     bullets: ['Bus od 1,2 €/km, TIR od 1,5 €/km w Europie', 'Auto na wyłączność albo doładunek', 'Warunki zapisane w zleceniu'],
     faq: [
@@ -307,7 +307,7 @@ export const pl: LangContent = {
     {
       slug: 'ukraine',
       meta: {
-        title: 'Transport towarów po Ukrainie od 1 tony',
+        title: 'Transport towarów po Ukrainie',
         description:
           'Transport między miastami Ukrainy: bus do 2 t, ciężarówki 5–10 t, TIR 22 t, ponadgabaryty. Stawki od 60 UAH/km, auto na wyłączność albo doładunek.',
       },

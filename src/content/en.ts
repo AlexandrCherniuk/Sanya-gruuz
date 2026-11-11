@@ -122,11 +122,11 @@ export const en: LangContent = {
     meta: {
       title: 'Freight Transport Ukraine – Europe and within Ukraine | CG Logistics',
       description:
-        'Road freight from 1 tonne between Ukraine and Europe and across Ukraine: vans, full trucks, oversized loads, car transporters. Sea and air freight from China. Quote after your request.',
+        'Road freight between Ukraine and Europe and across Ukraine: vans, full trucks, oversized loads, car transporters. Sea and air freight from China. Quote after your request.',
     },
     eyebrow: "Freight · Ukraine, Poland, Slovenia",
-    h1: 'Freight transport between Ukraine and Europe',
-    h1Accent: 'from 1 tonne',
+    h1: 'Freight transport',
+    h1Accent: 'across Ukraine and abroad',
     lead: "We match the vehicle to your cargo: van, full truck, low-bed, car transporter or crane truck. We carry across Ukraine and Europe, ship by sea and air from Asia and the USA, and handle customs clearance.",
     bullets: ['Van from €1.2/km, truck from €1.5/km in Europe', 'Dedicated vehicle or groupage', 'Terms fixed in the contract'],
     faq: [

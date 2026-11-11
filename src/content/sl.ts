@@ -122,11 +122,11 @@ export const sl: LangContent = {
     meta: {
       title: 'Prevoz tovora Slovenija – Ukrajina, po Evropi in Ukrajini | CG Logistics',
       description:
-        'Prevoz tovora od 1 tone med Slovenijo, Evropo in Ukrajino ter po vsej Ukrajini: kombi, tovornjak, izredni prevozi, avtotransporter. Uvoz iz Kitajske po morju in letalsko.',
+        'Prevoz tovora med Slovenijo, Evropo in Ukrajino ter po vsej Ukrajini: kombi, tovornjak, izredni prevozi, avtotransporter. Uvoz iz Kitajske po morju in letalsko.',
     },
     eyebrow: "Prevozi · Ukrajina, Poljska, Slovenija",
-    h1: 'Prevoz tovora v Ukrajino in po Evropi',
-    h1Accent: 'od 1 tone',
+    h1: 'Prevoz tovora',
+    h1Accent: 'po Ukrajini in v tujino',
     lead: "Vozilo izberemo glede na vaš tovor: kombi, tovornjak, nizko-podvoznik, avtotransporter ali vozilo z dvigalom. Vozimo po vsej Ukrajini in Evropi, po morju in letalsko dostavljamo iz Azije in ZDA ter uredimo carinjenje.",
     bullets: ['Kombi od 1,2 €/km, tovornjak od 1,5 €/km v Evropi', 'Samostojno vozilo ali zbirni prevoz', 'Pogoji zapisani v naročilu'],
     faq: [
@@ -307,7 +307,7 @@ export const sl: LangContent = {
     {
       slug: 'ukraine',
       meta: {
-        title: 'Prevoz tovora po Ukrajini od 1 tone',
+        title: 'Prevoz tovora po Ukrajini',
         description:
           'Prevoz tovora med mesti v Ukrajini: kombi do 2 t, tovornjaki 5–10 t, tovornjak 22 t, izredni prevozi. Postavke od 60 UAH/km, samostojno vozilo ali zbirni prevoz.',
       },
