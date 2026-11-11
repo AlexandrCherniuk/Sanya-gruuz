@@ -5,7 +5,8 @@ import { site } from './seo'
 import { initAnalytics, trackLead } from './analytics'
 import { sendLead } from './lead'
 import { digitsOnly, emptyDraft, isValidPhone, type QuoteDraft } from './quote'
-import { countries, DEFAULT_COUNTRY, flag, PRIORITY } from './countries'
+import { countries, DEFAULT_COUNTRY } from './countries'
+import { CountryPicker } from './CountryPicker'
 
 type Status = 'idle' | 'sending' | 'sent' | 'failed'
 type Field = 'phone' | 'from' | 'to'
@@ -27,22 +28,6 @@ function validate(draft: QuoteDraft, t: FormCopy, lang: string): Partial<Record<
   return errors
 }
 
-/** Список стран для выпадашки: названия на языке страницы, сначала частые страны. */
-function countryOptions(lang: string) {
-  let names: Intl.DisplayNames | null = null
-  try {
-    names = new Intl.DisplayNames([lang === 'ua' ? 'uk' : lang], { type: 'region' })
-  } catch {
-    names = null
-  }
-  const list = countries.map((c) => ({ ...c, name: names?.of(c.iso) ?? c.iso }))
-  const top = PRIORITY.map((iso) => list.find((c) => c.iso === iso)!).filter(Boolean)
-  const rest = list
-    .filter((c) => !PRIORITY.includes(c.iso))
-    .sort((a, b) => a.name.localeCompare(b.name, lang === 'ua' ? 'uk' : lang))
-  return { top, rest }
-}
-
 /** Если номер вписан с «+», показываем у поля страну по его коду (самое длинное совпадение). */
 function countryFromNumber(value: string) {
   const v = value.trim()
@@ -62,13 +47,9 @@ export function QuoteForm({ id = 'zapyt', successUrl, lang = 'ua' }: Props) {
   const [honeypot, setHoneypot] = useState('')
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({})
   const [status, setStatus] = useState<Status>('idle')
-  // Полный список стран рисуем только в браузере: названия из Intl могут отличаться от пререндера.
-  const [opts, setOpts] = useState<ReturnType<typeof countryOptions> | null>(null)
-
   useEffect(() => {
     initAnalytics()
-    setOpts(countryOptions(lang))
-  }, [lang])
+  }, [])
 
   const iso = draft.country || DEFAULT_COUNTRY[lang] || 'UA'
   const shown = countryFromNumber(draft.phone) ?? countries.find((c) => c.iso === iso)!
@@ -141,39 +122,14 @@ export function QuoteForm({ id = 'zapyt', successUrl, lang = 'ua' }: Props) {
       <div className="quote-phone-field">
         <label htmlFor={`${uid}-phone`}>{t.phone}</label>
         <div className="quote-phone">
-          <span className="quote-cc" aria-hidden="true">
-            <span className="quote-cc-flag">{flag(shown.iso)}</span>
-            {`+${shown.dial}`}
-          </span>
-          <select
-            className="quote-cc-select"
-            aria-label={t.country}
+          <CountryPicker
+            id={`${uid}-cc`}
+            lang={lang}
+            t={t}
             value={iso}
-            onChange={(e) => update('country', e.target.value)}
-          >
-            {opts ? (
-              <>
-                <optgroup label="★">
-                  {opts.top.map((c) => (
-                    <option key={c.iso} value={c.iso}>
-                      {`${flag(c.iso)} ${c.name} +${c.dial}`}
-                    </option>
-                  ))}
-                </optgroup>
-                <optgroup label="A–Z">
-                  {opts.rest.map((c) => (
-                    <option key={c.iso} value={c.iso}>
-                      {`${flag(c.iso)} ${c.name} +${c.dial}`}
-                    </option>
-                  ))}
-                </optgroup>
-              </>
-            ) : (
-              <option value={iso}>
-                {`${flag(shown.iso)} +${shown.dial}`}
-              </option>
-            )}
-          </select>
+            shown={shown}
+            onChange={(v) => update('country', v)}
+          />
           <input
             id={`${uid}-phone`}
             name="phone"

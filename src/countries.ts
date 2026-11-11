@@ -19,10 +19,6 @@ export const countries: Country[] = RAW.trim()
 /** Сначала страны, откуда реально пишут, дальше остальные по алфавиту. */
 export const PRIORITY = ['UA', 'PL', 'SI', 'DE', 'MD', 'RO', 'SK', 'CZ', 'LT', 'AT', 'IT', 'HR', 'GB', 'US', 'KZ']
 
-export function flag(iso: string) {
-  return String.fromCodePoint(...[...iso].map((c) => 0x1f1e6 + c.charCodeAt(0) - 65))
-}
-
 /** Код страны по умолчанию для языка страницы. */
 export const DEFAULT_COUNTRY: Record<string, string> = { ua: 'UA', ru: 'UA', en: 'UA', pl: 'PL', sl: 'SI' }
 
