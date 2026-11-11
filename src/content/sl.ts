@@ -61,7 +61,7 @@ export const sl: LangContent = {
         { title: 'Prihod vozila', text: 'Vozilo pride na nakladanje ob dogovorjenem času. Voznik poskrbi za zanesljivo pritrditev tovora.' },
         { title: 'Dostava', text: 'Redno vas obveščamo, kje je tovor. Dosegljivi smo vedno, ob vsakem času, da hitro rešimo vsako višjo silo in vsako težavo.' },
       ],
-      note: 'Za rezervacijo vozila lahko logist prosi za predplačilo. Način plačila zapišemo v naročilo za prevoz.',
+      note: 'Celotno plačilo ob razkladanju. Za rezervacijo vozila je lahko potrebno predplačilo.',
     },
     why: {
       eyebrow: 'Zakaj z nami',

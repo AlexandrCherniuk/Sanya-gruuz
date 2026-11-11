@@ -61,7 +61,7 @@ export const en: LangContent = {
         { title: 'Pickup', text: 'The vehicle arrives for loading at the agreed time. The driver ensures the cargo is reliably secured.' },
         { title: 'Delivery', text: 'We regularly update you on where your cargo is. We are reachable any time, day or night, to deal quickly with any force majeure or problem.' },
       ],
-      note: 'To reserve a vehicle, your manager may ask for a prepayment. Payment terms are set out in the transport order.',
+      note: 'Full payment is made on unloading. A prepayment may be needed to book the vehicle.',
     },
     why: {
       eyebrow: 'Why it is easy with us',

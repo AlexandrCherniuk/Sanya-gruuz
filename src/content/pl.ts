@@ -61,7 +61,7 @@ export const pl: LangContent = {
         { title: 'Podstawienie auta', text: 'Auto przyjeżdża na załadunek o umówionej godzinie. Kierowca zapewnia solidne zabezpieczenie ładunku.' },
         { title: 'Dostawa', text: 'Regularnie informujemy, gdzie jest teraz ładunek. Jesteśmy w kontakcie zawsze, o każdej porze, żeby szybko rozwiązać każdą sytuację awaryjną i każdy problem.' },
       ],
-      note: 'Przy rezerwacji auta logistyk może poprosić o przedpłatę. Sposób płatności zapisujemy w zleceniu transportowym.',
+      note: 'Pełna płatność przy rozładunku. Przy rezerwacji auta może być potrzebna przedpłata.',
     },
     why: {
       eyebrow: 'Dlaczego z nami spokojnie',
