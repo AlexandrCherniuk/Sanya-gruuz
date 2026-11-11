@@ -59,9 +59,9 @@ export const sl: LangContent = {
         { title: 'Povpraševanje', text: 'Izpolnite obrazec, pokličite ali pišite: od kod, kam in kaj prevažamo.' },
         { title: 'Ponudba in naročilo', text: 'Logist izbere vozilo in pot ter pove ceno. Pogoje zapišemo v naročilo za prevoz.' },
         { title: 'Prihod vozila', text: 'Vozilo pride na nakladanje ob dogovorjenem času. Voznik poskrbi za zanesljivo pritrditev tovora.' },
-        { title: 'Dostava', text: 'Do razkladanja smo na zvezi in vam povemo, kje je tovor.' },
+        { title: 'Dostava', text: 'Redno vas obveščamo, kje je tovor. Dosegljivi smo vedno, ob vsakem času, da hitro rešimo vsako višjo silo in vsako težavo.' },
       ],
-      note: 'Za rezervacijo vozila lahko logist prosi za predplačilo. Način plačila zapišemo v naročilo za prevoz.',
+      note: 'Celotno plačilo ob razkladanju. Za rezervacijo vozila je lahko potrebno predplačilo.',
     },
     why: {
       eyebrow: 'Zakaj z nami',
@@ -113,6 +113,7 @@ export const sl: LangContent = {
       text: 'Pustite telefonsko številko in relacijo. Logist vas bo poklical, izbral vozilo in povedal ceno.',
       button: 'Izračun cene',
       or: 'ali nam pišite',
+      orMobile: 'Pišite nam v aplikaciji',
     },
     related: 'Druge storitve',
     cargoTitle: 'Kaj prevažamo',
@@ -129,7 +130,7 @@ export const sl: LangContent = {
     h1: 'Prevoz tovora',
     h1Accent: 'po Ukrajini in v tujino',
     lead: "Vozilo izberemo glede na vaš tovor in ga v 2 urah pripeljemo na katero koli lokacijo. Vozimo po vsej Ukrajini in Evropi, po morju in letalsko dostavljamo iz Azije in ZDA ter uredimo carinjenje.",
-    bullets: ['Kombi od 1,2 €/km, tovornjak od 1,5 €/km v Evropi', 'Samostojno vozilo ali zbirni prevoz', 'Prevoz tovora na poti', 'Pogoji zapisani v naročilu'],
+    bullets: ['Kombi od 1,2 €/km, tovornjak od 1,5 €/km v Evropi', 'Samostojno vozilo ali vozilo, ki že gre v vašo smer', 'Logist dosegljiv 24 ur na dan', 'Pogoji zapisani v naročilu'],
     faq: [
       {
         q: 'Kako izvem ceno prevoza?',

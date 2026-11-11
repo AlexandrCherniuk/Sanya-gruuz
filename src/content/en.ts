@@ -59,9 +59,9 @@ export const en: LangContent = {
         { title: 'Request', text: 'Fill in the form, call us or send a message: where from, where to and what we are moving.' },
         { title: 'Quote and contract', text: 'Your manager picks the vehicle and route and gives you a price. We put the terms in a transport order.' },
         { title: 'Pickup', text: 'The vehicle arrives for loading at the agreed time. The driver ensures the cargo is reliably secured.' },
-        { title: 'Delivery', text: 'We keep you posted until unloading and tell you where your cargo is.' },
+        { title: 'Delivery', text: 'We regularly update you on where your cargo is. We are reachable any time, day or night, to deal quickly with any force majeure or problem.' },
       ],
-      note: 'To reserve a vehicle, your manager may ask for a prepayment. Payment terms are set out in the transport order.',
+      note: 'Full payment is made on unloading. A prepayment may be needed to book the vehicle.',
     },
     why: {
       eyebrow: 'Why it is easy with us',
@@ -113,6 +113,7 @@ export const en: LangContent = {
       text: 'Leave your phone number and route. A logistics manager will call you back, pick a vehicle and give you a price.',
       button: 'Get a quote',
       or: 'or message us',
+      orMobile: 'Message us on',
     },
     related: 'Other services',
     cargoTitle: 'What we carry',
@@ -129,7 +130,7 @@ export const en: LangContent = {
     h1: 'Freight transport',
     h1Accent: 'across Ukraine and abroad',
     lead: "We match the vehicle to your cargo and get it to any pickup point within 2 hours. We carry across Ukraine and Europe, ship by sea and air from Asia and the USA, and handle customs clearance.",
-    bullets: ['Van from €1.2/km, truck from €1.5/km in Europe', 'Dedicated vehicle or groupage', 'Backhaul and shared-load shipping', 'Terms fixed in the contract'],
+    bullets: ['Van from €1.2/km, truck from €1.5/km in Europe', 'Dedicated vehicle or one already going your way', 'Logistics manager available 24/7', 'Terms fixed in the contract'],
     faq: [
       {
         q: 'How do I find out the price?',

@@ -59,9 +59,9 @@ export const pl: LangContent = {
         { title: 'Zapytanie', text: 'Wypełnij formularz, zadzwoń lub napisz na komunikatorze: skąd, dokąd i co wieziemy.' },
         { title: 'Wycena i zlecenie', text: 'Logistyk dobiera auto i trasę, podaje cenę. Warunki zapisujemy w zleceniu transportowym.' },
         { title: 'Podstawienie auta', text: 'Auto przyjeżdża na załadunek o umówionej godzinie. Kierowca zapewnia solidne zabezpieczenie ładunku.' },
-        { title: 'Dostawa', text: 'Jesteśmy w kontakcie aż do rozładunku i mówimy, gdzie jest teraz ładunek.' },
+        { title: 'Dostawa', text: 'Regularnie informujemy, gdzie jest teraz ładunek. Jesteśmy w kontakcie zawsze, o każdej porze, żeby szybko rozwiązać każdą sytuację awaryjną i każdy problem.' },
       ],
-      note: 'Przy rezerwacji auta logistyk może poprosić o przedpłatę. Sposób płatności zapisujemy w zleceniu transportowym.',
+      note: 'Pełna płatność przy rozładunku. Przy rezerwacji auta może być potrzebna przedpłata.',
     },
     why: {
       eyebrow: 'Dlaczego z nami spokojnie',
@@ -113,6 +113,7 @@ export const pl: LangContent = {
       text: 'Zostaw numer telefonu i trasę. Logistyk oddzwoni, dobierze auto i poda cenę.',
       button: 'Wycena transportu',
       or: 'albo napisz do nas',
+      orMobile: 'Napisz do nas na komunikatorze',
     },
     related: 'Inne usługi',
     cargoTitle: 'Co przewozimy',
@@ -129,7 +130,7 @@ export const pl: LangContent = {
     h1: 'Transport towarów',
     h1Accent: 'po Ukrainie i za granicę',
     lead: "Dobierzemy auto do ładunku i podstawimy je w dowolne miejsce w 2 godziny. Wozimy po całej Ukrainie i Europie, morzem i samolotem dostarczamy z Azji i USA, zajmujemy się odprawą celną.",
-    bullets: ['Bus od 1,2 €/km, TIR od 1,5 €/km w Europie', 'Auto na wyłączność albo doładunek', 'Przewozy ładunków po drodze', 'Warunki zapisane w zleceniu'],
+    bullets: ['Bus od 1,2 €/km, TIR od 1,5 €/km w Europie', 'Auto na wyłączność albo auto jadące po drodze', 'Logistyk dostępny całą dobę', 'Warunki zapisane w zleceniu'],
     faq: [
       {
         q: 'Jak poznać cenę transportu?',
