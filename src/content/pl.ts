@@ -37,7 +37,7 @@ export const pl: LangContent = {
   blocks: {
     trustStrip: [
       { title: 'Od busa po niskopodwoziówkę', text: 'Auto dobrane do wagi i objętości' },
-      { title: 'Ukraina, Europa, Chiny', text: 'Drogą, morzem, samolotem' },
+      { title: 'Ukraina, Europa, Chiny, USA', text: 'Drogą, morzem, samolotem' },
       { title: 'Cena w zleceniu', text: 'Ustalona przed załadunkiem' },
       { title: 'Jeden opiekun', text: 'Od zapytania do rozładunku' },
     ],

@@ -37,7 +37,7 @@ export const sl: LangContent = {
   blocks: {
     trustStrip: [
       { title: 'Od kombija do nizkopodnika', text: 'Vozilo glede na težo in prostornino' },
-      { title: 'Ukrajina, Evropa, Kitajska', text: 'Cestno, morsko, letalsko' },
+      { title: 'Ukrajina, Evropa, Kitajska, ZDA', text: 'Cestno, morsko, letalsko' },
       { title: 'Cena v naročilu', text: 'Dogovorjena pred nakladanjem' },
       { title: 'En logist', text: 'Od povpraševanja do razkladanja' },
     ],

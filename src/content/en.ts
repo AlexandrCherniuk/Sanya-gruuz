@@ -37,7 +37,7 @@ export const en: LangContent = {
   blocks: {
     trustStrip: [
       { title: 'From vans to low-loaders', text: 'A vehicle matched to weight and volume' },
-      { title: 'Ukraine, Europe, China', text: 'Road, sea and air' },
+      { title: 'Ukraine, Europe, China, USA', text: 'Road, sea and air' },
       { title: 'Price in the contract', text: 'Agreed before loading' },
       { title: 'One manager', text: 'From request to delivery' },
     ],
