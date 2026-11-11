@@ -112,7 +112,7 @@ export const sl: LangContent = {
       title: 'Izračunamo prevoz za vaš tovor',
       text: 'Pustite telefonsko številko in relacijo. Logist vas bo poklical, izbral vozilo in povedal ceno.',
       button: 'Izračun cene',
-      or: 'ali nam pišite',
+      or: 'Pišite nam v aplikaciji',
     },
     related: 'Druge storitve',
     cargoTitle: 'Kaj prevažamo',

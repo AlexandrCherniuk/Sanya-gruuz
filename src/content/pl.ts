@@ -112,7 +112,7 @@ export const pl: LangContent = {
       title: 'Wycenimy transport Twojego ładunku',
       text: 'Zostaw numer telefonu i trasę. Logistyk oddzwoni, dobierze auto i poda cenę.',
       button: 'Wycena transportu',
-      or: 'albo napisz do nas',
+      or: 'Napisz do nas na komunikatorze',
     },
     related: 'Inne usługi',
     cargoTitle: 'Co przewozimy',

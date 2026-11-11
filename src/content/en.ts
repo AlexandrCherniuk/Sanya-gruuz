@@ -112,7 +112,7 @@ export const en: LangContent = {
       title: 'Get a quote for your cargo',
       text: 'Leave your phone number and route. A logistics manager will call you back, pick a vehicle and give you a price.',
       button: 'Get a quote',
-      or: 'or message us',
+      or: 'Message us on',
     },
     related: 'Other services',
     cargoTitle: 'What we carry',
