@@ -15,7 +15,7 @@ export const en: LangContent = {
     write: 'Message us',
     breadcrumbHome: 'Home',
     city: 'Kyiv',
-    location: 'Kyiv, Ukraine · Slovenia',
+    location: "Ukraine · Poland · Slovenia",
     from: 'from',
     more: 'Learn more',
     allServices: 'All services',
@@ -37,7 +37,7 @@ export const en: LangContent = {
   blocks: {
     trustStrip: [
       { title: 'From vans to low-loaders', text: 'A vehicle matched to weight and volume' },
-      { title: 'Ukraine, Europe, China', text: 'Road, sea and air' },
+      { title: 'Ukraine, Europe, China, USA', text: 'Road, sea and air' },
       { title: 'Price in the contract', text: 'Agreed before loading' },
       { title: 'One manager', text: 'From request to delivery' },
     ],
@@ -58,7 +58,7 @@ export const en: LangContent = {
       items: [
         { title: 'Request', text: 'Fill in the form, call us or send a message: where from, where to and what we are moving.' },
         { title: 'Quote and contract', text: 'Your manager picks the vehicle and route and gives you a price. We put the terms in a transport order.' },
-        { title: 'Pickup', text: 'The vehicle arrives for loading at the agreed time. The driver checks that the cargo is secured.' },
+        { title: 'Pickup', text: 'The vehicle arrives for loading at the agreed time. The driver ensures the cargo is reliably secured.' },
         { title: 'Delivery', text: 'We keep you posted until unloading and tell you where your cargo is.' },
       ],
       note: 'To reserve a vehicle, your manager may ask for a prepayment. Payment terms are set out in the transport order.',
@@ -122,13 +122,13 @@ export const en: LangContent = {
     meta: {
       title: 'Freight Transport Ukraine – Europe and within Ukraine | CR Logistics',
       description:
-        'Road freight from 1 tonne between Ukraine and Europe and across Ukraine: vans, full trucks, oversized loads, car transporters. Sea and air freight from China. Quote after your request.',
+        'Road freight between Ukraine and Europe and across Ukraine: vans, full trucks, oversized loads, car transporters. Sea and air freight from China. Quote after your request.',
     },
-    eyebrow: 'Freight transport · Kyiv · Slovenia',
-    h1: 'Freight transport between Ukraine and Europe',
-    h1Accent: 'from 1 tonne',
-    lead: 'We pick the right vehicle for your cargo: a van, a full truck, a low-loader, a car transporter or a crane truck. We carry goods between Ukraine and the EU, anywhere within Ukraine, and bring shipments from China.',
-    bullets: ['Van from €0.6/km, truck from €1.1/km in Europe', 'Dedicated vehicle or groupage', 'Terms fixed in the contract'],
+    eyebrow: "Freight · Ukraine, Poland, Slovenia",
+    h1: 'Freight transport',
+    h1Accent: 'across Ukraine and abroad',
+    lead: "We match the vehicle to your cargo: van, full truck, low-bed, car transporter or crane truck. We carry across Ukraine and Europe, ship by sea and air from Asia and the USA, and handle customs clearance.",
+    bullets: ['Van from €1.2/km, truck from €1.5/km in Europe', 'Dedicated vehicle or groupage', 'Terms fixed in the contract'],
     faq: [
       {
         q: 'How do I find out the price?',
@@ -176,7 +176,7 @@ export const en: LangContent = {
         { label: 'Body, L×W×H', value: 'up to 4.8×2.2×2.2 m' },
         { label: 'Pallets', value: 'up to 8–10' },
       ],
-      price: 'from UAH 20/km',
+      price: 'from UAH 35/km',
     },
     {
       id: 't5',
@@ -188,7 +188,7 @@ export const en: LangContent = {
         { label: 'Body, L×W×H', value: 'up to 7.2×2.45×2.5 m' },
         { label: 'Pallets', value: 'up to 15–18' },
       ],
-      price: 'from UAH 30/km',
+      price: 'from UAH 50/km',
     },
     {
       id: 't10',
@@ -200,7 +200,7 @@ export const en: LangContent = {
         { label: 'Body, L×W×H', value: 'up to 9×2.45×2.7 m' },
         { label: 'Pallets', value: 'up to 22' },
       ],
-      price: 'from UAH 35/km',
+      price: 'from UAH 60/km',
     },
     {
       id: 'fura',
@@ -212,7 +212,7 @@ export const en: LangContent = {
         { label: 'Body, L×W×H', value: '13.6×2.45×2.7 m' },
         { label: 'Pallets', value: 'up to 33–34' },
       ],
-      price: 'from UAH 45/km',
+      price: 'from UAH 70/km',
     },
     {
       id: 'coupler',
@@ -224,7 +224,7 @@ export const en: LangContent = {
         { label: 'Body', value: '2 × 7.7 m' },
         { label: 'Pallets', value: 'up to 36–38' },
       ],
-      price: 'from UAH 50/km',
+      price: 'from UAH 80/km',
     },
     {
       id: 'carrier',
@@ -235,7 +235,7 @@ export const en: LangContent = {
         { label: 'Options', value: 'tow truck, open, enclosed' },
         { label: 'Also', value: 'motorbikes, damaged cars' },
       ],
-      price: 'from UAH 25/km',
+      price: 'from UAH 40/km',
     },
     {
       id: 'lowbed',
@@ -246,7 +246,7 @@ export const en: LangContent = {
         { label: 'Platform', value: 'low-bed, extendable' },
         { label: 'Permits', value: 'arranged for the route' },
       ],
-      price: 'from UAH 75/km',
+      price: 'from UAH 100/km',
     },
     {
       id: 'manipulator',
@@ -257,7 +257,7 @@ export const en: LangContent = {
         { label: 'Crane', value: '3 to 7 t' },
         { label: 'Transport', value: 'up to 10 t' },
       ],
-      price: 'from UAH 60/km',
+      price: 'from UAH 100/km',
     },
     {
       id: 'reefer',
@@ -268,7 +268,7 @@ export const en: LangContent = {
         { label: 'Temperature', value: '−20 to +20 °C' },
         { label: 'Pallets', value: 'up to 33' },
       ],
-      price: 'from UAH 50/km',
+      price: 'from UAH 80/km',
     },
     {
       id: 'tipper',
@@ -279,7 +279,7 @@ export const en: LangContent = {
         { label: 'Payload', value: 'up to 25–40 t' },
         { label: 'Unloading', value: 'tipping' },
       ],
-      price: 'from UAH 60/km',
+      price: 'from UAH 100/km',
     },
     {
       id: 'tanker',
@@ -289,7 +289,7 @@ export const en: LangContent = {
         { label: 'Volume', value: '20–40 m³' },
         { label: 'Types', value: 'food-grade, chemical, fuel' },
       ],
-      price: 'from UAH 60/km',
+      price: 'from UAH 100/km',
     },
     {
       id: 'crane',
@@ -309,7 +309,7 @@ export const en: LangContent = {
       meta: {
         title: 'Freight Transport within Ukraine from 1 Tonne',
         description:
-          'Road freight between cities in Ukraine: vans up to 2 t, 5–10 t trucks, 22 t trucks, oversized loads. Rates from UAH 20/km, dedicated vehicle or groupage.',
+          'Road freight between cities in Ukraine: vans up to 2 t, 5–10 t trucks, 22 t trucks, oversized loads. Rates from UAH 35/km, dedicated vehicle or groupage.',
       },
       h1: 'Freight transport within Ukraine',
       lead: 'We deliver between any cities and villages in Ukraine: from a few boxes as groupage to a full truckload or oversized cargo on a low-loader.',
@@ -334,7 +334,7 @@ export const en: LangContent = {
       faq: [
         {
           q: 'How much does transport within Ukraine cost?',
-          a: 'A dedicated van up to 2 t costs from UAH 20/km, a 5 t truck from UAH 30, a 10 t truck from UAH 35, a 22 t truck from UAH 45/km. The exact price depends on the cargo and route.',
+          a: 'A dedicated van up to 2 t costs from UAH 35/km, a 5 t truck from UAH 50, a 10 t truck from UAH 60, a 22 t truck from UAH 70/km. The exact price depends on the cargo and route.',
         },
         {
           q: 'How soon can a vehicle arrive?',
@@ -378,7 +378,7 @@ export const en: LangContent = {
       faq: [
         {
           q: 'How is an international shipment priced?',
-          a: 'By road, per kilometre or as a fixed price for the route: a van up to 2 t costs about €0.6–0.8/km, a 22 t truck €1.1–1.5/km, a pallet as groupage from €0.2/km. Sea and air are priced per cubic metre or kilogram.',
+          a: 'By road, per kilometre or as a fixed price for the route: a van up to 2 t costs about €1.2/km, a 22 t truck €1.5/km, a pallet as groupage from €0.4/km. Sea and air are priced per cubic metre or kilogram.',
         },
         {
           q: 'Who handles customs?',
@@ -386,7 +386,7 @@ export const en: LangContent = {
         },
         {
           q: 'Can I send a small shipment?',
-          a: 'Yes, from one pallet as groupage in a shared truck. From China, from 50 kg in a shared container or by air.',
+          a: 'Yes, any weight as groupage in a shared truck. From China, in a shared container or by air.',
         },
       ],
     },
@@ -398,15 +398,15 @@ export const en: LangContent = {
       slug: 'bus',
       group: 'ukraine',
       meta: {
-        title: 'Van Transport up to 2 Tonnes in Ukraine from UAH 20/km',
+        title: 'Van Transport up to 2 Tonnes in Ukraine from UAH 35/km',
         description:
           'Cargo van up to 2 t and 20 m³ for moves, furniture and small consignments. Dedicated van or groupage, travel with your cargo, loaders.',
       },
-      card: { icon: 'bus', title: 'Van up to 2 t', text: 'Moves, furniture, appliances, small loads', price: 'from UAH 20/km' },
+      card: { icon: 'bus', title: 'Van up to 2 t', text: 'Moves, furniture, appliances, small loads', price: 'from UAH 35/km' },
       h1: 'Van transport up to 2 tonnes',
       lead: 'A Sprinter, Crafter or Master-type cargo van: roomy, fast and affordable for small loads across Ukraine.',
       bullets: ['Up to 2 t and 20 m³', 'You can travel with your cargo', 'Loaders if needed'],
-      priceFrom: 'from UAH 20/km',
+      priceFrom: 'from UAH 35/km',
       intro: {
         title: 'A van for small loads',
         paragraphs: [
@@ -431,9 +431,9 @@ export const en: LangContent = {
       prices: {
         title: 'Van prices',
         rows: [
-          { label: 'Dedicated van up to 2 t', value: 'from UAH 20/km' },
-          { label: 'Belongings and furniture (move)', value: 'from UAH 12/km' },
-          { label: 'Groupage', value: 'from UAH 10/km' },
+          { label: 'Dedicated van up to 2 t', value: 'from UAH 35/km' },
+          { label: 'Belongings and furniture (move)', value: 'from UAH 35/km' },
+          { label: 'Groupage', value: 'from UAH 15/km' },
           { label: 'Loader', value: 'from UAH 250/h', note: 'minimum 2 hours' },
         ],
         note: 'Rates are indicative. Your manager will give you the exact price after your request.',
@@ -458,15 +458,15 @@ export const en: LangContent = {
       slug: 'trucks',
       group: 'ukraine',
       meta: {
-        title: '5 and 10 Tonne Truck Transport in Ukraine from UAH 30/km',
+        title: '5 and 10 Tonne Truck Transport in Ukraine from UAH 50/km',
         description:
-          '5 t and 10 t trucks for commercial cargo, pallets, equipment and building materials. Curtainsider, insulated body, tail lift. Rates from UAH 30/km.',
+          '5 t and 10 t trucks for commercial cargo, pallets, equipment and building materials. Curtainsider, insulated body, tail lift. Rates from UAH 50/km.',
       },
-      card: { icon: 'truck', title: 'Trucks 5–10 t', text: 'Commercial cargo, pallets, equipment', price: 'from UAH 30/km' },
+      card: { icon: 'truck', title: 'Trucks 5–10 t', text: 'Commercial cargo, pallets, equipment', price: 'from UAH 50/km' },
       h1: '5 and 10 tonne truck transport',
       lead: 'Medium trucks for business: batches of goods, pallets, equipment, building materials. We pick the body type and loading method for your cargo.',
       bullets: ['Up to 10 t and 50 m³', 'Curtainsider, insulated, tail lift', 'Top, side or rear loading'],
-      priceFrom: 'from UAH 30/km',
+      priceFrom: 'from UAH 50/km',
       intro: {
         title: 'Trucks for business',
         paragraphs: [
@@ -491,8 +491,8 @@ export const en: LangContent = {
       prices: {
         title: 'Truck prices',
         rows: [
-          { label: 'Truck up to 5 t', value: 'from UAH 30/km' },
-          { label: 'Truck up to 10 t', value: 'from UAH 35/km' },
+          { label: 'Truck up to 5 t', value: 'from UAH 50/km' },
+          { label: 'Truck up to 10 t', value: 'from UAH 60/km' },
           { label: 'Groupage', value: 'by arrangement' },
         ],
         note: 'Rates are indicative. The price depends on weight, volume, body type and route.',
@@ -517,15 +517,15 @@ export const en: LangContent = {
       slug: 'fura',
       group: 'ukraine',
       meta: {
-        title: 'Full Truckload 22 t in Ukraine from UAH 45/km',
+        title: 'Full Truckload 22 t in Ukraine from UAH 70/km',
         description:
-          '22 t truck, 86–92 m³, 33 pallets, plus road trains up to 120 m³. Full truckloads within Ukraine and to Europe. Rates from UAH 45/km.',
+          '22 t truck, 86–92 m³, 33 pallets, plus road trains up to 120 m³. Full truckloads within Ukraine and to Europe. Rates from UAH 70/km.',
       },
-      card: { icon: 'trailer', title: 'Truck 22 t and road train', text: 'Full loads, up to 34 pallets', price: 'from UAH 45/km' },
+      card: { icon: 'trailer', title: 'Truck 22 t and road train', text: 'Full loads, up to 34 pallets', price: 'from UAH 70/km' },
       h1: 'Full truckload transport, 22 tonnes',
       lead: 'Curtainsider semi-trailers and road trains for large consignments: up to 22 tonnes, up to 34 pallets or up to 120 m³ of light bulky cargo.',
       bullets: ['Up to 22 t, 86–120 m³', 'Up to 33–38 pallets', 'Curtains open fully'],
-      priceFrom: 'from UAH 45/km',
+      priceFrom: 'from UAH 70/km',
       intro: {
         title: 'A full load in one vehicle',
         paragraphs: [
@@ -550,9 +550,9 @@ export const en: LangContent = {
       prices: {
         title: 'Full truck prices',
         rows: [
-          { label: 'Truck 22 t (curtainsider)', value: 'from UAH 45/km' },
-          { label: 'Road train up to 120 m³', value: 'from UAH 50/km' },
-          { label: 'Full truck within Europe', value: '€1.1–1.5/km' },
+          { label: 'Truck 22 t (curtainsider)', value: 'from UAH 70/km' },
+          { label: 'Road train up to 120 m³', value: 'from UAH 80/km' },
+          { label: 'Full truck within Europe', value: 'from €1.5/km' },
         ],
         note: 'Rates are indicative. The price depends on the route, season and availability of a return load.',
       },
@@ -568,7 +568,7 @@ export const en: LangContent = {
         },
         {
           q: 'Do you run full trucks abroad?',
-          a: 'Yes, our trucks go to European countries and back. The indicative rate is €1.1–1.5/km.',
+          a: 'Yes, our trucks go to European countries and back. The indicative rate is €1.5/km.',
         },
       ],
     },
@@ -576,15 +576,15 @@ export const en: LangContent = {
       slug: 'negabaryt',
       group: 'ukraine',
       meta: {
-        title: 'Oversized Cargo Transport by Low-Loader from UAH 75/km',
+        title: 'Oversized Cargo Transport by Low-Loader from UAH 100/km',
         description:
           'Oversized and heavy cargo up to 80 t: construction and farm machinery, equipment, modular buildings. Low-loaders, platforms, permits and route planning.',
       },
-      card: { icon: 'oversized', title: 'Oversized cargo', text: 'Machinery, equipment up to 80 t', price: 'from UAH 75/km' },
+      card: { icon: 'oversized', title: 'Oversized cargo', text: 'Machinery, equipment up to 80 t', price: 'from UAH 100/km' },
       h1: 'Oversized cargo transport',
       lead: 'We use low-loaders and platforms for anything that does not fit in a standard body: machinery, equipment, structures. We get the permits and plan the route.',
       bullets: ['Up to 60–80 t', 'Low-bed and extendable trailers', 'Permits and route for your load'],
-      priceFrom: 'from UAH 75/km',
+      priceFrom: 'from UAH 100/km',
       cargo: {
         title: 'What we carry',
         items: ['Excavators, loaders, bulldozers', 'Tractors and combines', 'Road-building machinery', 'Industrial equipment and lines', 'Steel structures, tanks', 'Kiosks, cabins, modular buildings', 'Concrete products, slabs'],
@@ -604,7 +604,7 @@ export const en: LangContent = {
       prices: {
         title: 'Oversized cargo prices',
         rows: [
-          { label: 'Low-loader within Ukraine', value: 'from UAH 75/km' },
+          { label: 'Low-loader within Ukraine', value: 'from UAH 100/km' },
           { label: 'Permits and escort', value: 'priced separately' },
         ],
         note: 'We price each job individually: it depends on dimensions, weight and route.',
@@ -633,11 +633,11 @@ export const en: LangContent = {
         description:
           'Car delivery by car transporter and tow truck within Ukraine and from Europe: cars, motorbikes, EVs, damaged vehicles. Open and enclosed transporters.',
       },
-      card: { icon: 'car', title: 'Car transporter', text: 'Cars within Ukraine and from Europe', price: 'from UAH 25/km' },
+      card: { icon: 'car', title: 'Car transporter', text: 'Cars within Ukraine and from Europe', price: 'from UAH 40/km' },
       h1: 'Car transport',
       lead: 'We deliver a single car on a tow truck or several on a car transporter: within Ukraine, from Europe to Ukraine and back.',
       bullets: ['Tow truck for 1–2 cars, transporter up to 8', 'Open and enclosed transporters', 'Damaged and non-running cars'],
-      priceFrom: 'from UAH 25/km',
+      priceFrom: 'from UAH 40/km',
       cargo: {
         title: 'What we carry',
         items: ['Passenger cars', 'SUVs and minivans', 'Electric vehicles', 'Motorbikes and quad bikes', 'Damaged cars', 'New cars from dealers'],
@@ -655,7 +655,7 @@ export const en: LangContent = {
       prices: {
         title: 'Car transport prices',
         rows: [
-          { label: 'Within Ukraine', value: 'from UAH 25/km' },
+          { label: 'Within Ukraine', value: 'from UAH 40/km' },
           { label: 'Lithuania to Ukraine', value: 'from €850' },
         ],
         note: 'The price depends on the model, weight, route and number of cars.',
@@ -680,11 +680,11 @@ export const en: LangContent = {
         description:
           'Crane truck with a 6–8 m bed and a crane up to 7 t: loading and delivery of blocks, kiosks, equipment and building materials without a separate crane.',
       },
-      card: { icon: 'manipulator', title: 'Crane truck', text: 'Loads itself and delivers', price: 'from UAH 60/km' },
+      card: { icon: 'manipulator', title: 'Crane truck', text: 'Loads itself and delivers', price: 'from UAH 100/km' },
       h1: 'Crane truck hire',
       lead: 'A truck with a loader crane loads, delivers and unloads your cargo itself, where there is no forklift or separate crane.',
       bullets: ['6–8 m bed', 'Crane from 3 to 7 t', 'Kyiv, the region and all of Ukraine'],
-      priceFrom: 'from UAH 60/km',
+      priceFrom: 'from UAH 100/km',
       cargo: {
         title: 'What we carry',
         items: ['Building materials on pallets', 'Concrete rings, blocks, slabs', 'Kiosks, site cabins', 'Generators, equipment', 'Containers', 'Safes and heavy items'],
@@ -698,7 +698,7 @@ export const en: LangContent = {
       prices: {
         title: 'Prices',
         rows: [
-          { label: 'Crane truck (transport)', value: 'from UAH 60/km' },
+          { label: 'Crane truck (transport)', value: 'from UAH 100/km' },
           { label: 'Work within the city', value: 'hourly, on request' },
         ],
         note: 'The price depends on crane capacity, working time and distance.',
@@ -747,13 +747,13 @@ export const en: LangContent = {
       meta: {
         title: 'Home and Office Moves within Ukraine and to Europe',
         description:
-          'Full-service moves: 15–20 m³ van, loaders from UAH 250/h, packing, moves between cities and abroad. Dedicated vehicle from UAH 12/km.',
+          'Full-service moves: 15–20 m³ van, loaders from UAH 250/h, packing, moves between cities and abroad. Dedicated vehicle from UAH 35/km.',
       },
-      card: { icon: 'moving', title: 'Moves', text: 'Home, office, between cities and abroad', price: 'from UAH 12/km' },
+      card: { icon: 'moving', title: 'Moves', text: 'Home, office, between cities and abroad', price: 'from UAH 35/km' },
       h1: 'Home and office moves',
       lead: 'We move your belongings, furniture and appliances to another city or country. Loaders, packing and furniture disassembly are available.',
-      bullets: ['Dedicated vehicle from UAH 12/km', 'Loaders from UAH 250/h', 'Within Ukraine and to Europe'],
-      priceFrom: 'from UAH 12/km',
+      bullets: ['Dedicated vehicle from UAH 35/km', 'Loaders from UAH 250/h', 'Within Ukraine and to Europe'],
+      priceFrom: 'from UAH 35/km',
       intro: {
         title: 'A move without the hassle',
         paragraphs: [
@@ -778,8 +778,8 @@ export const en: LangContent = {
       prices: {
         title: 'Moving prices',
         rows: [
-          { label: 'Dedicated vehicle 15–20 m³', value: 'from UAH 12/km' },
-          { label: 'Groupage', value: 'from UAH 10/km' },
+          { label: 'Dedicated vehicle 15–20 m³', value: 'from UAH 35/km' },
+          { label: 'Groupage', value: 'from UAH 15/km' },
           { label: 'Loader', value: 'from UAH 250/h', note: 'minimum 2 hours' },
           { label: 'Move to Europe', value: 'from €0.3/km' },
         ],
@@ -807,13 +807,13 @@ export const en: LangContent = {
       meta: {
         title: 'Groupage and Part Loads within Ukraine and to Europe',
         description:
-          'Groupage (shared loads) for small consignments: you pay only for your space. Within Ukraine from UAH 10/km, to Europe from €0.2/km per pallet.',
+          'Groupage (shared loads) for small consignments: you pay only for your space. Within Ukraine from UAH 15/km, to Europe from €0.4/km per pallet.',
       },
-      card: { icon: 'groupage', title: 'Groupage', text: 'Pay only for your space', price: 'from UAH 10/km' },
+      card: { icon: 'groupage', title: 'Groupage', text: 'Pay only for your space', price: 'from UAH 15/km' },
       h1: 'Groupage and part loads',
       lead: 'A small consignment does not need its own vehicle. We add your cargo to a trip going your way, and you pay only for the space it takes.',
-      bullets: ['From one pallet', 'Within Ukraine and to Europe', 'Cheaper than a dedicated vehicle'],
-      priceFrom: 'from UAH 10/km',
+      bullets: ['No minimum weight', 'Within Ukraine and to Europe', 'Cheaper than a dedicated vehicle'],
+      priceFrom: 'from UAH 15/km',
       sections: [
         {
           title: 'Who it suits',
@@ -827,8 +827,8 @@ export const en: LangContent = {
       prices: {
         title: 'Groupage prices',
         rows: [
-          { label: 'Groupage within Ukraine', value: 'from UAH 10/km' },
-          { label: 'Pallet up to 300 kg to Europe', value: '€0.2–0.3/km' },
+          { label: 'Groupage within Ukraine', value: 'from UAH 15/km' },
+          { label: 'Pallet up to 300 kg to Europe', value: 'from €0.4/km' },
         ],
         note: 'Rates are indicative and depend on the route and volume.',
       },
@@ -848,11 +848,11 @@ export const en: LangContent = {
         description:
           'Palletised goods transport: van up to 8–10 pallets, trucks up to 22, full truck up to 34. Curtainsider, insulated body, tail lift, side loading.',
       },
-      card: { icon: 'pallet', title: 'Pallets', text: '1 to 34 pallets in one trip', price: 'from UAH 20/km' },
+      card: { icon: 'pallet', title: 'Pallets', text: '1 to 34 pallets in one trip', price: 'from UAH 35/km' },
       h1: 'Pallet transport',
       lead: 'From one pallet as groupage to a full truck of 34 pallets. We pick the vehicle by pallet count, weight and loading method.',
       bullets: ['1–34 pallets', 'Tail lift and open curtains', 'Insulated body for food'],
-      priceFrom: 'from UAH 20/km',
+      priceFrom: 'from UAH 35/km',
       cargo: {
         title: 'What we carry on pallets',
         items: ['Food and drinks', 'Building materials', 'Household appliances', 'Goods for retail chains', 'Electrical goods, cable', 'Raw materials and finished products'],
@@ -878,7 +878,7 @@ export const en: LangContent = {
       meta: {
         title: 'Freight Transport in Kyiv: City, Region and across Ukraine',
         description:
-          'Freight transport in Kyiv and the Kyiv region: van from UAH 350/h, loaders, moves. From Kyiv across Ukraine from UAH 20/km. Pickup in every district.',
+          'Freight transport in Kyiv and the Kyiv region: van from UAH 350/h, loaders, moves. From Kyiv across Ukraine from UAH 35/km. Pickup in every district.',
       },
       card: { icon: 'city', title: 'Transport in Kyiv', text: 'City, region and trips from Kyiv', price: 'from UAH 350/h' },
       h1: 'Freight transport in Kyiv',
@@ -914,7 +914,7 @@ export const en: LangContent = {
           { label: '3–5 t truck in the city', value: 'from UAH 600/h', note: 'minimum 2 hours' },
           { label: 'Outside the city', value: 'from UAH 17/km' },
           { label: 'Loader', value: 'from UAH 250/h' },
-          { label: 'From Kyiv across Ukraine', value: 'from UAH 20/km' },
+          { label: 'From Kyiv across Ukraine', value: 'from UAH 35/km' },
         ],
         note: 'Rates are indicative. Your manager will give you the exact price after your request.',
       },
@@ -940,13 +940,13 @@ export const en: LangContent = {
       meta: {
         title: 'Refrigerated Transport within Ukraine and to Europe',
         description:
-          'Refrigerated trucks from 1.5 to 22 t for food and temperature-sensitive cargo. −20 to +20 °C. Within Ukraine from UAH 50/km.',
+          'Refrigerated trucks from 1.5 to 22 t for food and temperature-sensitive cargo. −20 to +20 °C. Within Ukraine from UAH 80/km.',
       },
-      card: { icon: 'reefer', title: 'Refrigerated', text: 'Food and temperature-sensitive cargo', price: 'from UAH 50/km' },
+      card: { icon: 'reefer', title: 'Refrigerated', text: 'Food and temperature-sensitive cargo', price: 'from UAH 80/km' },
       h1: 'Refrigerated transport',
       lead: 'We carry food, medicines, flowers and other cargo that needs a stable temperature: within Ukraine and to European countries.',
       bullets: ['1.5 to 22 t', '−20 to +20 °C', 'Pre-cooled before loading'],
-      priceFrom: 'from UAH 50/km',
+      priceFrom: 'from UAH 80/km',
       cargo: {
         title: 'What we carry',
         items: ['Meat and fish', 'Dairy products', 'Fruit and vegetables', 'Frozen food', 'Confectionery', 'Medicines', 'Flowers and plants', 'Drinks'],
@@ -968,8 +968,8 @@ export const en: LangContent = {
       prices: {
         title: 'Refrigerated truck prices',
         rows: [
-          { label: 'Refrigerated truck up to 5 t', value: 'from UAH 35/km' },
-          { label: 'Refrigerated truck 22 t', value: 'from UAH 50/km' },
+          { label: 'Refrigerated truck up to 5 t', value: 'from UAH 60/km' },
+          { label: 'Refrigerated truck 22 t', value: 'from UAH 80/km' },
         ],
         note: 'Rates are indicative and depend on the temperature and route.',
       },
@@ -991,13 +991,13 @@ export const en: LangContent = {
       meta: {
         title: 'Bulk Cargo Transport by Tipper and Grain Truck',
         description:
-          'Sand, gravel, soil, grain, fertilisers: tippers and grain trucks of 20–60 m³ across Ukraine. Rates from UAH 60/km, full loads.',
+          'Sand, gravel, soil, grain, fertilisers: tippers and grain trucks of 20–60 m³ across Ukraine. Rates from UAH 100/km, full loads.',
       },
-      card: { icon: 'bulk', title: 'Bulk cargo', text: 'Tippers and grain trucks 20–60 m³', price: 'from UAH 60/km' },
+      card: { icon: 'bulk', title: 'Bulk cargo', text: 'Tippers and grain trucks 20–60 m³', price: 'from UAH 100/km' },
       h1: 'Bulk cargo transport',
       lead: 'Tippers and grain trucks for bulk building materials, grain and fertilisers. Full loads delivered to a site, elevator or warehouse.',
       bullets: ['20–60 m³ body', 'Tippers and grain trucks', 'Across Ukraine'],
-      priceFrom: 'from UAH 60/km',
+      priceFrom: 'from UAH 100/km',
       cargo: {
         title: 'What we carry',
         items: ['Sand, crushed stone, screenings, gravel', 'Soil and black earth', 'Expanded clay', 'Wheat, maize, barley', 'Sunflower, rapeseed, soy', 'Mineral fertilisers', 'Cement, salt', 'Peat, coal'],
@@ -1010,7 +1010,7 @@ export const en: LangContent = {
       ],
       prices: {
         title: 'Prices',
-        rows: [{ label: 'Tipper / grain truck', value: 'from UAH 60/km' }],
+        rows: [{ label: 'Tipper / grain truck', value: 'from UAH 100/km' }],
         note: 'The price depends on volume, distance and number of trips.',
       },
       vehicles: ['tipper'],
@@ -1029,11 +1029,11 @@ export const en: LangContent = {
         description:
           'Food-grade and technical liquids, oil, water, fuel: 20–40 m³ tankers within Ukraine and to Europe. Tanker matched to your cargo.',
       },
-      card: { icon: 'liquid', title: 'Liquid cargo', text: 'Tankers 20–40 m³', price: 'from UAH 60/km' },
+      card: { icon: 'liquid', title: 'Liquid cargo', text: 'Tankers 20–40 m³', price: 'from UAH 100/km' },
       h1: 'Liquid cargo transport',
       lead: 'We pick a tanker for the type of liquid, its properties and volume: food-grade, chemical or fuel. Full loads within Ukraine and to the EU.',
       bullets: ['20–40 m³ tankers', 'Food-grade, chemical, fuel', 'Within Ukraine and to Europe'],
-      priceFrom: 'from UAH 60/km',
+      priceFrom: 'from UAH 100/km',
       cargo: {
         title: 'What we carry',
         items: ['Vegetable oil', 'Milk and dairy raw materials', 'Molasses', 'Drinking and process water', 'Technical liquids', 'Liquid fertilisers', 'Fuel and petroleum products', 'Bitumen'],
@@ -1046,7 +1046,7 @@ export const en: LangContent = {
       ],
       prices: {
         title: 'Prices',
-        rows: [{ label: 'Tanker truck', value: 'from UAH 60/km' }],
+        rows: [{ label: 'Tanker truck', value: 'from UAH 100/km' }],
         note: 'The price depends on tanker type, volume and route.',
       },
       vehicles: ['tanker'],
@@ -1065,13 +1065,13 @@ export const en: LangContent = {
       meta: {
         title: 'Freight Transport between Ukraine and Europe',
         description:
-          'Freight between Ukraine and Poland, Germany, Czechia, Slovenia and other EU countries. Van from €0.6/km, full truck from €1.1/km, groupage from one pallet.',
+          'Freight between Ukraine and Poland, Germany, Czechia, Slovenia and other EU countries. Van from €1.2/km, full truck from €1.5/km, groupage of any weight.',
       },
-      card: { icon: 'europe', title: 'Europe', text: 'Ukraine ↔ EU and trips within Europe', price: 'from €0.6/km' },
+      card: { icon: 'europe', title: 'Europe', text: 'Ukraine ↔ EU and trips within Europe', price: 'from €1.2/km' },
       h1: 'Freight transport Ukraine – Europe',
-      lead: 'We carry cargo from Ukraine to EU countries and back, and between European countries. In a dedicated vehicle or as groupage from one pallet.',
-      bullets: ['Van, full truck, low-loader, car transporter', 'Groupage from one pallet', 'CMR and customs clearance'],
-      priceFrom: 'from €0.6/km',
+      lead: 'We carry cargo from Ukraine to EU countries and back, and between European countries. In a dedicated vehicle or as groupage of any weight.',
+      bullets: ['Van, full truck, low-loader, car transporter', 'Groupage of any weight', 'CMR and customs clearance'],
+      priceFrom: 'from €1.2/km',
       intro: {
         title: 'Transport between Ukraine and the EU',
         paragraphs: [
@@ -1096,11 +1096,11 @@ export const en: LangContent = {
       prices: {
         title: 'Indicative prices',
         rows: [
-          { label: 'Van up to 2 t', value: '€0.6–0.8/km' },
-          { label: 'Truck 22 t', value: '€1.1–1.5/km' },
-          { label: 'Pallet up to 300 kg (groupage)', value: '€0.2–0.3/km' },
-          { label: 'Ukraine – Poland, full truck', value: 'from €900' },
-          { label: 'Ukraine – Germany, full truck', value: 'from €1,800' },
+          { label: 'Van up to 2 t', value: 'from €1.2/km' },
+          { label: 'Truck 22 t', value: 'from €1.5/km' },
+          { label: 'Pallet up to 300 kg (groupage)', value: 'from €0.4/km' },
+          { label: 'Ukraine – Poland, full truck', value: 'from €1,000' },
+          { label: 'Ukraine – Germany, full truck', value: 'from €2,000' },
         ],
         note: 'Prices are indicative: they depend on volume, route, season and availability of a return load.',
       },
@@ -1126,13 +1126,13 @@ export const en: LangContent = {
       meta: {
         title: 'Shipping from China to Ukraine by Sea and Air',
         description:
-          'Door-to-door delivery of goods from China: by sea from 55 days, by air from 14 days, from 50 kg. Shared and full containers, customs clearance, delivery to your door.',
+          'Door-to-door delivery of goods from China: by sea from 55 days, by air from 14 days. Shared and full containers, customs clearance, delivery to your door.',
       },
-      card: { icon: 'china', title: 'Shipping from China', text: 'Sea and air, door-to-door', price: 'from 50 kg' },
+      card: { icon: 'china', title: 'Shipping from China', text: 'Sea and air, door-to-door', price: 'on request' },
       h1: 'Shipping from China',
       lead: 'We collect goods from your supplier in China, ship them by sea or air via Europe, clear customs and deliver to your warehouse.',
-      bullets: ['From 50 kg', 'Sea from 55 days, air from 14', 'Customs clearance and delivery to your door'],
-      priceFrom: 'from 50 kg',
+      bullets: ['Any weight', 'Sea from 55 days, air from 14', 'Customs clearance and delivery to your door'],
+      priceFrom: 'on request',
       intro: {
         title: 'Door-to-door imports from China',
         paragraphs: [
@@ -1180,7 +1180,7 @@ export const en: LangContent = {
       faq: [
         {
           q: 'What is the minimum shipment?',
-          a: 'From 50 kg as shared cargo. For large consignments a full container is better value.',
+          a: 'Any weight, as shared cargo. For large consignments a full container is better value.',
         },
         {
           q: 'Sea or air?',
@@ -1277,12 +1277,12 @@ export const en: LangContent = {
       meta: {
         title: 'Freight Transport Ukraine – Poland and Poland – Ukraine',
         description:
-          'Freight to and from Poland: Warsaw, Wrocław, Poznań, Gdańsk, Lublin. Full truck from €900, van from €400, groupage from one pallet.',
+          'Freight to and from Poland: Warsaw, Wrocław, Poznań, Gdańsk, Lublin. Full truck from €1,000, van from €400, groupage of any weight.',
       },
       card: { icon: 'flag', title: 'Poland', text: 'Our most popular route', price: 'from €400' },
       h1: 'Freight transport Ukraine – Poland',
       lead: 'We carry cargo to and from Poland every week: by van, full truck or groupage. Warsaw, Wrocław, Poznań, Kraków, Gdańsk, Lublin and other cities.',
-      bullets: ['Van from €400, full truck from €900', 'Groupage from one pallet', 'CMR and customs'],
+      bullets: ['Van from €400, full truck from €1,000', 'Groupage of any weight', 'CMR and customs'],
       priceFrom: 'from €400',
       cargo: {
         title: 'What we carry',
@@ -1302,8 +1302,8 @@ export const en: LangContent = {
         title: 'Indicative prices',
         rows: [
           { label: 'Van up to 2 t', value: 'from €400' },
-          { label: 'Truck 22 t', value: 'from €900' },
-          { label: 'Groupage', value: 'from €0.2/km per pallet' },
+          { label: 'Truck 22 t', value: 'from €1,000' },
+          { label: 'Groupage', value: 'from €0.4/km per pallet' },
         ],
         note: 'The price depends on the city, volume and availability of a return load.',
       },
@@ -1316,42 +1316,54 @@ export const en: LangContent = {
       ],
     },
     {
-      slug: 'germany',
+      slug: 'customs',
       group: 'international',
-      meta: {
-        title: 'Freight Transport Ukraine – Germany',
-        description:
-          'Freight to and from Germany: Berlin, Hamburg, Munich, Frankfurt, Dresden. Full truck from €1,800, van from €900.',
-      },
-      card: { icon: 'flag', title: 'Germany', text: 'Berlin, Hamburg, Munich and more', price: 'from €900' },
-      h1: 'Freight transport Ukraine – Germany',
-      lead: 'We deliver cargo to any city in Germany or bring it from there to Ukraine: goods, equipment, machinery, belongings for a move.',
-      bullets: ['Van from €900, full truck from €1,800', 'Machinery on low-loaders', 'Door-to-door'],
-      priceFrom: 'from €900',
-      cargo: {
-        title: 'What we carry',
-        items: ['Equipment and machine tools', 'Commercial cargo', 'Used machinery', 'Cars', 'Personal belongings', 'Palletised goods'],
-      },
+      meta: { title: "Customs clearance and warehousing at the Polish border", description: "Import and export customs clearance, T1, EUR.1, TIR, warehousing and transloading at the Ukraine – Poland border." },
+      card: { icon: 'docs', title: "Customs and warehousing", text: "Customs clearance, storage, transloading", price: "on request" },
+      h1: "Customs clearance and warehousing at the Polish border",
+      lead: "Together with our partners at the Polish border, we handle the paperwork and store your cargo so it moves on without delays.",
+      bullets: ["Import, export, transit", "T1, EUR.1, EX, TIR", "Storage, transloading, consolidation"],
       sections: [
-        {
-          title: 'Cities',
-          text: 'Berlin, Hamburg, Munich, Frankfurt, Cologne, Stuttgart, Düsseldorf, Dresden, Leipzig, Bremen, Hanover, Nuremberg and more.',
-        },
+        { title: "Customs clearance", items: ["T1 document: transit clearance and support", "Import: customs clearance of goods entering the EU", "EX document: export of goods outside the EU", "EUR.1 certificate of origin", "Transit declaration for cargo from non-EU countries (China, USA, South Korea and others)", "TIR carnet: issuing and support"] },
+        { title: "Warehouse and logistics", items: ["Warehouse storage", "Transloading", "Cargo consolidation and deconsolidation", "Finding transport", "Cargo pickup from airports and seaports", "Sale of goods in transit"] },
+        { title: "Documents and advice", items: ["Full support with customs and transport documents", "Advice on customs procedures and international trade"] },
       ],
-      prices: {
-        title: 'Indicative prices',
-        rows: [
-          { label: 'Van up to 2 t, 20 m³', value: 'from €900' },
-          { label: 'Truck 22 t', value: 'from €1,800' },
-        ],
-        note: 'The price depends on the city, volume and season.',
-      },
-      vehicles: ['bus', 'fura', 'lowbed'],
+      vehicles: ['fura'],
       faq: [
-        {
-          q: 'Can you bring machinery from Germany?',
-          a: 'Yes, farm and construction machinery goes on low-loaders, cars on a car transporter or tow truck.',
-        },
+        { q: "How much does customs clearance cost?", a: "It depends on the procedure and the cargo. Tell us what you are shipping and where, and we will quote." },
+        { q: "Can I order customs or storage without transport?", a: "Yes, customs clearance or warehousing can be ordered separately." },
+      ],
+    },
+    {
+      slug: 'asia',
+      group: 'international',
+      meta: { title: "Freight from Asia to Ukraine", description: "Freight from Asia: China, Turkey, India, Vietnam. Sea containers and air freight, with customs clearance." },
+      card: { icon: 'china', title: "Asia", text: "China, Turkey, India and more", price: "on request" },
+      h1: "Freight from Asia to Ukraine",
+      lead: "We bring goods from Asian countries by sea or air: from pickup at the supplier to your warehouse in Ukraine.",
+      bullets: ["China, Turkey, India, Vietnam", "Sea FCL/LCL or air", "Customs clearance via a broker"],
+      cargo: { title: "What we carry", items: ["Commercial cargo", "Pallets", "Equipment", "Containers"] },
+      sections: [{ title: "How we deliver", text: "By sea in full or groupage containers, by air for urgent cargo, then by road across Ukraine." }],
+      vehicles: ['fura'],
+      faq: [
+        { q: "How much does shipping from Asia cost?", a: "We quote per shipment: it depends on the country, volume, weight and delivery method." },
+        { q: "What documents are needed?", a: "An invoice and documents for the goods; customs clearance is handled by a customs broker." },
+      ],
+    },
+    {
+      slug: 'usa',
+      group: 'international',
+      meta: { title: "Freight USA – Ukraine", description: "Freight from the USA to Ukraine and to the USA: sea containers and air freight, with customs clearance." },
+      card: { icon: 'air', title: "USA", text: "Sea and air, both ways", price: "on request" },
+      h1: "Freight USA – Ukraine",
+      lead: "We arrange cargo delivery between the USA and Ukraine by sea or air, door to door.",
+      bullets: ["Sea: FCL containers and LCL groupage", "Air for urgent cargo", "Customs clearance via a broker"],
+      cargo: { title: "What we carry", items: ["Commercial cargo", "Pallets", "Equipment", "Containers"] },
+      sections: [{ title: "How we deliver", text: "By sea via European ports or by air, then by road to your address." }],
+      vehicles: ['fura'],
+      faq: [
+        { q: "How much does shipping from the USA cost?", a: "We quote per shipment: it depends on volume, weight, city and delivery method." },
+        { q: "What documents are needed?", a: "An invoice and documents for the goods; customs clearance is handled by a customs broker." },
       ],
     },
     {
@@ -1384,7 +1396,7 @@ export const en: LangContent = {
       faq: [
         {
           q: 'How much does transport to Slovenia cost?',
-          a: 'We price it for the route: it depends on volume, city and format (dedicated vehicle or groupage). As a guide, a full truck within Europe costs €1.1–1.5/km.',
+          a: 'We price it for the route: it depends on volume, city and format (dedicated vehicle or groupage). As a guide, a full truck within Europe costs €1.5/km.',
         },
       ],
     },
@@ -1394,38 +1406,38 @@ export const en: LangContent = {
     meta: {
       title: 'Freight Transport Prices: Rates per km in Ukraine and Europe',
       description:
-        'Indicative freight rates within Ukraine: van from UAH 20/km, 5 t from UAH 30, 10 t from UAH 35, full truck from UAH 45. Rates for Europe, loaders and moves.',
+        'Indicative freight rates within Ukraine: van from UAH 35/km, 5 t from UAH 50, 10 t from UAH 60, full truck from UAH 70. Rates for Europe, loaders and moves.',
     },
     h1: 'Freight transport prices',
     lead: 'Indicative rates to plan your budget. Your manager gives you the exact price after your request and fixes it in the transport order.',
     ukraineTitle: 'Within Ukraine, dedicated vehicle',
     ukraineRows: [
-      { label: 'Van up to 2 t, up to 20 m³', value: 'from UAH 20/km' },
-      { label: 'Truck up to 5 t', value: 'from UAH 30/km' },
-      { label: 'Truck up to 10 t', value: 'from UAH 35/km' },
-      { label: 'Truck up to 22 t', value: 'from UAH 45/km' },
-      { label: 'Road train up to 120 m³', value: 'from UAH 50/km' },
-      { label: 'Refrigerated truck 22 t', value: 'from UAH 50/km' },
-      { label: 'Tipper / grain truck', value: 'from UAH 60/km' },
-      { label: 'Tanker truck', value: 'from UAH 60/km' },
-      { label: 'Car transporter', value: 'from UAH 25/km' },
-      { label: 'Crane truck', value: 'from UAH 60/km' },
-      { label: 'Low-loader (oversized)', value: 'from UAH 75/km' },
+      { label: 'Van up to 2 t, up to 20 m³', value: 'from UAH 35/km' },
+      { label: 'Truck up to 5 t', value: 'from UAH 50/km' },
+      { label: 'Truck up to 10 t', value: 'from UAH 60/km' },
+      { label: 'Truck up to 22 t', value: 'from UAH 70/km' },
+      { label: 'Road train up to 120 m³', value: 'from UAH 80/km' },
+      { label: 'Refrigerated truck 22 t', value: 'from UAH 80/km' },
+      { label: 'Tipper / grain truck', value: 'from UAH 100/km' },
+      { label: 'Tanker truck', value: 'from UAH 100/km' },
+      { label: 'Car transporter', value: 'from UAH 40/km' },
+      { label: 'Crane truck', value: 'from UAH 100/km' },
+      { label: 'Low-loader (oversized)', value: 'from UAH 100/km' },
       { label: 'Mobile crane', value: 'on request' },
     ],
     extraTitle: 'Moves and extra services',
     extraRows: [
-      { label: 'Move, dedicated vehicle 15–20 m³', value: 'from UAH 12/km' },
-      { label: 'Groupage within Ukraine', value: 'from UAH 10/km' },
+      { label: 'Move, dedicated vehicle 15–20 m³', value: 'from UAH 35/km' },
+      { label: 'Groupage within Ukraine', value: 'from UAH 15/km' },
       { label: 'Loader', value: 'from UAH 250/h', note: 'minimum 2 hours' },
     ],
     europeTitle: 'Europe',
     europeRows: [
-      { label: 'Van up to 2 t', value: '€0.6–0.8/km' },
-      { label: 'Truck 22 t', value: '€1.1–1.5/km' },
-      { label: 'Pallet up to 300 kg (groupage)', value: '€0.2–0.3/km' },
-      { label: 'Ukraine – Poland, full truck', value: 'from €900' },
-      { label: 'Ukraine – Germany, full truck', value: 'from €1,800' },
+      { label: 'Van up to 2 t', value: 'from €1.2/km' },
+      { label: 'Truck 22 t', value: 'from €1.5/km' },
+      { label: 'Pallet up to 300 kg (groupage)', value: 'from €0.4/km' },
+      { label: 'Ukraine – Poland, full truck', value: 'from €1,000' },
+      { label: 'Ukraine – Germany, full truck', value: 'from €2,000' },
     ],
     note: 'Prices are indicative and may change. The final amount depends on the cargo, route and date.',
     factorsTitle: 'What affects the price',
@@ -1458,8 +1470,8 @@ export const en: LangContent = {
     lead: 'Call us or message us on your favourite messenger. For a quote, tell us the route, weight and volume of your cargo.',
     aboutTitle: 'About us',
     about: [
-      'CR Logistics organises freight transport within Ukraine and abroad. We match the vehicle to the cargo: from a van to a full truck, low-loader, car transporter or crane truck.',
-      'We are based in Kyiv and have a presence in Slovenia. We work for small and medium businesses, sole traders and private clients.',
+      "CR Logistics arranges freight transport within Ukraine and abroad: by road, sea and air. We match the vehicle to the cargo: from a van to a full truck, low-bed trailer, car transporter or crane truck. We also handle customs clearance in Ukraine and Europe.",
+      "We are based in Ukraine, Poland and Slovenia. We work with both businesses and private clients.",
     ],
     hours: 'Requests from the website reach us instantly on Telegram',
   },
