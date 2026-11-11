@@ -22,7 +22,7 @@ export const sl: LangContent = {
     perKm: 'UAH/km',
     orderVehicle: 'Naroči',
     footerAbout:
-      'Prevoz tovora po Ukrajini in v tujino: od kombija do tovornjaka s polprikolico, izredni prevozi, avtotransporterji, dvigala. Dostava iz Kitajske po morju in letalsko.',
+      'Prevoz tovora po Ukrajini in v tujino: od kombija do tovornjaka s polprikolico, izredni prevozi, avtotransporterji, dvigala. Dostava iz Azije in ZDA po morju in letalsko.',
     footerNote: 'Cene na spletni strani so okvirne. Točno ceno vam logist pove po povpraševanju in jo zapiše v naročilo za prevoz.',
     rights: 'Vse pravice pridržane.',
     notFound: {
@@ -37,14 +37,14 @@ export const sl: LangContent = {
   blocks: {
     trustStrip: [
       { title: 'Od kombija do nizkopodnika', text: 'Vozilo glede na težo in prostornino' },
-      { title: 'Ukrajina, Evropa, Kitajska, ZDA', text: 'Cestno, morsko, letalsko' },
+      { title: 'Ukrajina, Evropa, Azija, ZDA', text: 'Cestno, morsko, letalsko' },
       { title: 'Cena v naročilu', text: 'Dogovorjena pred nakladanjem' },
       { title: 'En logist', text: 'Od povpraševanja do razkladanja' },
     ],
     directions: {
       eyebrow: 'Storitve',
       title: 'Prepeljemo vsak tovor',
-      sub: 'Prevozi po vsej Ukrajini, dostava v Evropo in iz nje, uvoz iz Kitajske.',
+      sub: 'Prevozi po vsej Ukrajini, dostava v Evropo in iz nje, uvoz iz Azije in ZDA.',
     },
     transport: {
       eyebrow: 'Vozila',
@@ -102,7 +102,7 @@ export const sl: LangContent = {
       logosTitle: 'Med našimi strankami',
       items: [
         { icon: 'business', title: 'Mala in srednja podjetja', text: 'Redne dobave, blago na paletah, dostava strankam po Ukrajini.' },
-        { icon: 'store', title: 'Samostojni podjetniki in spletne trgovine', text: 'Pošiljke iz Kitajske in Evrope, dostava v skladišče ali neposredno kupcu.' },
+        { icon: 'store', title: 'Samostojni podjetniki in spletne trgovine', text: 'Pošiljke iz Azije, ZDA in Evrope, dostava v skladišče ali neposredno kupcu.' },
         { icon: 'factory', title: 'Proizvajalci', text: 'Surovine v tovarno, končni izdelki distributerju, oprema.' },
         { icon: 'build', title: 'Gradbena podjetja', text: 'Gradbeni material, stroji na nizkopodniku, tovornjak z dvigalom in avtodvigalo na gradbišče.' },
         { icon: 'agro', title: 'Kmetijstvo', text: 'Kmetijski stroji, žito, gnojila, sipki tovor s prekucniki.' },
@@ -125,7 +125,7 @@ export const sl: LangContent = {
     meta: {
       title: 'Prevoz tovora Slovenija – Ukrajina, po Evropi in Ukrajini | GR Logistics',
       description:
-        'Prevoz tovora med Slovenijo, Evropo in Ukrajino ter po vsej Ukrajini: kombi, tovornjak, izredni prevozi, avtotransporter. Uvoz iz Kitajske po morju in letalsko.',
+        'Prevoz tovora med Slovenijo, Evropo in Ukrajino ter po vsej Ukrajini: kombi, tovornjak, izredni prevozi, avtotransporter. Uvoz iz Azije in ZDA po morju in letalsko.',
     },
     eyebrow: "Cestni prevoz · Letalski · Pomorski",
     h1: 'Prevoz tovora',
@@ -163,7 +163,7 @@ export const sl: LangContent = {
       },
       {
         q: 'Ali vozite tudi v tujino?',
-        a: 'Da. Vozimo iz Ukrajine v evropske države in nazaj, po Evropi, uvažamo pa tudi tovor iz Kitajske po morju in letalsko.',
+        a: 'Da. Vozimo iz Ukrajine v evropske države in nazaj, po Evropi, uvažamo pa tudi tovor iz Azije in ZDA po morju in letalsko.',
       },
     ],
   },
@@ -356,13 +356,13 @@ export const sl: LangContent = {
     {
       slug: 'international',
       meta: {
-        title: 'Mednarodni prevoz tovora: Ukrajina – Evropa, Kitajska, morje, letalo',
+        title: 'Mednarodni prevoz tovora: Ukrajina – Evropa, Azija, ZDA, morje, letalo',
         description:
-          'Prevoz iz Slovenije in Evrope v Ukrajino in nazaj, prevozi po Evropi, uvoz iz Kitajske po morju in letalsko. Samostojno vozilo, zbirni prevoz, kontejnerji.',
+          'Prevoz iz Slovenije in Evrope v Ukrajino in nazaj, prevozi po Evropi, uvoz iz Azije in ZDA po morju in letalsko. Samostojno vozilo, zbirni prevoz, kontejnerji.',
       },
       h1: 'Mednarodni prevoz tovora',
-      lead: 'Prepeljemo tovor iz Ukrajine v Evropo in nazaj, po Evropi, organiziramo pa tudi dostavo blaga iz Kitajske po morju ali letalsko.',
-      bullets: ['Ukrajina ↔ Evropa, prevozi po EU', 'Uvoz iz Kitajske: morje, letalo', 'Dokumenti in carinjenje'],
+      lead: 'Prepeljemo tovor iz Ukrajine v Evropo in nazaj, po Evropi, organiziramo pa tudi dostavo blaga iz Azije in ZDA po morju ali letalsko.',
+      bullets: ['Ukrajina ↔ Evropa, prevozi po EU', 'Uvoz iz Azije in ZDA: morje, letalo', 'Dokumenti in carinjenje'],
       sections: [
         {
           title: 'Smeri',

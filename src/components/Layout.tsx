@@ -690,7 +690,7 @@ export function Footer({ lang, c }: Ctx) {
       </div>
       <div className="wrap ftr-bottom">
         <p>
-          © {year} GR Logistics. {c.ui.rights}
+          © 2024–{year} GR Logistics. {c.ui.rights}
         </p>
         <p>{c.ui.footerNote}</p>
       </div>
