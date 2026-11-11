@@ -74,7 +74,7 @@ export const sl: LangContent = {
         { icon: 'truck', title: 'Ne plačate preveč za prostor', text: 'Vozilo izberemo glede na tovor, za manjše pošiljke ponudimo zbirni prevoz.' },
         { icon: 'clock', title: 'Vozilo takoj', text: 'Pri 95 % naročil prevoza tovora na poti vozilo pride na dogovorjeno mesto v 2 urah. Logista lahko pokličete kadar koli: delamo 24 ur na dan.' },
         { icon: 'shield', title: 'Zavarovanje tovora', text: 'Tovor zavarujemo pred poškodbami prek zanesljivih partnerjev, s kritjem do 1 000 000 €.' },
-        { icon: 'docs', title: 'Dokumenti za mejo', text: 'CMR, spremni dokumenti in carinjenje prek špediterja na mednarodnih relacijah.' },
+        { icon: 'docs', title: 'Dokumenti za mednarodne prevoze', text: 'CMR, spremni dokumenti in carinjenje prek špediterja na mednarodnih relacijah.' },
         { icon: 'route', title: 'Od vrat do vrat', text: 'Tovor prevzamemo in dostavimo na navedena naslova, brez pretovarjanja na poti.' },
       ],
     },

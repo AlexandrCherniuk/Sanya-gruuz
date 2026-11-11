@@ -74,7 +74,7 @@ export const en: LangContent = {
         { icon: 'truck', title: 'Pay only for the space you need', text: 'We match the vehicle to your cargo and offer groupage for small shipments.' },
         { icon: 'clock', title: 'A vehicle right away', text: 'In 95% of shared-load orders the vehicle arrives at the pickup point within 2 hours. You can reach a logistics manager any time: we work 24/7.' },
         { icon: 'shield', title: 'Cargo insurance', text: 'We insure cargo against damage through trusted partners, with cover of up to €1,000,000.' },
-        { icon: 'docs', title: 'Border paperwork', text: 'CMR, shipping documents and customs clearance through a broker on international routes.' },
+        { icon: 'docs', title: 'Documents for international shipments', text: 'CMR, shipping documents and customs clearance through a broker on international routes.' },
         { icon: 'route', title: 'Door-to-door', text: 'We collect and deliver at the addresses you give us, with no reloading on the way.' },
       ],
     },
