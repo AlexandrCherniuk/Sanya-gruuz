@@ -71,7 +71,8 @@ export const sl: LangContent = {
         { icon: 'contract', title: 'Cena se na poti ne spremeni', text: 'Pot, roke in ceno zapišemo v naročilo še pred nakladanjem.' },
         { icon: 'chat', title: 'Logist je vedno dosegljiv', text: 'Telefon, Viber, Telegram, WhatsApp. Povemo, kje je vozilo in kdaj prispe.' },
         { icon: 'truck', title: 'Ne plačate preveč za prostor', text: 'Vozilo izberemo glede na tovor, za manjše pošiljke ponudimo zbirni prevoz.' },
-        { icon: 'shield', title: 'Odgovornost za tovor', text: 'Prevoznik po naročilu odgovarja za tovor. Na željo uredimo zavarovanje.' },
+        { icon: 'clock', title: 'Vozilo takoj', text: 'Pri 95 % naročil prevoza tovora na poti vozilo pride na dogovorjeno mesto v 2 urah. Logista lahko pokličete kadar koli: delamo 24 ur na dan.' },
+        { icon: 'shield', title: 'Zavarovanje tovora', text: 'Tovor zavarujemo pred poškodbami prek zanesljivih partnerjev, s kritjem od 10 000 UAH. Za doplačilo povečamo zavarovalno vsoto.' },
         { icon: 'docs', title: 'Dokumenti za mejo', text: 'CMR, spremni dokumenti in carinjenje prek špediterja na mednarodnih relacijah.' },
         { icon: 'route', title: 'Od vrat do vrat', text: 'Tovor prevzamemo in dostavimo na navedena naslova, brez pretovarjanja na poti.' },
       ],
@@ -124,11 +125,11 @@ export const sl: LangContent = {
       description:
         'Prevoz tovora med Slovenijo, Evropo in Ukrajino ter po vsej Ukrajini: kombi, tovornjak, izredni prevozi, avtotransporter. Uvoz iz Kitajske po morju in letalsko.',
     },
-    eyebrow: "Prevozi · Ukrajina, Poljska, Slovenija",
+    eyebrow: "Letalski prevoz · Železnica · Cestni prevoz · Morje",
     h1: 'Prevoz tovora',
     h1Accent: 'po Ukrajini in v tujino',
-    lead: "Vozilo izberemo glede na vaš tovor: kombi, tovornjak, nizko-podvoznik, avtotransporter ali vozilo z dvigalom. Vozimo po vsej Ukrajini in Evropi, po morju in letalsko dostavljamo iz Azije in ZDA ter uredimo carinjenje.",
-    bullets: ['Kombi od 1,2 €/km, tovornjak od 1,5 €/km v Evropi', 'Samostojno vozilo ali zbirni prevoz', 'Pogoji zapisani v naročilu'],
+    lead: "Vozilo izberemo glede na vaš tovor in ga v 2 urah pripeljemo na katero koli lokacijo. Vozimo po vsej Ukrajini in Evropi, po morju in letalsko dostavljamo iz Azije in ZDA ter uredimo carinjenje.",
+    bullets: ['Kombi od 1,2 €/km, tovornjak od 1,5 €/km v Evropi', 'Samostojno vozilo ali zbirni prevoz', 'Prevoz tovora na poti', 'Pogoji zapisani v naročilu'],
     faq: [
       {
         q: 'Kako izvem ceno prevoza?',

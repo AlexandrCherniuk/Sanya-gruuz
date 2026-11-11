@@ -71,7 +71,8 @@ export const en: LangContent = {
         { icon: 'contract', title: 'No price changes on the road', text: 'Route, timing and price go into the transport order before loading.' },
         { icon: 'chat', title: 'Your manager stays in touch', text: 'Phone, Viber, Telegram, WhatsApp. We tell you where the truck is and when to expect it.' },
         { icon: 'truck', title: 'Pay only for the space you need', text: 'We match the vehicle to your cargo and offer groupage for small shipments.' },
-        { icon: 'shield', title: 'Cargo liability', text: 'The carrier is liable for your cargo under the contract. Insurance is available on request.' },
+        { icon: 'clock', title: 'A vehicle right away', text: 'In 95% of shared-load orders the vehicle arrives at the pickup point within 2 hours. You can reach a logistics manager any time: we work 24/7.' },
+        { icon: 'shield', title: 'Cargo insurance', text: 'We insure cargo against damage through trusted partners, with cover from UAH 10,000. Higher cover is available for an extra fee.' },
         { icon: 'docs', title: 'Border paperwork', text: 'CMR, shipping documents and customs clearance through a broker on international routes.' },
         { icon: 'route', title: 'Door-to-door', text: 'We collect and deliver at the addresses you give us, with no reloading on the way.' },
       ],
@@ -124,11 +125,11 @@ export const en: LangContent = {
       description:
         'Road freight between Ukraine and Europe and across Ukraine: vans, full trucks, oversized loads, car transporters. Sea and air freight from China. Quote after your request.',
     },
-    eyebrow: "Freight · Ukraine, Poland, Slovenia",
+    eyebrow: "Air freight · Rail · Road freight · Sea",
     h1: 'Freight transport',
     h1Accent: 'across Ukraine and abroad',
-    lead: "We match the vehicle to your cargo: van, full truck, low-bed, car transporter or crane truck. We carry across Ukraine and Europe, ship by sea and air from Asia and the USA, and handle customs clearance.",
-    bullets: ['Van from €1.2/km, truck from €1.5/km in Europe', 'Dedicated vehicle or groupage', 'Terms fixed in the contract'],
+    lead: "We match the vehicle to your cargo and get it to any pickup point within 2 hours. We carry across Ukraine and Europe, ship by sea and air from Asia and the USA, and handle customs clearance.",
+    bullets: ['Van from €1.2/km, truck from €1.5/km in Europe', 'Dedicated vehicle or groupage', 'Backhaul and shared-load shipping', 'Terms fixed in the contract'],
     faq: [
       {
         q: 'How do I find out the price?',
