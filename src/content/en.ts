@@ -31,6 +31,7 @@ export const en: LangContent = {
     },
     routesHead: { route: 'Route', km: 'Distance', bus: 'Van up to 2 t', fura: 'Truck 22 t' },
     langSwitch: 'Website language',
+    theme: 'Dark theme',
     units: { km: 'km', uah: 'UAH' },
   },
 

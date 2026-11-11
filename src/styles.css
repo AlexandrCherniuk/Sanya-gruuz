@@ -1,4 +1,5 @@
-/* GR Logistics: светлый, лёгкий интерфейс. Мятный — только акцент (кнопки, отметки). */
+/* GR Logistics: светлая тема по умолчанию + тёмная «графит» (html[data-theme=dark]).
+   Мятный — только акцент (кнопки, отметки). */
 :root {
   --ink: #0b0d0e;
   --ink-2: #1d2125;
@@ -13,6 +14,13 @@
   --acc-ink: #007a4d;
   --acc-soft: #d6fff0;
   --err: #d0312d;
+  /* Тёмные плашки (кнопки, подвал, CTA) и текст на мятном: в обеих темах свои. */
+  --solid: #0b0d0e;
+  --solid-2: #2a3036;
+  --on-acc: #0b0d0e;
+  --glass: rgb(255 255 255 / 92%);
+  --truck-trailer: #1d2125;
+  color-scheme: light;
   --radius: 16px;
   --wrap: 1180px;
   --font: 'Manrope Variable', 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -82,7 +90,7 @@ ol {
   left: -9999px;
   top: 8px;
   z-index: 100;
-  background: var(--ink);
+  background: var(--solid);
   color: #fff;
   padding: 8px 14px;
   border-radius: 8px;
@@ -114,17 +122,17 @@ ol {
 }
 .btn--acc {
   background: var(--acc);
-  color: var(--ink);
+  color: var(--on-acc);
 }
 .btn--acc:hover {
   background: var(--acc-press);
 }
 .btn--dark {
-  background: var(--ink);
+  background: var(--solid);
   color: #fff;
 }
 .btn--dark:hover {
-  background: var(--ink-3);
+  background: var(--solid-2);
 }
 .btn--ghost {
   background: var(--bg);
@@ -175,7 +183,7 @@ ol {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgb(255 255 255 / 92%);
+  background: var(--glass);
   backdrop-filter: saturate(1.4) blur(10px);
 }
 .hdr-in {
@@ -196,7 +204,7 @@ ol {
   place-items: center;
   width: 54px;
   height: 36px;
-  background: var(--ink);
+  background: var(--solid);
   border-radius: 9px;
   padding: 0 8px;
 }
@@ -359,7 +367,7 @@ ol {
 
 /* Подсказка «есть версия на вашем языке» (вставляет client.tsx) */
 .lang-hint {
-  background: var(--ink);
+  background: var(--solid);
   color: #fff;
   font-size: 0.9rem;
 }
@@ -393,7 +401,7 @@ ol {
   cursor: pointer;
 }
 .lang-hint button:hover {
-  background: var(--ink-3);
+  background: var(--solid-2);
 }
 .burger {
   display: none;
@@ -543,7 +551,7 @@ ol {
 .ticks svg {
   flex: none;
   margin-top: 2px;
-  color: var(--ink);
+  color: var(--on-acc);
   background: var(--acc);
   border-radius: 50%;
   padding: 3px;
@@ -981,7 +989,7 @@ ol {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: var(--ink);
+  background: var(--solid);
   color: var(--acc);
   font-weight: 800;
   font-size: 0.9rem;
@@ -1260,7 +1268,7 @@ ol {
   top: 92px;
   padding: 26px;
   border-radius: 20px;
-  background: var(--ink);
+  background: var(--solid);
   color: #fff;
 }
 .price-card h2 {
@@ -1380,7 +1388,7 @@ ol {
   border-radius: 24px;
   background:
     radial-gradient(600px 300px at 100% 0%, rgb(4 255 163 / 18%), transparent 60%),
-    var(--ink);
+    var(--solid);
   color: #fff;
 }
 .cta h2 {
@@ -1412,7 +1420,7 @@ ol {
 
 /* ——— Подвал ——— */
 .ftr {
-  background: var(--ink);
+  background: var(--solid);
   color: rgb(255 255 255 / 72%);
   padding: 64px 0 24px;
   font-size: 0.93rem;
@@ -1421,7 +1429,7 @@ ol {
   color: #fff;
 }
 .ftr .logo-mark {
-  background: var(--ink-2);
+  background: var(--solid-2);
 }
 .ftr-grid {
   display: grid;
@@ -1627,7 +1635,7 @@ ol {
     bottom: 0;
     z-index: 40;
     padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
-    background: rgb(255 255 255 / 95%);
+    background: var(--glass);
     backdrop-filter: blur(10px);
     border-top: 1px solid var(--line);
   }
@@ -1652,7 +1660,7 @@ ol {
   }
   .mbar-cta {
     background: var(--acc);
-    color: var(--ink);
+    color: var(--on-acc);
   }
   body {
     padding-bottom: 70px;
@@ -1682,4 +1690,198 @@ ol {
 }
 .table th a:hover {
   text-decoration-color: currentColor;
+}
+
+/* ——— Тёмная тема «графит» ———
+   Глубокий тёмно-серый, как металлик на дорогих авто: плоский фон страницы,
+   а карточки с лёгким металлическим отливом сверху. Включается атрибутом
+   data-theme="dark" на <html> (ставит скрипт в <head> до отрисовки). */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --ink: #eef1f3;
+  --ink-2: #d3d9de;
+  --ink-3: #b2bbc3;
+  --muted: #94a0aa;
+  --line: #2a3036;
+  --line-2: #3a4249;
+  --bg: #17191c;
+  --tint: #1c1f23;
+  --acc-press: #5cffc3;
+  --acc-ink: #04ffa3;
+  --acc-soft: rgb(4 255 163 / 13%);
+  --solid: #2b3137;
+  --solid-2: #363d44;
+  --glass: rgb(23 25 28 / 80%);
+  --truck-trailer: #2f363d;
+  --metal: linear-gradient(165deg, #252a30 0%, #1d2126 48%, #1a1d21 100%);
+}
+/* Выделение в заголовке: в тёмной без «маркера», просто мятный текст с лёгким свечением. */
+[data-theme='dark'] .accent {
+  background: none;
+  color: var(--acc);
+  text-shadow: 0 0 28px rgb(4 255 163 / 25%);
+}
+[data-theme='dark'] body {
+  background: var(--bg);
+}
+[data-theme='dark'] :is(.card, .veh, .steps li, .why li, .faq details, .quote-card, .hero-price, .table-wrap, .drop ul, .lang-menu) {
+  background: var(--metal);
+  border-color: var(--line);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%), 0 18px 40px -24px rgb(0 0 0 / 70%);
+}
+[data-theme='dark'] .s--tint {
+  background:
+    radial-gradient(1200px 400px at 50% 0%, rgb(255 255 255 / 2.5%), transparent 70%),
+    var(--tint);
+}
+[data-theme='dark'] .cta {
+  background:
+    radial-gradient(600px 300px at 100% 0%, rgb(4 255 163 / 16%), transparent 60%),
+    linear-gradient(160deg, #2c3238, #1b1e22 70%);
+  border: 1px solid var(--line);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 6%);
+}
+[data-theme='dark'] .price-card {
+  background: linear-gradient(160deg, #2c3238, #1b1e22 70%);
+  border: 1px solid var(--line);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 6%);
+}
+[data-theme='dark'] .ftr {
+  background: #0f1113;
+  border-top: 1px solid var(--line);
+}
+[data-theme='dark'] .ftr .logo-mark,
+[data-theme='dark'] .logo-mark {
+  background: #0b0d0e;
+  box-shadow: inset 0 0 0 1px var(--line-2);
+}
+[data-theme='dark'] .btn--ghost {
+  background: transparent;
+}
+[data-theme='dark'] .quote-card input,
+[data-theme='dark'] .quote-card textarea,
+[data-theme='dark'] .quote-card select {
+  background: #131518;
+}
+[data-theme='dark'] .quote-card input::placeholder {
+  color: #67717b;
+}
+.truck-trailer {
+  fill: var(--truck-trailer);
+}
+
+/* ——— Переключатель темы ———
+   Капсула с бегунком: солнце ↔ луна, бегунок пружинит, в тёмной — «звёзды» на треке. */
+.theme-tg {
+  --tg-w: 58px;
+  --tg-h: 32px;
+  --tg-k: 24px;
+  position: relative;
+  flex: none;
+  width: var(--tg-w);
+  height: var(--tg-h);
+  padding: 0;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #f6f8f9, #e7ebee);
+  box-shadow: inset 0 1px 2px rgb(11 13 14 / 10%);
+  cursor: pointer;
+  overflow: hidden;
+  transition: background 0.4s, border-color 0.4s;
+  -webkit-tap-highlight-color: transparent;
+}
+.theme-tg:hover {
+  border-color: var(--ink-3);
+}
+.theme-tg-stars {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.4s, transform 0.5s;
+  background:
+    radial-gradient(1px 1px at 12px 9px, #fff 99%, transparent),
+    radial-gradient(1.2px 1.2px at 20px 20px, #fff 99%, transparent),
+    radial-gradient(1px 1px at 8px 22px, rgb(255 255 255 / 70%) 99%, transparent),
+    radial-gradient(1px 1px at 25px 11px, rgb(255 255 255 / 60%) 99%, transparent);
+}
+.theme-tg-knob {
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  width: var(--tg-k);
+  height: var(--tg-k);
+  margin-top: calc(var(--tg-k) / -2);
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #0b0d0e;
+  box-shadow: 0 2px 6px rgb(11 13 14 / 22%), 0 0 0 1px rgb(11 13 14 / 6%);
+  transition:
+    transform 0.55s cubic-bezier(0.68, -0.4, 0.27, 1.4),
+    background 0.4s,
+    box-shadow 0.4s;
+}
+.theme-tg-knob svg {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  transition: transform 0.55s cubic-bezier(0.68, -0.4, 0.27, 1.4), opacity 0.3s;
+}
+.theme-tg-moon {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.4);
+}
+[data-theme='dark'] .theme-tg {
+  border-color: #3f474f;
+  background: linear-gradient(180deg, #2b3137, #15181b);
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / 60%), 0 0 0 1px rgb(255 255 255 / 3%);
+}
+[data-theme='dark'] .theme-tg-stars {
+  opacity: 1;
+  transform: none;
+}
+[data-theme='dark'] .theme-tg-knob {
+  transform: translateX(calc(var(--tg-w) - var(--tg-k) - 8px));
+  background: var(--acc);
+  box-shadow: 0 0 14px rgb(4 255 163 / 45%), 0 2px 6px rgb(0 0 0 / 50%);
+}
+[data-theme='dark'] .theme-tg-sun {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.4);
+}
+[data-theme='dark'] .theme-tg-moon {
+  opacity: 1;
+  transform: none;
+}
+/* Плавная смена цветов на всей странице только в момент переключения
+   (если браузер не умеет View Transitions). */
+.theme-anim,
+.theme-anim *,
+.theme-anim *::before,
+.theme-anim *::after {
+  transition:
+    background-color 0.35s,
+    border-color 0.35s,
+    color 0.35s,
+    fill 0.35s !important;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+@media (max-width: 720px) {
+  .theme-tg {
+    --tg-w: 52px;
+    --tg-h: 30px;
+    --tg-k: 22px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-tg *,
+  .theme-tg {
+    transition: none !important;
+  }
 }

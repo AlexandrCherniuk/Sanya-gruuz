@@ -14,6 +14,64 @@ document.querySelectorAll<HTMLElement>('[data-island="quote"]').forEach((el) => 
   hydrateRoot(el, <QuoteForm successUrl={el.dataset.successUrl} lang={lang} />)
 })
 
+// Переключатель темы. Начальную тему уже поставил скрипт в <head> (THEME_BOOT в entry-server.tsx).
+const THEME_KEY = 'gr-theme'
+const themeColor = { light: '#FFFFFF', dark: '#17191C' }
+const currentTheme = () => (document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light')
+function syncThemeUi() {
+  const t = currentTheme()
+  document.querySelectorAll<HTMLElement>('[data-theme-toggle]').forEach((b) => b.setAttribute('aria-checked', String(t === 'dark')))
+  document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')?.setAttribute('content', themeColor[t])
+}
+function setTheme(t: 'dark' | 'light', from?: HTMLElement) {
+  const root = document.documentElement
+  const apply = () => {
+    root.dataset.theme = t
+    syncThemeUi()
+  }
+  try {
+    localStorage.setItem(THEME_KEY, t)
+  } catch {
+    /* приватный режим: просто не запоминаем */
+  }
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+  const doc = document as Document & { startViewTransition?: (cb: () => void) => { ready: Promise<void> } }
+  if (!reduce && doc.startViewTransition && from) {
+    // Новая тема «разливается» кругом от переключателя.
+    const r = from.getBoundingClientRect()
+    const x = r.left + r.width / 2
+    const y = r.top + r.height / 2
+    const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))
+    doc.startViewTransition(apply).ready.then(() => {
+      root.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
+        { duration: 650, easing: 'cubic-bezier(0.4, 0, 0.2, 1)', pseudoElement: '::view-transition-new(root)' },
+      )
+    })
+  } else if (!reduce) {
+    root.classList.add('theme-anim')
+    apply()
+    setTimeout(() => root.classList.remove('theme-anim'), 400)
+  } else apply()
+}
+syncThemeUi()
+document.querySelectorAll<HTMLElement>('[data-theme-toggle]').forEach((b) =>
+  b.addEventListener('click', () => setTheme(currentTheme() === 'dark' ? 'light' : 'dark', b)),
+)
+// Посетитель не выбирал сам: следуем за настройкой устройства, если она поменялась.
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+  let saved: string | null = null
+  try {
+    saved = localStorage.getItem(THEME_KEY)
+  } catch {
+    /* нет доступа */
+  }
+  if (!saved) {
+    document.documentElement.dataset.theme = e.matches ? 'dark' : 'light'
+    syncThemeUi()
+  }
+})
+
 // Закрываем выпадающие меню (язык, бургер) по клику мимо и по Esc.
 function closeMenus(except?: Element | null) {
   document.querySelectorAll<HTMLDetailsElement>('details.lang[open], details.burger[open]').forEach((d) => {

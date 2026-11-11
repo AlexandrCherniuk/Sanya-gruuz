@@ -359,6 +359,11 @@ function jsonLd(route: Route, c: LangContent) {
   return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c')
 }
 
+/** Тема до первой отрисовки, чтобы не мигало белым: выбор посетителя, иначе настройка устройства.
+ *  Ключ THEME_KEY тот же, что в client.tsx. */
+const THEME_KEY = 'gr-theme'
+const THEME_BOOT = `(function(){var t=null;try{t=localStorage.getItem('${THEME_KEY}')}catch(e){}if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);if(t==='dark'){var m=document.querySelector('meta[name=theme-color]');if(m)m.content='#17191C'}})()`
+
 type Assets = { js: string; css: string[]; fonts: string[] }
 
 const ogLocale: Record<Lang, string> = { ua: 'uk_UA', ru: 'ru_RU', en: 'en_GB', pl: 'pl_PL', sl: 'sl_SI' }
@@ -412,6 +417,7 @@ export function renderPage(route: Route, assets: Assets) {
     <meta name="description" content="${esc(route.meta.description)}">
     ${route.noindex ? '<meta name="robots" content="noindex, follow">' : `<link rel="canonical" href="${canonical}">\n    ${alternates}`}
     <meta name="theme-color" content="#FFFFFF">
+    <script>${THEME_BOOT}</script>
     <meta name="format-detection" content="telephone=no">
     <link rel="icon" type="image/png" href="${asset('favicon.png')}">
     <link rel="apple-touch-icon" href="${asset('brand/apple-touch-icon.png')}">
@@ -511,6 +517,8 @@ export function render404(assets: Assets) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>404 | ${esc(brand.name)}</title>
     <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#FFFFFF">
+    <script>${THEME_BOOT}</script>
     <link rel="icon" type="image/png" href="${asset('favicon.png')}">
     ${assets.css.map((href) => `<link rel="stylesheet" href="${href}">`).join('\n    ')}
   </head>
