@@ -309,6 +309,17 @@ function TruckRoad({ label }: { label: string }) {
         <button type="button" className="truck" aria-label={label} title={label}>
           <span className="truck-shadow" />
           <svg className="truck-svg" viewBox="-40 0 200 56" width="200" height="56" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="truck-beam" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0" stopColor="#fff6d6" stopOpacity="0.85" />
+                <stop offset="0.45" stopColor="#fff2c4" stopOpacity="0.32" />
+                <stop offset="1" stopColor="#fff2c4" stopOpacity="0" />
+              </linearGradient>
+              <radialGradient id="truck-spot">
+                <stop offset="0" stopColor="#fff2c4" stopOpacity="0.4" />
+                <stop offset="1" stopColor="#fff2c4" stopOpacity="0" />
+              </radialGradient>
+            </defs>
             <g className="truck-trail">
               <rect x="-34" y="14" width="26" height="2" rx="1" />
               <rect x="-24" y="24" width="18" height="2" rx="1" />
@@ -350,6 +361,12 @@ function TruckRoad({ label }: { label: string }) {
                 </g>
               </g>
             ))}
+            {/* Фары: свет включается при запуске, заметен в тёмной теме */}
+            <g className="truck-beam">
+              <path d="M146 33.2 L214 22 L214 50 L146 36.4 Z" fill="url(#truck-beam)" />
+              <ellipse cx="186" cy="53.5" rx="30" ry="3" fill="url(#truck-spot)" />
+              <circle cx="145" cy="34.5" r="3.2" fill="#fff6d6" opacity="0.7" />
+            </g>
           </svg>
         </button>
       </div>

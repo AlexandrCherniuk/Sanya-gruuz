@@ -137,7 +137,34 @@ function truckRide() {
   const light = truck.querySelector<SVGRectElement>('.truck-light')!
   const pipe = truck.querySelector<SVGRectElement>('.truck-pipe')!
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)')
+  const beam = truck.querySelector<SVGGElement>('.truck-beam')!
+  const dark = () => document.documentElement.dataset.theme === 'dark'
   let busy = false
+
+  // Фары: моргнули при запуске и горят ровно; гаснут плавно.
+  function lightsOn() {
+    if (!dark()) return
+    beam.getAnimations().forEach((a) => a.cancel())
+    beam.animate(
+      reduce.matches
+        ? [{ opacity: 0 }, { opacity: 1 }]
+        : [
+            { opacity: 0 },
+            { opacity: 0.7, offset: 0.15 },
+            { opacity: 0.15, offset: 0.28 },
+            { opacity: 0.9, offset: 0.45 },
+            { opacity: 0.6, offset: 0.55 },
+            { opacity: 1 },
+          ],
+      { duration: reduce.matches ? 500 : 650, easing: 'ease-out', fill: 'forwards' },
+    )
+  }
+  async function lightsOff() {
+    const from = Number(getComputedStyle(beam).opacity)
+    if (!from) return
+    beam.getAnimations().forEach((a) => a.cancel())
+    await beam.animate([{ opacity: from }, { opacity: 0 }], { duration: 900, easing: 'ease-in', fill: 'forwards' }).finished
+  }
 
   const play = (el: Element, k: Keyframe[], o: KeyframeAnimationOptions) => el.animate(k, { fill: 'forwards', ...o }).finished
 
@@ -175,10 +202,13 @@ function truckRide() {
     const rd = road!.getBoundingClientRect()
     const out = rd.right - tr.left + 30 // до правого края и чуть дальше
     const back = tr.right - rd.left + 30 // заезд из-за левого края
-    const go = Math.min(1700, 900 + out * 0.55)
-    const come = Math.min(2000, 1100 + back * 0.6)
+    // На компьютере экран шире, поэтому едет спокойнее, на телефоне быстрее.
+    const wide = window.matchMedia('(min-width: 900px)').matches
+    const go = wide ? Math.min(3200, 1600 + out * 1.1) : Math.min(1700, 900 + out * 0.55)
+    const come = wide ? Math.min(3600, 1900 + back * 1.2) : Math.min(2000, 1100 + back * 0.6)
 
-    // Заводится: дрожь кабины и дым.
+    // Заводится: дрожь кабины, дым, в тёмной теме включаются фары.
+    lightsOn()
     puffs(3)
     light.animate([{ opacity: 1 }, { opacity: 0.2 }, { opacity: 1 }], { duration: 260, iterations: 2 })
     await play(
@@ -229,10 +259,18 @@ function truckRide() {
     await play(truck!, [{ transform: `translateX(${-back}px)` }, { transform: 'translateX(0)' }], { duration: come, easing: brake })
     truck!.getAnimations().forEach((a) => a.cancel())
     ;[body, trail].forEach((el) => el.getAnimations().forEach((a) => a.cancel()))
+    // Постоял с фарами и заглушился.
+    await new Promise((r) => setTimeout(r, 1200))
+    await lightsOff()
   }
 
   // Без лишнего движения: только моргнуть фарами и чуть пыхнуть.
   async function blink() {
+    if (dark()) {
+      lightsOn()
+      await new Promise((r) => setTimeout(r, 1800))
+      return lightsOff()
+    }
     await light.animate([{ opacity: 1 }, { opacity: 0.15 }, { opacity: 1 }], { duration: 300, iterations: 2 }).finished
   }
 
