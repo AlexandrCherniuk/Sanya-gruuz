@@ -1316,42 +1316,35 @@ export const en: LangContent = {
       ],
     },
     {
-      slug: 'germany',
+      slug: 'asia',
       group: 'international',
-      meta: {
-        title: 'Freight Transport Ukraine – Germany',
-        description:
-          'Freight to and from Germany: Berlin, Hamburg, Munich, Frankfurt, Dresden. Full truck from €1,800, van from €900.',
-      },
-      card: { icon: 'flag', title: 'Germany', text: 'Berlin, Hamburg, Munich and more', price: 'from €900' },
-      h1: 'Freight transport Ukraine – Germany',
-      lead: 'We deliver cargo to any city in Germany or bring it from there to Ukraine: goods, equipment, machinery, belongings for a move.',
-      bullets: ['Van from €900, full truck from €1,800', 'Machinery on low-loaders', 'Door-to-door'],
-      priceFrom: 'from €900',
-      cargo: {
-        title: 'What we carry',
-        items: ['Equipment and machine tools', 'Commercial cargo', 'Used machinery', 'Cars', 'Personal belongings', 'Palletised goods'],
-      },
-      sections: [
-        {
-          title: 'Cities',
-          text: 'Berlin, Hamburg, Munich, Frankfurt, Cologne, Stuttgart, Düsseldorf, Dresden, Leipzig, Bremen, Hanover, Nuremberg and more.',
-        },
-      ],
-      prices: {
-        title: 'Indicative prices',
-        rows: [
-          { label: 'Van up to 2 t, 20 m³', value: 'from €900' },
-          { label: 'Truck 22 t', value: 'from €1,800' },
-        ],
-        note: 'The price depends on the city, volume and season.',
-      },
-      vehicles: ['bus', 'fura', 'lowbed'],
+      meta: { title: "Freight from Asia to Ukraine", description: "Freight from Asia: China, Turkey, India, Vietnam. Sea containers and air freight, with customs clearance." },
+      card: { icon: 'china', title: "Asia", text: "China, Turkey, India and more", price: "on request" },
+      h1: "Freight from Asia to Ukraine",
+      lead: "We bring goods from Asian countries by sea or air: from pickup at the supplier to your warehouse in Ukraine.",
+      bullets: ["China, Turkey, India, Vietnam", "Sea FCL/LCL or air", "Customs clearance via a broker"],
+      cargo: { title: "What we carry", items: ["Commercial cargo", "Pallets", "Equipment", "Containers"] },
+      sections: [{ title: "How we deliver", text: "By sea in full or groupage containers, by air for urgent cargo, then by road across Ukraine." }],
+      vehicles: ['fura'],
       faq: [
-        {
-          q: 'Can you bring machinery from Germany?',
-          a: 'Yes, farm and construction machinery goes on low-loaders, cars on a car transporter or tow truck.',
-        },
+        { q: "How much does shipping from Asia cost?", a: "We quote per shipment: it depends on the country, volume, weight and delivery method." },
+        { q: "What documents are needed?", a: "An invoice and documents for the goods; customs clearance is handled by a customs broker." },
+      ],
+    },
+    {
+      slug: 'usa',
+      group: 'international',
+      meta: { title: "Freight USA – Ukraine", description: "Freight from the USA to Ukraine and to the USA: sea containers and air freight, with customs clearance." },
+      card: { icon: 'air', title: "USA", text: "Sea and air, both ways", price: "on request" },
+      h1: "Freight USA – Ukraine",
+      lead: "We arrange cargo delivery between the USA and Ukraine by sea or air, door to door.",
+      bullets: ["Sea: FCL containers and LCL groupage", "Air for urgent cargo", "Customs clearance via a broker"],
+      cargo: { title: "What we carry", items: ["Commercial cargo", "Pallets", "Equipment", "Containers"] },
+      sections: [{ title: "How we deliver", text: "By sea via European ports or by air, then by road to your address." }],
+      vehicles: ['fura'],
+      faq: [
+        { q: "How much does shipping from the USA cost?", a: "We quote per shipment: it depends on volume, weight, city and delivery method." },
+        { q: "What documents are needed?", a: "An invoice and documents for the goods; customs clearance is handled by a customs broker." },
       ],
     },
     {

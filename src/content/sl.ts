@@ -1316,42 +1316,35 @@ export const sl: LangContent = {
       ],
     },
     {
-      slug: 'germany',
+      slug: 'asia',
       group: 'international',
-      meta: {
-        title: 'Prevoz tovora Ukrajina – Nemčija',
-        description:
-          'Prevoz tovora v Nemčijo in iz Nemčije: Berlin, Hamburg, München, Frankfurt, Dresden. Tovornjak od 1.800 €, kombi od 900 €.',
-      },
-      card: { icon: 'flag', title: 'Nemčija', text: 'Berlin, Hamburg, München in druga', price: 'od 900 €' },
-      h1: 'Prevoz tovora Ukrajina – Nemčija',
-      lead: 'Tovor prepeljemo v katero koli mesto v Nemčiji ali ga od tam pripeljemo v Ukrajino: blago, opremo, stroje, stvari pri selitvi.',
-      bullets: ['Kombi od 900 €, tovornjak od 1.800 €', 'Stroji z nizkopodnikom', 'Od vrat do vrat'],
-      priceFrom: 'od 900 €',
-      cargo: {
-        title: 'Kaj prevažamo',
-        items: ['Oprema in obdelovalni stroji', 'Komercialni tovor', 'Rabljeni stroji', 'Avtomobili', 'Osebne stvari', 'Paletirano blago'],
-      },
-      sections: [
-        {
-          title: 'Mesta',
-          text: 'Berlin, Hamburg, München, Frankfurt, Köln, Stuttgart, Düsseldorf, Dresden, Leipzig, Bremen, Hannover, Nürnberg in druga.',
-        },
-      ],
-      prices: {
-        title: 'Okvirne cene',
-        rows: [
-          { label: 'Kombi do 2 t, 20 m³', value: 'od 900 €' },
-          { label: 'Tovornjak 22 t', value: 'od 1.800 €' },
-        ],
-        note: 'Cena je odvisna od mesta, količine in sezone.',
-      },
-      vehicles: ['bus', 'fura', 'lowbed'],
+      meta: { title: "Prevoz blaga iz Azije v Ukrajino", description: "Prevoz blaga iz Azije: Kitajska, Turčija, Indija, Vietnam. Morsko v kontejnerjih in letalsko, s carinjenjem." },
+      card: { icon: 'china', title: "Azija", text: "Kitajska, Turčija, Indija in druge", price: "na povpraševanje" },
+      h1: "Prevoz blaga iz Azije v Ukrajino",
+      lead: "Pripeljemo blago iz azijskih držav po morju ali letalsko: od prevzema pri dobavitelju do vašega skladišča v Ukrajini.",
+      bullets: ["Kitajska, Turčija, Indija, Vietnam", "Morsko FCL/LCL ali letalsko", "Carinjenje prek carinskega posrednika"],
+      cargo: { title: "Kaj prevažamo", items: ["Komercialni tovor", "Palete", "Oprema", "Kontejnerji"] },
+      sections: [{ title: "Kako dostavljamo", text: "Po morju v polnih ali zbirnih kontejnerjih, letalsko za nujne pošiljke, nato cestno po Ukrajini." }],
+      vehicles: ['fura'],
       faq: [
-        {
-          q: 'Ali lahko pripeljete stroje iz Nemčije?',
-          a: 'Da, kmetijske in gradbene stroje vozimo z nizkopodnikom, avtomobile z avtotransporterjem ali avtovleko.',
-        },
+        { q: "Koliko stane prevoz iz Azije?", a: "Ceno izračunamo za pošiljko: odvisna je od države, prostornine, teže in načina dostave." },
+        { q: "Kateri dokumenti so potrebni?", a: "Račun in dokumenti za blago; carinjenje opravimo prek carinskega posrednika." },
+      ],
+    },
+    {
+      slug: 'usa',
+      group: 'international',
+      meta: { title: "Prevoz blaga ZDA – Ukrajina", description: "Prevoz blaga iz ZDA v Ukrajino in v ZDA: morsko v kontejnerjih in letalsko, s carinjenjem." },
+      card: { icon: 'air', title: "ZDA", text: "Morsko in letalsko v obe smeri", price: "na povpraševanje" },
+      h1: "Prevoz blaga ZDA – Ukrajina",
+      lead: "Organiziramo prevoz tovora med ZDA in Ukrajino po morju ali letalsko, od vrat do vrat.",
+      bullets: ["Morsko: kontejnerji FCL in zbirni LCL", "Letalsko za nujne pošiljke", "Carinjenje prek carinskega posrednika"],
+      cargo: { title: "Kaj prevažamo", items: ["Komercialni tovor", "Palete", "Oprema", "Kontejnerji"] },
+      sections: [{ title: "Kako dostavljamo", text: "Po morju prek evropskih pristanišč ali letalsko, nato cestno do vašega naslova." }],
+      vehicles: ['fura'],
+      faq: [
+        { q: "Koliko stane prevoz iz ZDA?", a: "Ceno izračunamo za pošiljko: odvisna je od prostornine, teže, mesta in načina dostave." },
+        { q: "Kateri dokumenti so potrebni?", a: "Račun in dokumenti za blago; carinjenje opravimo prek carinskega posrednika." },
       ],
     },
     {

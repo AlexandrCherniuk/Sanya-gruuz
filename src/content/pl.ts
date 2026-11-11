@@ -1316,42 +1316,35 @@ export const pl: LangContent = {
       ],
     },
     {
-      slug: 'germany',
+      slug: 'asia',
       group: 'international',
-      meta: {
-        title: 'Transport Niemcy – Ukraina i Ukraina – Niemcy',
-        description:
-          'Transport towarów do i z Niemiec: Berlin, Hamburg, Monachium, Frankfurt, Drezno. TIR od 1800 €, bus od 900 €.',
-      },
-      card: { icon: 'flag', title: 'Niemcy', text: 'Berlin, Hamburg, Monachium i inne', price: 'od 900 €' },
-      h1: 'Transport Ukraina – Niemcy',
-      lead: 'Przewieziemy ładunek do dowolnego miasta w Niemczech albo przywieziemy stamtąd do Ukrainy: towar, urządzenia, maszyny, rzeczy przy przeprowadzce.',
-      bullets: ['Bus od 900 €, TIR od 1800 €', 'Maszyny niskopodwoziówką', 'Od drzwi do drzwi'],
-      priceFrom: 'od 900 €',
-      cargo: {
-        title: 'Co przewozimy',
-        items: ['Maszyny i obrabiarki', 'Ładunki handlowe', 'Używany sprzęt', 'Samochody', 'Rzeczy osobiste', 'Towar paletowy'],
-      },
-      sections: [
-        {
-          title: 'Miasta',
-          text: 'Berlin, Hamburg, Monachium, Frankfurt, Kolonia, Stuttgart, Düsseldorf, Drezno, Lipsk, Brema, Hanower, Norymberga i inne.',
-        },
-      ],
-      prices: {
-        title: 'Ceny orientacyjne',
-        rows: [
-          { label: 'Bus do 2 t, 20 m³', value: 'od 900 €' },
-          { label: 'TIR 22 t', value: 'od 1800 €' },
-        ],
-        note: 'Cena zależy od miasta, ilości i sezonu.',
-      },
-      vehicles: ['bus', 'fura', 'lowbed'],
+      meta: { title: "Transport towarów z Azji na Ukrainę", description: "Transport towarów z Azji: Chiny, Turcja, Indie, Wietnam. Morzem w kontenerach i samolotem, z odprawą celną." },
+      card: { icon: 'china', title: "Azja", text: "Chiny, Turcja, Indie i inne", price: "na zapytanie" },
+      h1: "Transport towarów z Azji na Ukrainę",
+      lead: "Przywieziemy towar z krajów Azji morzem lub samolotem: od odbioru u dostawcy do Twojego magazynu na Ukrainie.",
+      bullets: ["Chiny, Turcja, Indie, Wietnam", "Morze FCL/LCL lub samolot", "Odprawa celna przez agencję"],
+      cargo: { title: "Co przewozimy", items: ["Ładunki komercyjne", "Palety", "Sprzęt", "Kontenery"] },
+      sections: [{ title: "Jak dostarczamy", text: "Morzem w kontenerach pełnych lub zbiorczych, samolotem dla pilnych ładunków, dalej po Ukrainie transportem drogowym." }],
+      vehicles: ['fura'],
       faq: [
-        {
-          q: 'Czy można przywieźć maszyny z Niemiec?',
-          a: 'Tak, maszyny rolnicze i budowlane wozimy niskopodwoziówką, auta autolawetą albo lawetą.',
-        },
+        { q: "Ile kosztuje transport z Azji?", a: "Cenę liczymy pod ładunek: zależy od kraju, objętości, wagi i sposobu dostawy." },
+        { q: "Jakie dokumenty są potrzebne?", a: "Faktura i dokumenty towaru; odprawę celną robimy przez agencję celną." },
+      ],
+    },
+    {
+      slug: 'usa',
+      group: 'international',
+      meta: { title: "Transport towarów USA – Ukraina", description: "Transport towarów z USA na Ukrainę i do USA: morzem w kontenerach i samolotem, z odprawą celną." },
+      card: { icon: 'air', title: "USA", text: "Morzem i samolotem w obie strony", price: "na zapytanie" },
+      h1: "Transport towarów USA – Ukraina",
+      lead: "Organizujemy transport ładunków między USA a Ukrainą morzem lub samolotem, od drzwi do drzwi.",
+      bullets: ["Morze: kontenery FCL i zbiorcze LCL", "Samolot dla pilnych ładunków", "Odprawa celna przez agencję"],
+      cargo: { title: "Co przewozimy", items: ["Ładunki komercyjne", "Palety", "Sprzęt", "Kontenery"] },
+      sections: [{ title: "Jak dostarczamy", text: "Morzem przez porty europejskie lub samolotem, dalej transportem drogowym pod Twój adres." }],
+      vehicles: ['fura'],
+      faq: [
+        { q: "Ile kosztuje transport z USA?", a: "Cenę liczymy pod ładunek: zależy od objętości, wagi, miasta i sposobu dostawy." },
+        { q: "Jakie dokumenty są potrzebne?", a: "Faktura i dokumenty towaru; odprawę celną robimy przez agencję celną." },
       ],
     },
     {
