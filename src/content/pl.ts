@@ -72,7 +72,7 @@ export const pl: LangContent = {
         { icon: 'chat', title: 'Logistyk zawsze pod telefonem', text: 'Telefon, Viber, Telegram, WhatsApp. Powiemy, gdzie jest auto i kiedy dojedzie.' },
         { icon: 'truck', title: 'Nie przepłacasz za przestrzeń', text: 'Dobieramy nadwozie do ładunku, a dla małych partii proponujemy doładunek.' },
         { icon: 'clock', title: 'Auto od ręki', text: 'W 95% zleceń przewozu ładunku po drodze auto przyjeżdża na miejsce w ciągu 2 godzin. Z logistykiem skontaktujesz się o każdej porze: pracujemy całą dobę.' },
-        { icon: 'shield', title: 'Ubezpieczenie ładunku', text: 'Ubezpieczamy ładunek od uszkodzenia przez sprawdzonych partnerów, na kwotę od 10 000 UAH. Za dopłatą zwiększymy sumę ubezpieczenia.' },
+        { icon: 'shield', title: 'Ubezpieczenie ładunku', text: 'Ubezpieczamy ładunek od uszkodzenia przez sprawdzonych partnerów, na kwotę do 1 000 000 €.' },
         { icon: 'docs', title: 'Dokumenty na granicę', text: 'CMR, dokumenty przewozowe, odprawa celna przez agencję celną na trasach międzynarodowych.' },
         { icon: 'route', title: 'Od drzwi do drzwi', text: 'Odbieramy i dowozimy pod wskazane adresy, bez przeładunków po drodze.' },
       ],
