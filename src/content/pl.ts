@@ -125,7 +125,7 @@ export const pl: LangContent = {
       description:
         'Transport towarów: Polska – Ukraina, Europa, cała Ukraina. Bus, TIR, ładunki ponadgabarytowe, autolawety. Import z Chin morzem i samolotem. Wycena po zapytaniu.',
     },
-    eyebrow: "Transport lotniczy · Kolej · Transport drogowy · Morze",
+    eyebrow: "Transport drogowy · Lotniczy · Morski",
     h1: 'Transport towarów',
     h1Accent: 'po Ukrainie i za granicę',
     lead: "Dobierzemy auto do ładunku i podstawimy je w dowolne miejsce w 2 godziny. Wozimy po całej Ukrainie i Europie, morzem i samolotem dostarczamy z Azji i USA, zajmujemy się odprawą celną.",
