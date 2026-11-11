@@ -35,6 +35,7 @@ export const sl: LangContent = {
   },
 
   blocks: {
+    truck: 'Zapelji tovornjak',
     trustStrip: [
       { title: 'Od kombija do nizkopodnika', text: 'Vozilo glede na težo in prostornino' },
       { title: 'Ukrajina, Evropa, Azija, ZDA', text: 'Cestno, morsko, letalsko' },

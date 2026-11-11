@@ -35,6 +35,7 @@ export const ua: LangContent = {
   },
 
   blocks: {
+    truck: 'Прокатати фуру',
     trustStrip: [
       { title: 'Від буса до трала', text: 'Підберемо машину під вагу й об’єм' },
       { title: 'Україна, Європа, Азія, США', text: 'Авто, море, авіа' },
