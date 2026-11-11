@@ -1470,8 +1470,8 @@ export const pl: LangContent = {
     lead: 'Zadzwoń albo napisz na wygodnym komunikatorze. Do wyceny podaj trasę, wagę i objętość ładunku.',
     aboutTitle: 'O firmie',
     about: [
-      'CR Logistics organizuje transport towarów po Ukrainie i za granicę. Dobieramy auto do ładunku: od busa po TIR-a, niskopodwoziówkę, autolawetę albo HDS.',
-      'Działamy z Kijowa i jesteśmy obecni w Słowenii. Wozimy dla małych i średnich firm, jednoosobowych działalności i klientów prywatnych.',
+      "CR Logistics organizuje transport ładunków po Ukrainie i za granicę: drogowy, morski i lotniczy. Dobieramy transport do ładunku: od busa po TIR, niskopodwozie, autolawetę czy HDS. Zajmujemy się też odprawą celną na Ukrainie i w Europie.",
+      "Działamy na Ukrainie, w Polsce i w Słowenii. Pracujemy z firmami i klientami prywatnymi.",
     ],
     hours: 'Zapytania ze strony trafiają do nas od razu na Telegram',
   },

@@ -1470,8 +1470,8 @@ export const sl: LangContent = {
     lead: 'Pokličite ali pišite v aplikaciji, ki vam ustreza. Za izračun povejte relacijo, težo in prostornino tovora.',
     aboutTitle: 'O podjetju',
     about: [
-      'CR Logistics organizira prevoze tovora po Ukrajini in v tujino. Vozilo izberemo glede na tovor: od kombija do tovornjaka, nizkopodnika, avtotransporterja ali tovornjaka z dvigalom.',
-      'Delujemo iz Kijeva in smo prisotni v Sloveniji. Vozimo za mala in srednja podjetja, samostojne podjetnike in fizične osebe.',
+      "CR Logistics organizira prevoz tovora po Ukrajini in v tujino: cestni, morski in letalski. Prevoz izberemo glede na tovor: od kombija do tovornjaka, nizko-podvoznika, avtotransporterja ali vozila z dvigalom. Uredimo tudi carinjenje v Ukrajini in Evropi.",
+      "Imamo sedež v Ukrajini, na Poljskem in v Sloveniji. Delamo s podjetji in fizičnimi osebami.",
     ],
     hours: 'Povpraševanja s spletne strani prejmemo takoj v Telegram',
   },
