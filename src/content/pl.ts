@@ -22,7 +22,7 @@ export const pl: LangContent = {
     perKm: 'UAH/km',
     orderVehicle: 'Zamów',
     footerAbout:
-      'Transport towarów po Ukrainie i za granicę: od busa po TIR-a, ładunki ponadgabarytowe, autolawety, HDS i dźwigi. Transport z Chin morzem i samolotem.',
+      'Transport towarów po Ukrainie i za granicę: od busa po TIR-a, ładunki ponadgabarytowe, autolawety, HDS i dźwigi. Transport z Azji i USA morzem i samolotem.',
     footerNote: 'Ceny na stronie są orientacyjne. Dokładną kwotę podajemy po zapytaniu i wpisujemy do zlecenia transportowego.',
     rights: 'Wszelkie prawa zastrzeżone.',
     notFound: {
@@ -37,14 +37,14 @@ export const pl: LangContent = {
   blocks: {
     trustStrip: [
       { title: 'Od busa po niskopodwoziówkę', text: 'Auto dobrane do wagi i objętości' },
-      { title: 'Ukraina, Europa, Chiny, USA', text: 'Drogą, morzem, samolotem' },
+      { title: 'Ukraina, Europa, Azja, USA', text: 'Drogą, morzem, samolotem' },
       { title: 'Cena w zleceniu', text: 'Ustalona przed załadunkiem' },
       { title: 'Jeden opiekun', text: 'Od zapytania do rozładunku' },
     ],
     directions: {
       eyebrow: 'Usługi',
       title: 'Przewieziemy każdy ładunek',
-      sub: 'Transport krajowy w całej Ukrainie, przewozy do i z Europy, import z Chin.',
+      sub: 'Transport krajowy w całej Ukrainie, przewozy do i z Europy, import z Azji i USA.',
     },
     transport: {
       eyebrow: 'Flota',
@@ -102,7 +102,7 @@ export const pl: LangContent = {
       logosTitle: 'Wśród naszych klientów',
       items: [
         { icon: 'business', title: 'Małe i średnie firmy', text: 'Regularne dostawy, towar na paletach, dostawy do klientów w Ukrainie.' },
-        { icon: 'store', title: 'JDG i sklepy internetowe', text: 'Partie towaru z Chin i Europy, dostawa do magazynu lub prosto do kupującego.' },
+        { icon: 'store', title: 'JDG i sklepy internetowe', text: 'Partie towaru z Azji, USA i Europy, dostawa do magazynu lub prosto do kupującego.' },
         { icon: 'factory', title: 'Producenci', text: 'Surowce do zakładu, gotowe wyroby do dystrybutora, maszyny i urządzenia.' },
         { icon: 'build', title: 'Firmy budowlane', text: 'Materiały budowlane, maszyny na niskopodwoziówce, HDS i dźwig na budowę.' },
         { icon: 'agro', title: 'Rolnictwo', text: 'Maszyny rolnicze, zboże, nawozy, ładunki sypkie wywrotkami.' },
@@ -125,7 +125,7 @@ export const pl: LangContent = {
     meta: {
       title: 'Transport do Ukrainy z Polski i Europy oraz po Ukrainie | CR Logistics',
       description:
-        'Transport towarów: Polska – Ukraina, Europa, cała Ukraina. Bus, TIR, ładunki ponadgabarytowe, autolawety. Import z Chin morzem i samolotem. Wycena po zapytaniu.',
+        'Transport towarów: Polska – Ukraina, Europa, cała Ukraina. Bus, TIR, ładunki ponadgabarytowe, autolawety. Import z Azji i USA morzem i samolotem. Wycena po zapytaniu.',
     },
     eyebrow: "Transport drogowy · Lotniczy · Morski",
     h1: 'Transport towarów',
@@ -163,7 +163,7 @@ export const pl: LangContent = {
       },
       {
         q: 'Czy jeździcie za granicę?',
-        a: 'Tak. Wozimy z Ukrainy do krajów Europy i z powrotem, po Europie, a także sprowadzamy ładunki z Chin morzem i samolotem.',
+        a: 'Tak. Wozimy z Ukrainy do krajów Europy i z powrotem, po Europie, a także sprowadzamy ładunki z Azji i USA morzem i samolotem.',
       },
     ],
   },
@@ -356,13 +356,13 @@ export const pl: LangContent = {
     {
       slug: 'international',
       meta: {
-        title: 'Transport międzynarodowy: Ukraina – Europa, Chiny, morze, samolot',
+        title: 'Transport międzynarodowy: Ukraina – Europa, Azja, USA, morze, samolot',
         description:
-          'Transport z Polski i Europy do Ukrainy i z powrotem, przewozy po Europie, import z Chin morzem i samolotem. Auto na wyłączność, doładunek, kontenery.',
+          'Transport z Polski i Europy do Ukrainy i z powrotem, przewozy po Europie, import z Azji i USA morzem i samolotem. Auto na wyłączność, doładunek, kontenery.',
       },
       h1: 'Transport międzynarodowy',
-      lead: 'Przewieziemy ładunek z Ukrainy do Europy i z powrotem, po Europie, a także zorganizujemy dostawę towarów z Chin morzem albo samolotem.',
-      bullets: ['Ukraina ↔ Europa, kursy po UE', 'Import z Chin: morze, samolot', 'Dokumenty i odprawa celna'],
+      lead: 'Przewieziemy ładunek z Ukrainy do Europy i z powrotem, po Europie, a także zorganizujemy dostawę towarów z Azji i USA morzem albo samolotem.',
+      bullets: ['Ukraina ↔ Europa, kursy po UE', 'Import z Azji i USA: morze, samolot', 'Dokumenty i odprawa celna'],
       sections: [
         {
           title: 'Kierunki',

@@ -22,7 +22,7 @@ export const en: LangContent = {
     perKm: 'UAH/km',
     orderVehicle: 'Book',
     footerAbout:
-      'Road freight within Ukraine and across Europe: from vans to full trucks, oversized loads, car transporters and special vehicles. Sea and air freight from China.',
+      'Road freight within Ukraine and across Europe: from vans to full trucks, oversized loads, car transporters and special vehicles. Sea and air freight from Asia and the USA.',
     footerNote: 'Prices on the website are indicative. Your manager confirms the exact price after your request and fixes it in the contract.',
     rights: 'All rights reserved.',
     notFound: {
@@ -37,14 +37,14 @@ export const en: LangContent = {
   blocks: {
     trustStrip: [
       { title: 'From vans to low-loaders', text: 'A vehicle matched to weight and volume' },
-      { title: 'Ukraine, Europe, China, USA', text: 'Road, sea and air' },
+      { title: 'Ukraine, Europe, Asia, USA', text: 'Road, sea and air' },
       { title: 'Price in the contract', text: 'Agreed before loading' },
       { title: 'One manager', text: 'From request to delivery' },
     ],
     directions: {
       eyebrow: 'Services',
       title: 'We move any kind of cargo',
-      sub: 'Domestic transport anywhere in Ukraine, deliveries to and from Europe, imports from China.',
+      sub: 'Domestic transport anywhere in Ukraine, deliveries to and from Europe, imports from Asia and the USA.',
     },
     transport: {
       eyebrow: 'Vehicles',
@@ -102,7 +102,7 @@ export const en: LangContent = {
       logosTitle: 'Among our clients',
       items: [
         { icon: 'business', title: 'Small and medium businesses', text: 'Regular supplies, palletised goods, deliveries to customers across Ukraine.' },
-        { icon: 'store', title: 'Sole traders and online shops', text: 'Shipments from China and Europe, delivered to a warehouse or straight to the buyer.' },
+        { icon: 'store', title: 'Sole traders and online shops', text: 'Shipments from Asia, the USA and Europe, delivered to a warehouse or straight to the buyer.' },
         { icon: 'factory', title: 'Manufacturers', text: 'Raw materials to the plant, finished goods to distributors, equipment.' },
         { icon: 'build', title: 'Construction companies', text: 'Building materials, machinery on low-loaders, crane trucks and mobile cranes on site.' },
         { icon: 'agro', title: 'Agribusiness', text: 'Farm machinery, grain, fertilisers, bulk cargo in tippers.' },
@@ -125,7 +125,7 @@ export const en: LangContent = {
     meta: {
       title: 'Freight Transport Ukraine – Europe and within Ukraine | CR Logistics',
       description:
-        'Road freight between Ukraine and Europe and across Ukraine: vans, full trucks, oversized loads, car transporters. Sea and air freight from China. Quote after your request.',
+        'Road freight between Ukraine and Europe and across Ukraine: vans, full trucks, oversized loads, car transporters. Sea and air freight from Asia and the USA. Quote after your request.',
     },
     eyebrow: "Road freight · Air · Sea",
     h1: 'Freight transport',
@@ -163,7 +163,7 @@ export const en: LangContent = {
       },
       {
         q: 'Do you work outside Ukraine?',
-        a: 'Yes. We carry cargo from Ukraine to European countries and back, within Europe, and we deliver goods from China by sea and air.',
+        a: 'Yes. We carry cargo from Ukraine to European countries and back, within Europe, and we deliver goods from Asia and the USA by sea and air.',
       },
     ],
   },
@@ -356,13 +356,13 @@ export const en: LangContent = {
     {
       slug: 'international',
       meta: {
-        title: 'International Freight: Ukraine – Europe, China, Sea and Air',
+        title: 'International Freight: Ukraine – Europe, Asia, USA, Sea and Air',
         description:
-          'Freight from Ukraine to Europe and back, transport within Europe, imports from China by sea and air. Dedicated vehicle, groupage, containers.',
+          'Freight from Ukraine to Europe and back, transport within Europe, imports from Asia and the USA by sea and air. Dedicated vehicle, groupage, containers.',
       },
       h1: 'International freight transport',
-      lead: 'We carry cargo from Ukraine to Europe and back, within Europe, and arrange delivery of goods from China by sea or air.',
-      bullets: ['Ukraine ↔ Europe, trips within the EU', 'Imports from China: sea, air', 'Documents and customs clearance'],
+      lead: 'We carry cargo from Ukraine to Europe and back, within Europe, and arrange delivery of goods from Asia and the USA by sea or air.',
+      bullets: ['Ukraine ↔ Europe, trips within the EU', 'Imports from Asia and the USA: sea, air', 'Documents and customs clearance'],
       sections: [
         {
           title: 'Destinations',
