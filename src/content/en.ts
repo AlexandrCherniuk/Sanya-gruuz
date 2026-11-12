@@ -1368,6 +1368,35 @@ export const en: LangContent = {
       ],
     },
     {
+      slug: 'uae',
+      group: 'international',
+      meta: { title: "Freight from the UAE to Ukraine and to the UAE", description: "Freight UAE – Ukraine: Dubai, Sharjah, Abu Dhabi. Sea freight in FCL and LCL containers via Jebel Ali port, air freight for urgent cargo, customs clearance." },
+      card: { icon: 'sea', title: "UAE", text: "Dubai, sea and air", price: "on request" },
+      h1: "Freight UAE – Ukraine",
+      lead: "We collect goods from your supplier in Dubai, Sharjah or Abu Dhabi, ship them by sea or air, clear customs and deliver to your warehouse. We also ship the other way — from Ukraine to the Emirates.",
+      bullets: ["Dubai, Sharjah, Abu Dhabi", "Sea FCL/LCL or air", "Customs clearance and door-to-door delivery"],
+      priceFrom: "on request",
+      intro: { title: "Imports from the Emirates, turnkey", paragraphs: ["The UAE is one of the largest trade hubs in the world. Goods from Asia, the Middle East and Africa pass through Dubai, home to thousands of wholesale suppliers and free economic zones.", "We handle the whole chain: pickup from the supplier, sea or air shipping, customs clearance and delivery across Ukraine. We will price both options and tell you which works best for your goods."] },
+      cargo: { title: "What is shipped from the UAE", items: ["Electronics and appliances", "Auto parts and tyres", "Equipment", "Building materials", "Marketplace goods", "Food and drinks", "Cargo from free zones"] },
+      sections: [
+        { title: "Shipping options", items: ["Sea — the main option for large shipments: containers from Jebel Ali port (Dubai) via European ports, then by road to Ukraine", "Full container (FCL) 20’ or 40’ — you pay for the whole container", "Groupage (LCL) — you pay only for your cubic metres", "Air — for urgent, valuable and light cargo via Dubai airports"] },
+        { title: "How delivery works", items: ["You send the weight, volume, type of goods, invoice value and supplier address", "We agree the route, timing and price", "We collect the goods from the supplier or free zone and prepare them for shipping", "We ship by sea or air", "Customs clearance in Ukraine via a customs broker: declaration, HS codes, duties", "We deliver to your warehouse or address"] },
+      ],
+      prices: {
+        title: "What the price depends on",
+        rows: [{ label: "Weight and volume", value: "kg or m³" }, { label: "Shipping method", value: "sea / air" }, { label: "Type of goods and duties", value: "by HS code" }, { label: "Insurance and packing", value: "on request" }],
+        note: "We fix the price after calculating the route for your goods.",
+      },
+      vehicles: ['fura', 'bus'],
+      faq: [
+        { q: "How much does shipping from the UAE cost?", a: "We quote per shipment: it depends on weight, volume, shipping method and customs duties. Tell us what you are shipping and we will calculate it." },
+        { q: "Sea or air?", a: "Sea is for large and heavy shipments: cheaper but slower. Air is for when you need the goods fast or they are valuable and light." },
+        { q: "Do you help with customs clearance?", a: "Yes, customs clearance is done via a customs broker: declaration, classification of goods, calculation and payment of duties." },
+        { q: "Can you ship cargo from Ukraine to the UAE?", a: "Yes, we arrange delivery the other way too — by sea or air, with export formalities." },
+        { q: "What documents are needed?", a: "An invoice, a packing list and documents for the goods. We prepare the rest of the transport and customs documents ourselves." },
+      ],
+    },
+    {
       slug: 'slovenia',
       group: 'international',
       meta: {
