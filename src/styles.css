@@ -536,44 +536,6 @@ ol {
   color: var(--acc-ink);
 }
 
-/* Подсказка «есть версия на вашем языке» (вставляет client.tsx) */
-.lang-hint {
-  background: var(--solid);
-  color: #fff;
-  font-size: 0.9rem;
-}
-.lang-hint-in {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-height: 44px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-}
-.lang-hint p {
-  margin: 0;
-  flex: 1;
-}
-.lang-hint a {
-  color: var(--acc);
-  font-weight: 700;
-  white-space: nowrap;
-}
-.lang-hint button {
-  flex: none;
-  width: 32px;
-  height: 32px;
-  border: 0;
-  border-radius: 8px;
-  background: transparent;
-  color: #fff;
-  font-size: 1.3rem;
-  line-height: 1;
-  cursor: pointer;
-}
-.lang-hint button:hover {
-  background: var(--solid-2);
-}
 .burger {
   display: none;
   position: relative;
