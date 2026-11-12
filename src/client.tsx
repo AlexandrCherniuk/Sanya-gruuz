@@ -284,3 +284,13 @@ function truckRide() {
   })
 }
 truckRide()
+
+// Мобильное меню: открыт только один раздел аккордеона.
+document.querySelectorAll<HTMLDetailsElement>('details.mm-sec').forEach((d) => {
+  d.addEventListener('toggle', () => {
+    if (!d.open) return
+    document.querySelectorAll<HTMLDetailsElement>('details.mm-sec[open]').forEach((o) => {
+      if (o !== d) o.open = false
+    })
+  })
+})

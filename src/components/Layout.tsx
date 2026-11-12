@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 import { asset, clientLogos, contacts, languages, links, url, type Lang } from '../site/config'
 import type { Card, Faq, LangContent, PriceRow, Section, ServicePage, Vehicle } from '../content/types'
 import { QuoteForm } from '../QuoteForm'
+import { ChevronDown, ChevronRight, LayoutGrid, MessageCircle, Tag, Truck } from 'lucide-react'
 import { Arrow, Icon, MessengerGlyph, Tick } from './Icon'
 
 export type Ctx = {
@@ -233,43 +234,110 @@ export function Header({ lang, c, path, available, quoteHref }: Ctx) {
               <span />
             </summary>
             <div className="burger-menu">
-              {groups.map((g) => (
-                <div key={g.hub}>
-                  <p className="burger-h">
-                    <a href={url(lang, `${g.hub}/`)}>{g.title}</a>
-                  </p>
-                  {g.cols.map((col) => (
-                    <div key={col.title} className="burger-grp">
-                      <p className="burger-sub">{col.title}</p>
-                      <ul>
-                        {col.items.map((s) => (
-                          <li key={s.slug}>
-                            <a href={url(lang, servicePath(s))}>{s.card.title}</a>
-                          </li>
+              <nav className="mm" aria-label={c.ui.menu}>
+                <details className="mm-sec">
+                  <summary>
+                    <span className="mm-ico">
+                      <LayoutGrid size={20} />
+                    </span>
+                    {c.ui.nav.services}
+                    <ChevronDown className="mm-chev" size={20} />
+                  </summary>
+                  <div className="mm-body">
+                    {groups.map((g) => (
+                      <div key={g.hub} className="mm-grp">
+                        <a className="mm-hub" href={url(lang, `${g.hub}/`)}>
+                          {g.title} <Arrow size={14} />
+                        </a>
+                        {g.cols.map((col) => (
+                          <div key={col.title}>
+                            <p className="mm-sub">{col.title}</p>
+                            <ul>
+                              {col.items.map((s) => (
+                                <li key={s.slug}>
+                                  <a href={url(lang, servicePath(s))}>
+                                    <Icon name={s.card.icon} size={18} />
+                                    {s.card.title}
+                                  </a>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
                         ))}
-                      </ul>
-                    </div>
+                      </div>
+                    ))}
+                  </div>
+                </details>
+                <details className="mm-sec">
+                  <summary>
+                    <span className="mm-ico">
+                      <Truck size={20} />
+                    </span>
+                    {tr.title}
+                    <ChevronDown className="mm-chev" size={20} />
+                  </summary>
+                  <div className="mm-body">
+                    <ul>
+                      {tr.main.map((s) => (
+                        <li key={s.slug}>
+                          <a className="mm-tr" href={url(lang, servicePath(s))}>
+                            <Icon name={s.card.icon} size={18} />
+                            <span className="mm-tr-t">{s.card.title}</span>
+                            {s.card.price ? <span className="mm-price">{s.card.price}</span> : null}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mm-sub">{tr.specialTitle}</p>
+                    <ul>
+                      {tr.special.map((s) => (
+                        <li key={s.slug}>
+                          <a href={url(lang, servicePath(s))}>
+                            <Icon name={s.card.icon} size={18} />
+                            {s.card.title}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </details>
+                <a className="mm-link" href={url(lang, 'prices/')}>
+                  <span className="mm-ico">
+                    <Tag size={20} />
+                  </span>
+                  {c.ui.nav.prices}
+                  <ChevronRight className="mm-chev" size={20} />
+                </a>
+                <a className="mm-link" href={url(lang, 'contacts/')}>
+                  <span className="mm-ico">
+                    <MessageCircle size={20} />
+                  </span>
+                  {c.ui.nav.contacts}
+                  <ChevronRight className="mm-chev" size={20} />
+                </a>
+              </nav>
+              <div className="mm-foot">
+                <a className="btn btn--acc btn--block" href={quoteHref}>
+                  {c.ui.cta}
+                </a>
+                <div className="mm-contact">
+                  <a className="mm-call" href={links.tel}>
+                    <MessengerGlyph kind="phone" />
+                    {contacts.phoneDisplay}
+                  </a>
+                  {(
+                    [
+                      ['viber', links.viber, 'Viber'],
+                      ['telegram', links.telegram, 'Telegram'],
+                      ['whatsapp', links.whatsapp, 'WhatsApp'],
+                    ] as const
+                  ).map(([kind, href, label]) => (
+                    <a key={kind} className={`mm-msg msg-${kind}`} href={href} target="_blank" rel="noopener" aria-label={label}>
+                      <MessengerGlyph kind={kind} />
+                    </a>
                   ))}
                 </div>
-              ))}
-              <p className="burger-h">{tr.title}</p>
-              <ul>
-                {[...tr.main, ...tr.special].map((s) => (
-                  <li key={s.slug}>
-                    <a href={url(lang, servicePath(s))}>{s.card.title}</a>
-                  </li>
-                ))}
-              </ul>
-              <p className="burger-h">
-                <a href={url(lang, 'prices/')}>{c.ui.nav.prices}</a>
-              </p>
-              <p className="burger-h">
-                <a href={url(lang, 'contacts/')}>{c.ui.nav.contacts}</a>
-              </p>
-              <a className="btn btn--dark btn--block" href={links.tel}>
-                <MessengerGlyph kind="phone" />
-                {contacts.phoneDisplay}
-              </a>
+              </div>
             </div>
           </details>
         </div>
