@@ -52,6 +52,7 @@ export const clientLogos: { name: string; file: string }[] = [
   { name: 'Хміль України', file: 'clients/hop.svg' },
   { name: 'Hub Sky Line', file: 'clients/hubskyline.png' },
   { name: 'Hawk FPV', file: 'clients/hawk.png' },
+  { name: 'Бітрейд Вест', file: 'clients/bitrade-west.svg' },
 ]
 
 export const links = {
