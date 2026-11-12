@@ -7,7 +7,8 @@ export const ru: LangContent = {
   ui: {
     skip: 'Перейти к заявке',
     menu: 'Меню',
-    nav: { ukraine: 'По Украине', international: 'Международные', prices: 'Цены', contacts: 'Контакты' },
+    nav: { services: 'Услуги', ukraine: 'По Украине', international: 'Международные', prices: 'Цены', contacts: 'Контакты' },
+    menuGroups: { special: 'Спецтехника', cargo: 'Грузы и задачи', europe: 'Европа', overseas: 'Азия и США' },
     cta: 'Рассчитать стоимость',
     ctaShort: 'Рассчитать',
     call: 'Позвонить',
@@ -42,11 +43,6 @@ export const ru: LangContent = {
       { title: 'Цена в договоре', text: 'Фиксируем до погрузки' },
       { title: 'Один менеджер', text: 'От заявки до разгрузки' },
     ],
-    directions: {
-      eyebrow: 'Услуги',
-      title: 'Перевезём любой груз',
-      sub: 'Рейсы по всей Украине, доставка в Европу и из Европы, импорт из Азии и США.',
-    },
     transport: {
       eyebrow: 'Транспорт',
       title: 'Машина под ваш груз',

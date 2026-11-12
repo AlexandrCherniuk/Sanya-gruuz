@@ -91,40 +91,124 @@ function ThemeToggle({ label }: { label: string }) {
   )
 }
 
+/** Меню «Транспорт»: три основные машины крупно, спецтехника отдельной группой. */
+const TRANSPORT_MAIN = ['bus', 'trucks', 'fura']
+const TRANSPORT_SPECIAL = ['negabaryt', 'avtovoz', 'manipulator', 'avtokran']
+
+/** Меню «Послуги»: задачи по Україні и международка по регионам. Машины живут в «Транспорте». */
+const MENU_GROUPS = [
+  { hub: 'ukraine', cols: [{ key: 'cargo', slugs: ['pereizd', 'zbirni', 'palety', 'refrigerator', 'bulk', 'liquid', 'kyiv'] }] },
+  { hub: 'international', cols: [
+    { key: 'europe', slugs: ['europe', 'poland', 'slovenia', 'customs'] },
+    { key: 'overseas', slugs: ['china', 'asia', 'usa', 'sea', 'air'] },
+  ] },
+] as const
+
+function pick(all: ServicePage[], slugs: readonly string[]) {
+  return slugs.map((slug) => all.find((s) => s.slug === slug)).filter((s): s is ServicePage => Boolean(s))
+}
+
+function menuGroups(c: LangContent) {
+  return MENU_GROUPS.map((g) => {
+    const all = mainServices(c, g.hub)
+    const cols = g.cols.map((col) => ({ title: c.ui.menuGroups[col.key], items: pick(all, col.slugs) }))
+    // Новая услуга, которой ещё нет в меню, попадает в последнюю колонку, чтобы не потеряться.
+    const used = new Set<string>([...g.cols.flatMap((col) => col.slugs), ...TRANSPORT_MAIN, ...TRANSPORT_SPECIAL])
+    cols[cols.length - 1].items.push(...all.filter((s) => !used.has(s.slug)))
+    return { hub: g.hub, title: g.hub === 'ukraine' ? c.ui.nav.ukraine : c.ui.nav.international, cols }
+  })
+}
+
+function transportMenu(c: LangContent) {
+  const all = mainServices(c, 'ukraine')
+  return { title: c.blocks.transport.eyebrow, main: pick(all, TRANSPORT_MAIN), specialTitle: c.ui.menuGroups.special, special: pick(all, TRANSPORT_SPECIAL) }
+}
+
 export function Header({ lang, c, path, available, quoteHref }: Ctx) {
-  const ukr = mainServices(c, 'ukraine')
-  const intl = mainServices(c, 'international')
-  const active = (p: string) => (path.startsWith(p) ? 'is-active' : undefined)
-  const drop = (items: ServicePage[]) => (
-    <div className="drop">
-      <ul>
-        {items.map((s) => (
-          <li key={s.slug}>
-            <a href={url(lang, servicePath(s))}>
-              <Icon name={s.card.icon} size={18} />
-              <span>{s.card.title}</span>
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
+  const groups = menuGroups(c)
+  const tr = transportMenu(c)
+  const caret = (
+    <svg className="nav-caret" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+      <path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   )
+  const trSlugs = [...tr.main, ...tr.special].map((s) => `ukraine/${s.slug}/`)
+  const inTransport = trSlugs.some((p) => path.startsWith(p))
+  const active = (p: string) => (path.startsWith(p) ? 'is-active' : undefined)
+  const inServices = !inTransport && (path.startsWith('ukraine/') || path.startsWith('international/'))
   return (
     <header className="hdr">
       <div className="wrap hdr-in">
         <Logo lang={lang} />
         <nav className="nav" aria-label={c.ui.menu}>
-          <div className="nav-item">
-            <a className={active('ukraine/')} href={url(lang, 'ukraine/')}>
-              {c.ui.nav.ukraine}
-            </a>
-            {drop(ukr)}
+          <div className="nav-item nav-item--mega">
+            <button type="button" className={`nav-btn${inServices ? ' is-active' : ''}`} aria-haspopup="true">
+              {c.ui.nav.services}
+              {caret}
+            </button>
+            <div className="drop drop--mega">
+              <div className="mega">
+                {groups.map((g) => (
+                  <div key={g.hub} className={`mega-sec mega-sec--${g.hub}`}>
+                    <a className="mega-hub" href={url(lang, `${g.hub}/`)}>
+                      {g.title} <Arrow size={14} />
+                    </a>
+                    <div className="mega-cols">
+                      {g.cols.map((col) => (
+                        <div key={col.title} className="mega-col">
+                          <p className="mega-h">{col.title}</p>
+                          <ul>
+                            {col.items.map((s) => (
+                              <li key={s.slug}>
+                                <a href={url(lang, servicePath(s))}>
+                                  <Icon name={s.card.icon} size={16} />
+                                  <span>{s.card.title}</span>
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
           <div className="nav-item">
-            <a className={active('international/')} href={url(lang, 'international/')}>
-              {c.ui.nav.international}
-            </a>
-            {drop(intl)}
+            <button type="button" className={`nav-btn${inTransport ? ' is-active' : ''}`} aria-haspopup="true">
+              {tr.title}
+              {caret}
+            </button>
+            <div className="drop drop--tr">
+              <div className="tr-menu">
+                <ul>
+                  {tr.main.map((s) => (
+                    <li key={s.slug}>
+                      <a className="tr-main" href={url(lang, servicePath(s))}>
+                        <Icon name={s.card.icon} size={20} />
+                        <span className="tr-txt">
+                          <strong>{s.card.title}</strong>
+                          <span>{s.card.text}</span>
+                        </span>
+                        {s.card.price ? <span className="tr-price">{s.card.price}</span> : null}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mega-h">{tr.specialTitle}</p>
+                <ul className="tr-special">
+                  {tr.special.map((s) => (
+                    <li key={s.slug}>
+                      <a href={url(lang, servicePath(s))}>
+                        <Icon name={s.card.icon} size={16} />
+                        <span>{s.card.title}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
           <a className={active('prices/')} href={url(lang, 'prices/')}>
             {c.ui.nav.prices}
@@ -149,21 +233,28 @@ export function Header({ lang, c, path, available, quoteHref }: Ctx) {
               <span />
             </summary>
             <div className="burger-menu">
-              <p className="burger-h">
-                <a href={url(lang, 'ukraine/')}>{c.ui.nav.ukraine}</a>
-              </p>
+              {groups.map((g) => (
+                <div key={g.hub}>
+                  <p className="burger-h">
+                    <a href={url(lang, `${g.hub}/`)}>{g.title}</a>
+                  </p>
+                  {g.cols.map((col) => (
+                    <div key={col.title} className="burger-grp">
+                      <p className="burger-sub">{col.title}</p>
+                      <ul>
+                        {col.items.map((s) => (
+                          <li key={s.slug}>
+                            <a href={url(lang, servicePath(s))}>{s.card.title}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              ))}
+              <p className="burger-h">{tr.title}</p>
               <ul>
-                {ukr.map((s) => (
-                  <li key={s.slug}>
-                    <a href={url(lang, servicePath(s))}>{s.card.title}</a>
-                  </li>
-                ))}
-              </ul>
-              <p className="burger-h">
-                <a href={url(lang, 'international/')}>{c.ui.nav.international}</a>
-              </p>
-              <ul>
-                {intl.map((s) => (
+                {[...tr.main, ...tr.special].map((s) => (
                   <li key={s.slug}>
                     <a href={url(lang, servicePath(s))}>{s.card.title}</a>
                   </li>
@@ -439,36 +530,6 @@ function ServiceCard({ href, card }: { href: string; card: Card }) {
         <Arrow size={18} />
       </span>
     </a>
-  )
-}
-
-export function Directions({ ctx }: { ctx: Ctx }) {
-  const { c, lang } = ctx
-  const b = c.blocks.directions
-  const ukr = mainServices(c, 'ukraine')
-  const intl = mainServices(c, 'international')
-  return (
-    <section className="s" aria-labelledby="dir-h">
-      <div className="wrap">
-        <Head eyebrow={b.eyebrow} title={b.title} sub={b.sub} id="dir-h" />
-        <div className="group">
-          <h3 className="group-h">
-            <a href={url(lang, 'ukraine/')}>
-              {c.ui.nav.ukraine} <Arrow size={16} />
-            </a>
-          </h3>
-          <ServiceCards lang={lang} services={ukr} />
-        </div>
-        <div className="group">
-          <h3 className="group-h">
-            <a href={url(lang, 'international/')}>
-              {c.ui.nav.international} <Arrow size={16} />
-            </a>
-          </h3>
-          <ServiceCards lang={lang} services={intl} />
-        </div>
-      </div>
-    </section>
   )
 }
 

@@ -8,7 +8,8 @@ export const pl: LangContent = {
   ui: {
     skip: 'Przejdź do formularza',
     menu: 'Menu',
-    nav: { ukraine: 'Po Ukrainie', international: 'Międzynarodowy', prices: 'Cennik', contacts: 'Kontakt' },
+    nav: { services: 'Usługi', ukraine: 'Po Ukrainie', international: 'Międzynarodowy', prices: 'Cennik', contacts: 'Kontakt' },
+    menuGroups: { special: 'Sprzęt specjalny', cargo: 'Ładunki i zadania', europe: 'Europa', overseas: 'Azja i USA' },
     cta: 'Wycena transportu',
     ctaShort: 'Wycena',
     call: 'Zadzwoń',
@@ -43,11 +44,6 @@ export const pl: LangContent = {
       { title: 'Cena w zleceniu', text: 'Ustalona przed załadunkiem' },
       { title: 'Jeden opiekun', text: 'Od zapytania do rozładunku' },
     ],
-    directions: {
-      eyebrow: 'Usługi',
-      title: 'Przewieziemy każdy ładunek',
-      sub: 'Transport krajowy w całej Ukrainie, przewozy do i z Europy, import z Azji i USA.',
-    },
     transport: {
       eyebrow: 'Flota',
       title: 'Auto pod Twój ładunek',
