@@ -192,7 +192,7 @@ function truckRide() {
   }
 
   function spin(px: number, duration: number, easing: string) {
-    const r = (8 * svg.getBoundingClientRect().width) / 200 // радиус колеса в пикселях
+    const r = (50 * svg.getBoundingClientRect().width) / 2200 // радиус колеса в пикселях
     const deg = (px / r) * (180 / Math.PI)
     wheels.forEach((w) => w.animate([{ transform: 'rotate(0deg)' }, { transform: `rotate(${deg}deg)` }], { duration, easing }))
   }
