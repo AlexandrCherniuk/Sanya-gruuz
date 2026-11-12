@@ -222,7 +222,8 @@ ol {
   gap: 4px;
 }
 .nav > a,
-.nav-item > a {
+.nav-item > a,
+.nav-btn {
   display: inline-block;
   padding: 8px 12px;
   border-radius: 8px;
@@ -233,6 +234,8 @@ ol {
 }
 .nav > a:hover,
 .nav-item > a:hover,
+.nav-btn:hover,
+.nav-item--mega:focus-within .nav-btn,
 .nav .is-active {
   background: var(--tint);
   color: var(--ink);
@@ -280,6 +283,114 @@ ol {
 .drop svg {
   color: var(--muted);
   flex: none;
+}
+
+/* Меню «Послуги»: широкая выпадашка по всей ширине шапки, группы колонками. */
+.hdr-in {
+  position: relative;
+}
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+.nav-caret {
+  transition: transform 0.15s;
+}
+.nav-item--mega:hover .nav-caret,
+.nav-item--mega:focus-within .nav-caret {
+  transform: rotate(180deg);
+}
+.nav-item--mega {
+  position: static;
+}
+.drop--mega {
+  left: 8px;
+  right: 8px;
+}
+.mega {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 8px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 20px 50px -20px rgb(11 13 14 / 25%);
+  padding: 18px 14px 14px;
+}
+.mega-sec + .mega-sec {
+  border-left: 1px solid var(--line);
+  padding-left: 14px;
+}
+.drop .mega-hub {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px 10px;
+  font-weight: 800;
+  font-size: 1rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+.drop .mega-hub:hover {
+  background: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.mega-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 4px;
+}
+.mega-sec--ukraine .mega-cols {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.mega-sec--international .mega-cols {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.mega-h {
+  margin: 0 0 4px;
+  padding: 0 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.drop .mega ul {
+  min-width: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+}
+.drop .mega a:not(.mega-hub) {
+  padding: 7px 10px;
+  font-size: 0.9rem;
+}
+[data-theme='dark'] .mega {
+  background: var(--metal);
+  border-color: var(--line);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%), 0 18px 40px -24px rgb(0 0 0 / 70%);
+}
+[data-theme='dark'] .drop .mega ul {
+  background: none;
+  box-shadow: none;
+}
+.burger-sub {
+  margin: 10px 0 2px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 .hdr-right {
   margin-left: auto;

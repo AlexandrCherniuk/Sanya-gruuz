@@ -8,7 +8,8 @@ export const sl: LangContent = {
   ui: {
     skip: 'Na obrazec za povpraševanje',
     menu: 'Meni',
-    nav: { ukraine: 'Po Ukrajini', international: 'Mednarodni', prices: 'Cenik', contacts: 'Kontakt' },
+    nav: { services: 'Storitve', ukraine: 'Po Ukrajini', international: 'Mednarodni', prices: 'Cenik', contacts: 'Kontakt' },
+    menuGroups: { vehicles: 'Vozila', special: 'Posebna oprema', cargo: 'Tovor in naloge', europe: 'Evropa', overseas: 'Azija in ZDA' },
     cta: 'Izračun cene',
     ctaShort: 'Ponudba',
     call: 'Pokliči',
@@ -43,11 +44,6 @@ export const sl: LangContent = {
       { title: 'Cena v naročilu', text: 'Dogovorjena pred nakladanjem' },
       { title: 'En logist', text: 'Od povpraševanja do razkladanja' },
     ],
-    directions: {
-      eyebrow: 'Storitve',
-      title: 'Prepeljemo vsak tovor',
-      sub: 'Prevozi po vsej Ukrajini, dostava v Evropo in iz nje, uvoz iz Azije in ZDA.',
-    },
     transport: {
       eyebrow: 'Vozila',
       title: 'Vozilo za vaš tovor',

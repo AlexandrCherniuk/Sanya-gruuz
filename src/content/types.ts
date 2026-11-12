@@ -123,7 +123,8 @@ export type LangContent = {
   ui: {
     skip: string
     menu: string
-    nav: { ukraine: string; international: string; prices: string; contacts: string }
+    nav: { services: string; ukraine: string; international: string; prices: string; contacts: string }
+    menuGroups: { vehicles: string; special: string; cargo: string; europe: string; overseas: string }
     cta: string
     ctaShort: string
     call: string
@@ -153,7 +154,6 @@ export type LangContent = {
     /** Подпись к фуре под hero (aria-label и подсказка). */
     truck: string
     trustStrip: { title: string; text: string }[]
-    directions: { eyebrow: string; title: string; sub: string }
     transport: { eyebrow: string; title: string; sub: string }
     steps: { eyebrow: string; title: string; sub: string; items: { title: string; text: string }[]; note: string }
     why: { eyebrow: string; title: string; sub: string; items: Card[] }

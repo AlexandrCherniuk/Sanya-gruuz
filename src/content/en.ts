@@ -8,7 +8,8 @@ export const en: LangContent = {
   ui: {
     skip: 'Skip to quote form',
     menu: 'Menu',
-    nav: { ukraine: 'Within Ukraine', international: 'International', prices: 'Prices', contacts: 'Contact' },
+    nav: { services: 'Services', ukraine: 'Within Ukraine', international: 'International', prices: 'Prices', contacts: 'Contact' },
+    menuGroups: { vehicles: 'Vehicles', special: 'Special equipment', cargo: 'Cargo & tasks', europe: 'Europe', overseas: 'Asia & USA' },
     cta: 'Get a quote',
     ctaShort: 'Get a quote',
     call: 'Call',
@@ -43,11 +44,6 @@ export const en: LangContent = {
       { title: 'Price in the contract', text: 'Agreed before loading' },
       { title: 'One manager', text: 'From request to delivery' },
     ],
-    directions: {
-      eyebrow: 'Services',
-      title: 'We move any kind of cargo',
-      sub: 'Domestic transport anywhere in Ukraine, deliveries to and from Europe, imports from Asia and the USA.',
-    },
     transport: {
       eyebrow: 'Vehicles',
       title: 'The right vehicle for your cargo',

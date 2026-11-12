@@ -8,7 +8,8 @@ export const ua: LangContent = {
   ui: {
     skip: 'Перейти до заявки',
     menu: 'Меню',
-    nav: { ukraine: 'По Україні', international: 'Міжнародні', prices: 'Ціни', contacts: 'Контакти' },
+    nav: { services: 'Послуги', ukraine: 'По Україні', international: 'Міжнародні', prices: 'Ціни', contacts: 'Контакти' },
+    menuGroups: { vehicles: 'Машини', special: 'Спецтехніка', cargo: 'Вантажі й задачі', europe: 'Європа', overseas: 'Азія і США' },
     cta: 'Розрахувати вартість',
     ctaShort: 'Розрахувати',
     call: 'Подзвонити',
@@ -43,11 +44,6 @@ export const ua: LangContent = {
       { title: 'Ціна в договорі', text: 'Фіксуємо до завантаження' },
       { title: 'Один менеджер', text: 'Від заявки до розвантаження' },
     ],
-    directions: {
-      eyebrow: 'Послуги',
-      title: 'Перевеземо будь-який вантаж',
-      sub: 'Внутрішні рейси по всій Україні, доставка в Європу та з Європи, імпорт з Азії та США.',
-    },
     transport: {
       eyebrow: 'Транспорт',
       title: 'Машина під ваш вантаж',
