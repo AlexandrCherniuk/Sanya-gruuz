@@ -65,7 +65,6 @@ function Home({ ctx }: { ctx: Ctx }) {
       <Steps c={c} />
       <Why c={c} tinted />
       <Clients c={c} />
-      <Routes c={c} lang={ctx.lang} tinted />
       <FaqBlock c={c} faq={c.home.faq} />
       <FinalCta c={c} quoteHref={ctx.quoteHref} />
     </>
