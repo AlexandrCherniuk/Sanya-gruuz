@@ -9,7 +9,7 @@ export const pl: LangContent = {
     skip: 'Przejdź do formularza',
     menu: 'Menu',
     nav: { services: 'Usługi', ukraine: 'Po Ukrainie', international: 'Międzynarodowy', prices: 'Cennik', contacts: 'Kontakt' },
-    menuGroups: { vehicles: 'Pojazdy', special: 'Sprzęt specjalny', cargo: 'Ładunki i zadania', europe: 'Europa', overseas: 'Azja i USA' },
+    menuGroups: { special: 'Sprzęt specjalny', cargo: 'Ładunki i zadania', europe: 'Europa', overseas: 'Azja i USA' },
     cta: 'Wycena transportu',
     ctaShort: 'Wycena',
     call: 'Zadzwoń',

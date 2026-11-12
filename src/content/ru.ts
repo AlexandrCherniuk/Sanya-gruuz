@@ -8,7 +8,7 @@ export const ru: LangContent = {
     skip: 'Перейти к заявке',
     menu: 'Меню',
     nav: { services: 'Услуги', ukraine: 'По Украине', international: 'Международные', prices: 'Цены', contacts: 'Контакты' },
-    menuGroups: { vehicles: 'Машины', special: 'Спецтехника', cargo: 'Грузы и задачи', europe: 'Европа', overseas: 'Азия и США' },
+    menuGroups: { special: 'Спецтехника', cargo: 'Грузы и задачи', europe: 'Европа', overseas: 'Азия и США' },
     cta: 'Рассчитать стоимость',
     ctaShort: 'Рассчитать',
     call: 'Позвонить',

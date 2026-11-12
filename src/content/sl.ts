@@ -9,7 +9,7 @@ export const sl: LangContent = {
     skip: 'Na obrazec za povpraševanje',
     menu: 'Meni',
     nav: { services: 'Storitve', ukraine: 'Po Ukrajini', international: 'Mednarodni', prices: 'Cenik', contacts: 'Kontakt' },
-    menuGroups: { vehicles: 'Vozila', special: 'Posebna oprema', cargo: 'Tovor in naloge', europe: 'Evropa', overseas: 'Azija in ZDA' },
+    menuGroups: { special: 'Posebna oprema', cargo: 'Tovor in naloge', europe: 'Evropa', overseas: 'Azija in ZDA' },
     cta: 'Izračun cene',
     ctaShort: 'Ponudba',
     call: 'Pokliči',

@@ -9,7 +9,7 @@ export const en: LangContent = {
     skip: 'Skip to quote form',
     menu: 'Menu',
     nav: { services: 'Services', ukraine: 'Within Ukraine', international: 'International', prices: 'Prices', contacts: 'Contact' },
-    menuGroups: { vehicles: 'Vehicles', special: 'Special equipment', cargo: 'Cargo & tasks', europe: 'Europe', overseas: 'Asia & USA' },
+    menuGroups: { special: 'Special equipment', cargo: 'Cargo & tasks', europe: 'Europe', overseas: 'Asia & USA' },
     cta: 'Get a quote',
     ctaShort: 'Get a quote',
     call: 'Call',

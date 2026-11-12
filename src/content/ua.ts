@@ -9,7 +9,7 @@ export const ua: LangContent = {
     skip: 'Перейти до заявки',
     menu: 'Меню',
     nav: { services: 'Послуги', ukraine: 'По Україні', international: 'Міжнародні', prices: 'Ціни', contacts: 'Контакти' },
-    menuGroups: { vehicles: 'Машини', special: 'Спецтехніка', cargo: 'Вантажі й задачі', europe: 'Європа', overseas: 'Азія і США' },
+    menuGroups: { special: 'Спецтехніка', cargo: 'Вантажі й задачі', europe: 'Європа', overseas: 'Азія і США' },
     cta: 'Розрахувати вартість',
     ctaShort: 'Розрахувати',
     call: 'Подзвонити',

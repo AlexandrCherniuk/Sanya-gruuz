@@ -124,7 +124,7 @@ export type LangContent = {
     skip: string
     menu: string
     nav: { services: string; ukraine: string; international: string; prices: string; contacts: string }
-    menuGroups: { vehicles: string; special: string; cargo: string; europe: string; overseas: string }
+    menuGroups: { special: string; cargo: string; europe: string; overseas: string }
     cta: string
     ctaShort: string
     call: string

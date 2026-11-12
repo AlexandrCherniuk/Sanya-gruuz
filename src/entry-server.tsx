@@ -62,7 +62,6 @@ function Home({ ctx }: { ctx: Ctx }) {
         lead={c.home.lead}
         bullets={c.home.bullets}
       />
-      <Transport c={c} vehicles={c.vehicles.filter((v) => ['bus', 't5', 't10', 'fura', 'coupler', 'carrier', 'lowbed', 'manipulator'].includes(v.id))} quoteHref={ctx.quoteHref} tinted />
       <Steps c={c} />
       <Why c={c} tinted />
       <Clients c={c} />
