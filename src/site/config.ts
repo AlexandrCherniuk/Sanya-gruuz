@@ -74,10 +74,10 @@ export const BASE: string = import.meta.env.BASE_URL
 
 /**
  * Главный адрес сайта: на него ведут canonical, hreflang, og и sitemap, где бы ни лежала копия
- * (GitHub Pages, Cloudflare Pages, временный *.pages.dev). Когда подключим свой домен, меняем здесь.
+ * (GitHub Pages, Cloudflare Pages, временный *.pages.dev).
  * Переменная VITE_SITE_URL при сборке его перекрывает.
  */
-const DEFAULT_SITE_URL = 'https://alexandrcherniuk.github.io/Sanya-gruuz'
+const DEFAULT_SITE_URL = 'https://grlogistics.com.ua'
 
 export const SITE_URL: string = (import.meta.env.VITE_SITE_URL || DEFAULT_SITE_URL).replace(/\/$/, '')
 
