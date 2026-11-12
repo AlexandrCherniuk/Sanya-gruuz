@@ -1663,6 +1663,14 @@ ol {
   margin: 0;
   font-weight: 800;
   white-space: nowrap;
+  text-align: right;
+}
+/* На узком экране длинная подпись («дешевле отдельной машины») переносится,
+   иначе карточка цен распирала страницу шире экрана. */
+@media (max-width: 480px) {
+  .prices dd {
+    white-space: normal;
+  }
 }
 
 /* Страница цен */
@@ -1869,7 +1877,7 @@ ol {
   .faq-grid,
   .price-cols,
   .cta {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .hero h1 {
     max-width: none;

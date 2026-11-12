@@ -708,7 +708,7 @@ export function Clients({ c, tinted }: { c: LangContent; tinted?: boolean }) {
                 </button>
               </div>
             </div>
-            <ul>
+            <ul tabIndex={0} aria-label={b.logosTitle}>
               {clientLogos.map((l) => (
                 <li key={l.name}>
                   <span className="logo-tile">
