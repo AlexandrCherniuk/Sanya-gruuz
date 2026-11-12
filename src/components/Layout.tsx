@@ -635,7 +635,10 @@ export function Clients({ c, tinted }: { c: LangContent; tinted?: boolean }) {
             <ul>
               {clientLogos.map((l) => (
                 <li key={l.name}>
-                  <img src={asset(l.file)} alt={l.name} loading="lazy" height="40" />
+                  <span className="logo-tile">
+                    <img src={asset(l.file)} alt={l.name} loading="lazy" />
+                  </span>
+                  <span className="logo-name">{l.name}</span>
                 </li>
               ))}
             </ul>
