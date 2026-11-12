@@ -48,9 +48,9 @@ function norm(s: string) {
 
 /** Ищем по началу слова: «пол» находит Польшу, но не «Сполучені Штати». */
 function wordStarts(name: string, q: string) {
-  return norm(name)
-    .split(/[\s\-()]+/)
-    .some((w) => w.startsWith(q))
+  const n = norm(name)
+  // Запрос из нескольких слов («united st», «сполучені штати») ищем с начала любого слова названия.
+  return n.startsWith(q) || n.split(/[\s\-()]+/).some((w) => w.startsWith(q)) || n.includes(` ${q}`)
 }
 
 type Props = {
