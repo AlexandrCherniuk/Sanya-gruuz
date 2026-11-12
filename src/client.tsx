@@ -242,18 +242,52 @@ function truckRide() {
 }
 truckRide()
 
-// Лента клиентов: на компьютере её можно тянуть мышкой, пальцем листается сама.
-function logosDrag() {
-  const list = document.querySelector<HTMLElement>('.logos ul')
-  if (!list) return
-  let startX = 0
-  let startScroll = 0
+// Лента клиентов: стрелки листают по карточкам, пальцем листается сама,
+// мышкой тянется с инерцией и мягко встаёт на ближайшую карточку.
+function logosCarousel() {
+  const box = document.querySelector<HTMLElement>('.logos')
+  const list = box?.querySelector<HTMLElement>('ul')
+  if (!box || !list) return
+  const [prev, next] = box.querySelectorAll<HTMLButtonElement>('.logos-btn')
+  const step = () => {
+    const li = list.querySelector('li')
+    const gap = parseFloat(getComputedStyle(list).columnGap) || 0
+    return li ? li.getBoundingClientRect().width + gap : 200
+  }
+  const update = () => {
+    const max = list.scrollWidth - list.clientWidth - 2
+    const left = list.scrollLeft > 2
+    const right = list.scrollLeft < max
+    list.classList.toggle('fade-l', left)
+    list.classList.toggle('fade-r', right)
+    if (prev) prev.disabled = !left
+    if (next) next.disabled = !right
+    box.classList.toggle('no-scroll', max <= 0)
+  }
+  const go = (dir: number) => {
+    const s = step()
+    const per = Math.max(1, Math.floor(list.clientWidth / s) - 1)
+    list.scrollBy({ left: dir * s * per, behavior: 'smooth' })
+  }
+  prev?.addEventListener('click', () => go(-1))
+  next?.addEventListener('click', () => go(1))
+  list.addEventListener('scroll', update, { passive: true })
+  window.addEventListener('resize', update)
+  update()
+
   let down = false
+  let startX = 0
+  let start = 0
+  let lastX = 0
+  let lastT = 0
+  let v = 0
   list.addEventListener('pointerdown', (e) => {
     if (e.pointerType !== 'mouse' || e.button !== 0) return
     down = true
-    startX = e.clientX
-    startScroll = list.scrollLeft
+    startX = lastX = e.clientX
+    start = list.scrollLeft
+    lastT = performance.now()
+    v = 0
   })
   list.addEventListener('pointermove', (e) => {
     if (!down) return
@@ -262,16 +296,26 @@ function logosDrag() {
       list.classList.add('is-drag')
       list.setPointerCapture(e.pointerId)
     }
-    if (list.classList.contains('is-drag')) list.scrollLeft = startScroll - dx
+    if (!list.classList.contains('is-drag')) return
+    list.scrollLeft = start - dx
+    const t = performance.now()
+    v = (e.clientX - lastX) / Math.max(1, t - lastT)
+    lastX = e.clientX
+    lastT = t
   })
   const up = () => {
+    if (!down) return
     down = false
+    if (!list.classList.contains('is-drag')) return
+    const s = step()
+    const target = Math.round((list.scrollLeft - v * 260) / s) * s
     list.classList.remove('is-drag')
+    list.scrollTo({ left: target, behavior: 'smooth' })
   }
   list.addEventListener('pointerup', up)
   list.addEventListener('pointercancel', up)
 }
-logosDrag()
+logosCarousel()
 
 // Мобильное меню: открыт только один раздел аккордеона.
 document.querySelectorAll<HTMLDetailsElement>('details.mm-sec').forEach((d) => {

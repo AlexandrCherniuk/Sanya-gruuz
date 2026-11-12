@@ -144,6 +144,9 @@ export type LangContent = {
     routesHead: { route: string; km: string; bus: string; fura: string }
     /** Подпись переключателя языков для экранных читалок. */
     langSwitch: string
+    /** Кнопки листания ленты (клиенты). */
+    prev: string
+    next: string
     /** Подпись переключателя тёмной темы. */
     theme: string
     /** Единицы в таблице маршрутов. */

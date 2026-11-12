@@ -1321,19 +1321,73 @@ ol {
   margin-bottom: 16px;
 }
 /* Клиенты одной лентой: листается пальцем, на компьютере тянется мышкой. */
+.logos-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.logos-top .logos-h {
+  margin-bottom: 0;
+}
+.logos-nav {
+  display: flex;
+  gap: 8px;
+}
+.logos.no-scroll .logos-nav {
+  display: none;
+}
+.logos-btn {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid var(--line-2);
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, opacity 0.2s, transform 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.logos-btn:hover:not(:disabled) {
+  border-color: var(--acc-ink);
+  color: var(--acc-ink);
+}
+.logos-btn:active:not(:disabled) {
+  transform: scale(0.92);
+}
+.logos-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
 .logos ul {
   display: flex;
   gap: 14px;
   overflow-x: auto;
-  scroll-snap-type: x proximity;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
   scrollbar-width: none;
   padding-bottom: 4px;
   cursor: grab;
   user-select: none;
+}
+/* Края ленты мягко гаснут только там, где есть что листать. */
+.logos ul.fade-r {
   -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent);
   mask-image: linear-gradient(90deg, #000 88%, transparent);
+}
+.logos ul.fade-l {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%);
+  mask-image: linear-gradient(90deg, transparent, #000 12%);
+}
+.logos ul.fade-l.fade-r {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
 }
 .logos ul::-webkit-scrollbar {
   display: none;
@@ -1341,6 +1395,7 @@ ol {
 .logos ul.is-drag {
   cursor: grabbing;
   scroll-snap-type: none;
+  scroll-behavior: auto;
 }
 .logos ul.is-drag li {
   pointer-events: none;
