@@ -46,7 +46,12 @@ export const contacts = {
  * (файл кладём в public/clients/). Пример: { name: 'Назва компанії', file: 'clients/name.svg' }.
  * Пока список пустой, блок показывает только типы клиентов.
  */
-export const clientLogos: { name: string; file: string }[] = []
+export const clientLogos: { name: string; file: string }[] = [
+  { name: 'Kärcher', file: 'clients/karcher.svg' },
+  { name: 'Хміль України', file: 'clients/hop.svg' },
+  { name: 'Hub Sky Line', file: 'clients/hubskyline.png' },
+  { name: 'Hawk FPV', file: 'clients/hawk.png' },
+]
 
 export const links = {
   tel: `tel:+${contacts.phone}`,
