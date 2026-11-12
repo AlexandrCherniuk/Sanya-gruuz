@@ -242,8 +242,8 @@ function truckRide() {
 }
 truckRide()
 
-// Лента клиентов: стрелки листают по карточкам, пальцем листается сама,
-// мышкой тянется с инерцией и мягко встаёт на ближайшую карточку.
+// Лента клиентов: стрелки плавно листают по карточкам, пальцем листается сама,
+// мышкой тянется и останавливается там, где отпустили (без доводки и рывков).
 function logosCarousel() {
   const box = document.querySelector<HTMLElement>('.logos')
   const list = box?.querySelector<HTMLElement>('ul')
@@ -267,7 +267,8 @@ function logosCarousel() {
   const go = (dir: number) => {
     const s = step()
     const per = Math.max(1, Math.floor(list.clientWidth / s) - 1)
-    list.scrollBy({ left: dir * s * per, behavior: 'smooth' })
+    const target = Math.round((list.scrollLeft + dir * s * per) / s) * s
+    list.scrollTo({ left: target, behavior: 'smooth' })
   }
   prev?.addEventListener('click', () => go(-1))
   next?.addEventListener('click', () => go(1))
@@ -278,16 +279,11 @@ function logosCarousel() {
   let down = false
   let startX = 0
   let start = 0
-  let lastX = 0
-  let lastT = 0
-  let v = 0
   list.addEventListener('pointerdown', (e) => {
     if (e.pointerType !== 'mouse' || e.button !== 0) return
     down = true
-    startX = lastX = e.clientX
+    startX = e.clientX
     start = list.scrollLeft
-    lastT = performance.now()
-    v = 0
   })
   list.addEventListener('pointermove', (e) => {
     if (!down) return
@@ -298,19 +294,10 @@ function logosCarousel() {
     }
     if (!list.classList.contains('is-drag')) return
     list.scrollLeft = start - dx
-    const t = performance.now()
-    v = (e.clientX - lastX) / Math.max(1, t - lastT)
-    lastX = e.clientX
-    lastT = t
   })
   const up = () => {
-    if (!down) return
     down = false
-    if (!list.classList.contains('is-drag')) return
-    const s = step()
-    const target = Math.round((list.scrollLeft - v * 260) / s) * s
     list.classList.remove('is-drag')
-    list.scrollTo({ left: target, behavior: 'smooth' })
   }
   list.addEventListener('pointerup', up)
   list.addEventListener('pointercancel', up)
