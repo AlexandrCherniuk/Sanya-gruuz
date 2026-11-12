@@ -52,9 +52,12 @@ export const clientLogos: { name: string; file: string }[] = [
   { name: 'Хміль України', file: 'clients/hop.svg' },
   { name: 'Hub Sky Line', file: 'clients/hubskyline.png' },
   { name: 'Hawk FPV', file: 'clients/hawk.png' },
-  { name: 'Бітрейд Вест', file: 'clients/bitrade-west.svg' },
   { name: 'Grinpoint', file: 'clients/grinpoint.png' },
   { name: 'Укртелеком', file: 'clients/ukrtelecom.svg' },
+  { name: 'Varus', file: 'clients/varus.svg' },
+  { name: 'Elmotech', file: 'clients/elmotech.svg' },
+  { name: 'Dr.Tolstikova', file: 'clients/drtolstikova.svg' },
+  { name: 'Бітрейд Вест', file: 'clients/bitrade-west.svg' },
 ]
 
 export const links = {

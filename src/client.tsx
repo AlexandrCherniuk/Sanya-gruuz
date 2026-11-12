@@ -242,6 +242,37 @@ function truckRide() {
 }
 truckRide()
 
+// Лента клиентов: на компьютере её можно тянуть мышкой, пальцем листается сама.
+function logosDrag() {
+  const list = document.querySelector<HTMLElement>('.logos ul')
+  if (!list) return
+  let startX = 0
+  let startScroll = 0
+  let down = false
+  list.addEventListener('pointerdown', (e) => {
+    if (e.pointerType !== 'mouse' || e.button !== 0) return
+    down = true
+    startX = e.clientX
+    startScroll = list.scrollLeft
+  })
+  list.addEventListener('pointermove', (e) => {
+    if (!down) return
+    const dx = e.clientX - startX
+    if (!list.classList.contains('is-drag') && Math.abs(dx) > 4) {
+      list.classList.add('is-drag')
+      list.setPointerCapture(e.pointerId)
+    }
+    if (list.classList.contains('is-drag')) list.scrollLeft = startScroll - dx
+  })
+  const up = () => {
+    down = false
+    list.classList.remove('is-drag')
+  }
+  list.addEventListener('pointerup', up)
+  list.addEventListener('pointercancel', up)
+}
+logosDrag()
+
 // Мобильное меню: открыт только один раздел аккордеона.
 document.querySelectorAll<HTMLDetailsElement>('details.mm-sec').forEach((d) => {
   d.addEventListener('toggle', () => {
