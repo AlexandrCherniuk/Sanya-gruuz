@@ -264,21 +264,11 @@ function truckRide() {
     await lightsOff()
   }
 
-  // Без лишнего движения: только моргнуть фарами и чуть пыхнуть.
-  async function blink() {
-    if (dark()) {
-      lightsOn()
-      await new Promise((r) => setTimeout(r, 1800))
-      return lightsOff()
-    }
-    await light.animate([{ opacity: 1 }, { opacity: 0.15 }, { opacity: 1 }], { duration: 300, iterations: 2 }).finished
-  }
-
   truck.addEventListener('click', async () => {
     if (busy) return
     busy = true
     try {
-      await (reduce.matches ? blink() : ride())
+      await ride() // едет всегда: человек сам нажал и ждёт поездку, даже если в системе выключена анимация
     } finally {
       busy = false
     }
