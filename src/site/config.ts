@@ -50,6 +50,7 @@ export const clientLogos: { name: string; file: string }[] = [
   { name: 'Kärcher', file: 'clients/karcher.svg' },
   { name: 'Хміль України', file: 'clients/hop.svg' },
   { name: 'Hub Sky Line', file: 'clients/hubskyline.png' },
+  { name: 'Hawk FPV', file: 'clients/hawk.png' },
 ]
 
 export const links = {
