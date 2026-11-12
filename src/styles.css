@@ -243,6 +243,16 @@ ol {
 .nav-item {
   position: relative;
 }
+/* Пункт меню тянется на всю высоту шапки: иначе между кнопкой и выпадашкой
+   пустая полоса, мышь уходит с пункта и меню закрывается раньше, чем до него дошли. */
+.nav,
+.nav-item {
+  align-self: stretch;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+}
 .drop {
   position: absolute;
   top: 100%;
