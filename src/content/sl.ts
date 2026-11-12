@@ -1368,6 +1368,35 @@ export const sl: LangContent = {
       ],
     },
     {
+      slug: 'uae',
+      group: 'international',
+      meta: { title: "Prevoz blaga iz ZAE v Ukrajino in v ZAE", description: "Prevoz blaga ZAE – Ukrajina: Dubaj, Šardža, Abu Dabi. Morsko v kontejnerjih FCL in LCL prek pristanišča Džebel Ali, letalsko za nujne pošiljke, carinjenje." },
+      card: { icon: 'sea', title: "ZAE", text: "Dubaj, morsko in letalsko", price: "na povpraševanje" },
+      h1: "Prevoz blaga ZAE – Ukrajina",
+      lead: "Blago prevzamemo pri dobavitelju v Dubaju, Šardži ali Abu Dabiju, ga pošljemo po morju ali letalsko, ocarinimo in dostavimo v vaše skladišče. Vozimo tudi v obratni smeri — iz Ukrajine v Emirate.",
+      bullets: ["Dubaj, Šardža, Abu Dabi", "Morsko FCL/LCL ali letalsko", "Carinjenje in dostava do vrat"],
+      priceFrom: "na povpraševanje",
+      intro: { title: "Uvoz iz Emiratov na ključ", paragraphs: ["ZAE so eno največjih trgovskih središč na svetu. Skozi Dubaj potuje blago iz Azije, Bližnjega vzhoda in Afrike, tu delujejo tisoči veletrgovcev in prostih ekonomskih con.", "Organiziramo celotno verigo: prevzem pri dobavitelju, pošiljanje po morju ali letalsko, carinjenje in dostavo po Ukrajini. Izračunamo obe možnosti in svetujemo, kaj se bolj splača za vaše blago."] },
+      cargo: { title: "Kaj se prevaža iz ZAE", items: ["Elektronika in gospodinjski aparati", "Avtodeli in pnevmatike", "Oprema", "Gradbeni materiali", "Blago za spletne tržnice", "Hrana in pijača", "Tovor iz prostih con"] },
+      sections: [
+        { title: "Načini dostave", items: ["Po morju — glavni način za velike pošiljke: kontejnerji iz pristanišča Džebel Ali (Dubaj) prek evropskih pristanišč, nato cestno do Ukrajine", "Poln kontejner (FCL) 20’ ali 40’ — plačate cel kontejner", "Zbirni tovor (LCL) — plačate le svoje kubične metre", "Letalsko — za nujne, dragocene in lahke pošiljke prek letališč v Dubaju"] },
+        { title: "Kako poteka dostava", items: ["Pošljete težo, prostornino, vrsto blaga, vrednost na računu in naslov dobavitelja", "Dogovorimo pot, roke in ceno", "Blago prevzamemo pri dobavitelju ali v prosti coni in ga pripravimo za odpremo", "Pošljemo po morju ali letalsko", "Carinjenje v Ukrajini prek carinskega posrednika: deklaracija, tarifne oznake, dajatve", "Dostavimo v skladišče ali na naslov"] },
+      ],
+      prices: {
+        title: "Od česa je odvisna cena",
+        rows: [{ label: "Teža in prostornina", value: "kg ali m³" }, { label: "Način dostave", value: "morsko / letalsko" }, { label: "Vrsta blaga in dajatve", value: "po tarifni oznaki" }, { label: "Zavarovanje in pakiranje", value: "na povpraševanje" }],
+        note: "Ceno določimo po izračunu poti za vaše blago.",
+      },
+      vehicles: ['fura', 'bus'],
+      faq: [
+        { q: "Koliko stane prevoz iz ZAE?", a: "Ceno izračunamo za pošiljko: odvisna je od teže, prostornine, načina dostave in carinskih dajatev. Napišite, kaj vozite, in izračunamo." },
+        { q: "Morsko ali letalsko?", a: "Morsko je za velike in težke pošiljke: ceneje, a dlje. Letalsko, ko blago potrebujete hitro ali je drago in lahko." },
+        { q: "Ali pomagate pri carinjenju?", a: "Da, carinjenje opravimo prek carinskega posrednika: deklaracija, uvrstitev blaga, izračun in plačilo dajatev." },
+        { q: "Ali lahko pošljete tovor iz Ukrajine v ZAE?", a: "Da, organiziramo dostavo tudi v obratni smeri — po morju ali letalsko, z izvoznimi formalnostmi." },
+        { q: "Kateri dokumenti so potrebni?", a: "Račun, dobavnica (packing list) in dokumenti za blago. Ostale prevozne in carinske dokumente pripravimo sami." },
+      ],
+    },
+    {
       slug: 'slovenia',
       group: 'international',
       meta: {

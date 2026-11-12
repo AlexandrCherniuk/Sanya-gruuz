@@ -101,7 +101,7 @@ const MENU_GROUPS = [
   { hub: 'ukraine', cols: [{ key: 'cargo', slugs: ['pereizd', 'zbirni', 'palety', 'refrigerator', 'bulk', 'liquid', 'kyiv'] }] },
   { hub: 'international', cols: [
     { key: 'europe', slugs: ['europe', 'poland', 'slovenia', 'customs'] },
-    { key: 'overseas', slugs: ['china', 'asia', 'usa', 'sea', 'air'] },
+    { key: 'overseas', slugs: ['china', 'asia', 'usa', 'uae', 'sea', 'air'] },
   ] },
 ] as const
 

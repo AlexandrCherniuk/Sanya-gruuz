@@ -1368,6 +1368,35 @@ export const pl: LangContent = {
       ],
     },
     {
+      slug: 'uae',
+      group: 'international',
+      meta: { title: "Transport towarów z ZEA na Ukrainę i do ZEA", description: "Transport towarów ZEA – Ukraina: Dubaj, Szardża, Abu Zabi. Morzem w kontenerach FCL i LCL przez port Dżabal Ali, samolotem dla pilnych ładunków, odprawa celna." },
+      card: { icon: 'sea', title: "ZEA", text: "Dubaj, morzem i samolotem", price: "na zapytanie" },
+      h1: "Transport towarów ZEA – Ukraina",
+      lead: "Odbierzemy towar od dostawcy w Dubaju, Szardży lub Abu Zabi, wyślemy morzem lub samolotem, odprawimy i dowieziemy do Twojego magazynu. Wozimy też w drugą stronę — z Ukrainy do Emiratów.",
+      bullets: ["Dubaj, Szardża, Abu Zabi", "Morze FCL/LCL lub samolot", "Odprawa celna i dostawa pod drzwi"],
+      priceFrom: "na zapytanie",
+      intro: { title: "Import z Emiratów pod klucz", paragraphs: ["ZEA to jeden z największych hubów handlowych świata. Przez Dubaj płyną towary z Azji, Bliskiego Wschodu i Afryki, działają tu tysiące hurtowych dostawców i wolnych stref ekonomicznych.", "Organizujemy cały łańcuch: odbiór od dostawcy, wysyłkę morzem lub samolotem, odprawę celną i dostawę na Ukrainie. Policzymy oba warianty i doradzimy, co się bardziej opłaca dla Twojego towaru."] },
+      cargo: { title: "Co wozi się z ZEA", items: ["Elektronika i AGD", "Części samochodowe i opony", "Sprzęt", "Materiały budowlane", "Towary dla marketplace’ów", "Żywność i napoje", "Ładunki z wolnych stref"] },
+      sections: [
+        { title: "Sposoby dostawy", items: ["Morzem — główny sposób dla dużych partii: kontenery z portu Dżabal Ali (Dubaj) przez porty Europy, dalej transportem drogowym na Ukrainę", "Pełny kontener (FCL) 20’ lub 40’ — płacisz za cały kontener", "Ładunek zbiorczy (LCL) — płacisz tylko za swoje metry sześcienne", "Samolotem — dla pilnych, cennych i lekkich ładunków przez lotniska w Dubaju"] },
+        { title: "Jak przebiega dostawa", items: ["Przesyłasz wagę, objętość, rodzaj towaru, wartość z faktury i adres dostawcy", "Uzgadniamy trasę, terminy i cenę", "Odbieramy towar od dostawcy lub z wolnej strefy i przygotowujemy do wysyłki", "Wysyłamy morzem lub samolotem", "Odprawa celna na Ukrainie przez agencję celną: zgłoszenie, kody taryfowe, opłaty", "Dostarczamy do magazynu lub pod wskazany adres"] },
+      ],
+      prices: {
+        title: "Od czego zależy cena",
+        rows: [{ label: "Waga i objętość", value: "kg lub m³" }, { label: "Sposób dostawy", value: "morze / samolot" }, { label: "Rodzaj towaru i opłaty celne", value: "wg kodu taryfowego" }, { label: "Ubezpieczenie i pakowanie", value: "na zapytanie" }],
+        note: "Cenę ustalamy po wyliczeniu trasy pod Twój towar.",
+      },
+      vehicles: ['fura', 'bus'],
+      faq: [
+        { q: "Ile kosztuje transport z ZEA?", a: "Cenę liczymy pod ładunek: zależy od wagi, objętości, sposobu dostawy i opłat celnych. Napisz, co wieziesz — policzymy." },
+        { q: "Morze czy samolot?", a: "Morze — dla dużych i ciężkich partii: taniej, ale dłużej. Samolot — gdy towar jest potrzebny szybko albo jest drogi i lekki." },
+        { q: "Czy pomożecie z odprawą celną?", a: "Tak, odprawę robimy przez agencję celną: zgłoszenie, klasyfikacja towaru, wyliczenie i opłacenie należności." },
+        { q: "Czy można wysłać ładunek z Ukrainy do ZEA?", a: "Tak, organizujemy dostawę także w drugą stronę — morzem lub samolotem, z odprawą eksportową." },
+        { q: "Jakie dokumenty są potrzebne?", a: "Faktura, lista pakunkowa i dokumenty towaru. Resztę dokumentów przewozowych i celnych przygotujemy sami." },
+      ],
+    },
+    {
       slug: 'slovenia',
       group: 'international',
       meta: {
