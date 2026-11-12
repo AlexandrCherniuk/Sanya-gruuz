@@ -96,7 +96,7 @@ export const pl: LangContent = {
     clients: {
       eyebrow: 'Z kim pracujemy',
       title: 'Powierzają nam transport',
-      sub: 'Wozimy dla firm każdej wielkości i dla klientów prywatnych. Do każdego zadania własne auto i własny plan.',
+      sub: 'Wozimy dla dużych firm, małych przedsiębiorstw i klientów prywatnych. Do każdego ładunku dobieramy odpowiednie auto i najlepszą trasę.',
       logosTitle: 'Wśród naszych klientów',
       items: [
         { icon: 'business', title: 'Małe i średnie firmy', text: 'Regularne dostawy, towar na paletach, dostawy do klientów w Ukrainie.' },

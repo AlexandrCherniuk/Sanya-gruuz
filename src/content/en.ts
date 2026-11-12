@@ -96,7 +96,7 @@ export const en: LangContent = {
     clients: {
       eyebrow: 'Who we work with',
       title: 'Trusted with their freight',
-      sub: 'We work for businesses of every size and for private clients. Each job gets its own vehicle and its own plan.',
+      sub: 'We carry freight for large companies, small businesses and private clients. For every load we pick the right vehicle and the best route.',
       logosTitle: 'Among our clients',
       items: [
         { icon: 'business', title: 'Small and medium businesses', text: 'Regular supplies, palletised goods, deliveries to customers across Ukraine.' },
