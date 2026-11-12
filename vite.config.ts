@@ -1,7 +1,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// На GitHub Pages сайт живёт в /<репо>/. Когда подключим домен, задать BASE_PATH=/ при сборке.
+// На GitHub Pages сайт живёт в /<репо>/: имя репо даёт GITHUB_REPOSITORY из GitHub Actions.
+// На Cloudflare Pages и локально этой переменной нет, и сайт собирается в корень /.
+// BASE_PATH при сборке перекрывает оба варианта.
 const repoName = process.env.GITHUB_REPOSITORY?.split('/')[1]
 const base = process.env.BASE_PATH ?? (repoName ? `/${repoName}/` : '/')
 

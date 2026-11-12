@@ -56,13 +56,17 @@ export const links = {
   email: `mailto:${contacts.email}`,
 }
 
-/** Базовый путь сайта: /Sanya-gruuz/ на GitHub Pages, / на своём домене. */
+/** Базовый путь сайта: /Sanya-gruuz/ на GitHub Pages, / на Cloudflare Pages и своём домене. */
 export const BASE: string = import.meta.env.BASE_URL
 
-/** Полный адрес сайта для canonical, hreflang и sitemap. Переопределяется SITE_URL при сборке. */
-export const SITE_URL: string = (
-  import.meta.env.VITE_SITE_URL || `https://alexandrcherniuk.github.io${BASE}`
-).replace(/\/$/, '')
+/**
+ * Главный адрес сайта: на него ведут canonical, hreflang, og и sitemap, где бы ни лежала копия
+ * (GitHub Pages, Cloudflare Pages, временный *.pages.dev). Когда подключим свой домен, меняем здесь.
+ * Переменная VITE_SITE_URL при сборке его перекрывает.
+ */
+const DEFAULT_SITE_URL = 'https://alexandrcherniuk.github.io/Sanya-gruuz'
+
+export const SITE_URL: string = (import.meta.env.VITE_SITE_URL || DEFAULT_SITE_URL).replace(/\/$/, '')
 
 /** Ссылка внутри сайта: url('ua', 'ukraine/bus/') → /Sanya-gruuz/ua/ukraine/bus/ */
 export function url(lang: Lang, path = '') {
