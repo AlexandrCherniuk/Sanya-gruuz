@@ -96,7 +96,7 @@ export const sl: LangContent = {
     clients: {
       eyebrow: 'S kom delamo',
       title: 'Zaupajo nam prevoz',
-      sub: 'Vozimo za podjetja vseh velikosti in za fizične osebe. Za vsako nalogo svoje vozilo in svoj načrt.',
+      sub: 'Vozimo za velika in mala podjetja ter fizične osebe. Za vsak tovor izberemo pravo vozilo in najboljšo pot.',
       logosTitle: 'Med našimi strankami',
       items: [
         { icon: 'business', title: 'Mala in srednja podjetja', text: 'Redne dobave, blago na paletah, dostava strankam po Ukrajini.' },
