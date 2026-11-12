@@ -57,6 +57,7 @@ export const clientLogos: { name: string; file: string }[] = [
   { name: 'Varus', file: 'clients/varus.svg' },
   { name: 'Elmotech', file: 'clients/elmotech.svg' },
   { name: 'Dr.Tolstikova', file: 'clients/drtolstikova.svg' },
+  { name: 'Смарт Телеком Сервіс', file: 'clients/smart-telecom.jpg' },
   { name: 'Бітрейд Вест', file: 'clients/bitrade-west.svg' },
 ]
 

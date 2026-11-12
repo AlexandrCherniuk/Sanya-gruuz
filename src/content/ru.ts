@@ -31,6 +31,8 @@ export const ru: LangContent = {
     },
     routesHead: { route: 'Маршрут', km: 'Расстояние', bus: 'Бус до 2 т', fura: 'Фура 22 т' },
     langSwitch: 'Язык сайта',
+    prev: 'Назад',
+    next: 'Дальше',
     theme: 'Тёмная тема',
     units: { km: 'км', uah: 'грн' },
   },
