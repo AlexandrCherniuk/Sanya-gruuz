@@ -643,7 +643,7 @@ ol {
 .truck {
   position: relative;
   display: block;
-  margin-left: -38px;
+  margin-left: -27px;
   padding: 0;
   border: 0;
   background: none;
@@ -658,7 +658,7 @@ ol {
 }
 .truck-svg {
   display: block;
-  width: 190px;
+  width: 300px;
   height: auto;
   overflow: visible;
 }
@@ -711,10 +711,10 @@ ol {
 }
 @media (max-width: 640px) {
   .truck {
-    margin-left: -32px;
+    margin-left: -22px;
   }
   .truck-svg {
-    width: 160px;
+    width: 240px;
   }
   .hero.hero--home {
     padding-bottom: 8px;
@@ -1766,8 +1766,44 @@ ol {
 [data-theme='dark'] .quote-card input::placeholder {
   color: #67717b;
 }
-.truck-trailer {
+/* Фура: в светлой теме белая с изумрудным переливом, в тёмной графитовая. */
+.tk-trailer {
+  fill: url(#tk-tr);
+  stroke: #dfe5e8;
+  stroke-width: 2;
+}
+.tk-cab {
+  fill: url(#tk-cab);
+  stroke: #dfe5e8;
+  stroke-width: 2;
+}
+.tk-green {
+  fill: #05d98f;
+}
+.tk-logo {
+  fill: #05c985;
+}
+.tk-text {
+  fill: #1c2023;
+  font-family: inherit;
+}
+.tk-arc {
+  fill: #2c3135;
+}
+[data-theme='dark'] .tk-trailer,
+[data-theme='dark'] .tk-cab {
   fill: var(--truck-trailer);
+  stroke: none;
+}
+[data-theme='dark'] .tk-green,
+[data-theme='dark'] .tk-logo {
+  fill: #04f7a0;
+}
+[data-theme='dark'] .tk-text {
+  fill: #ffffff;
+}
+[data-theme='dark'] .tk-arc {
+  fill: #4a535b;
 }
 .truck-beam {
   opacity: 0;

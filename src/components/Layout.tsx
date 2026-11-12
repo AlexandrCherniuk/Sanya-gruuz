@@ -308,7 +308,7 @@ function TruckRoad({ label }: { label: string }) {
       <div className="wrap road-in">
         <button type="button" className="truck" aria-label={label} title={label}>
           <span className="truck-shadow" />
-          <svg className="truck-svg" viewBox="-40 0 200 56" width="200" height="56" aria-hidden="true" focusable="false">
+          <svg className="truck-svg" viewBox="-200 30 2200 404" width="300" height="55" aria-hidden="true" focusable="false">
             <defs>
               <linearGradient id="truck-beam" x1="0" x2="1" y1="0" y2="0">
                 <stop offset="0" stopColor="#fff6d6" stopOpacity="0.85" />
@@ -319,53 +319,79 @@ function TruckRoad({ label }: { label: string }) {
                 <stop offset="0" stopColor="#fff2c4" stopOpacity="0.4" />
                 <stop offset="1" stopColor="#fff2c4" stopOpacity="0" />
               </radialGradient>
+              {/* Светлая тема: белый прицеп переливается в изумрудный к кабине */}
+              <linearGradient id="tk-tr" x1="0" y1="0" x2="1" y2="0.35">
+                <stop offset="0" stopColor="#ffffff" />
+                <stop offset="0.45" stopColor="#f6fffb" />
+                <stop offset="0.8" stopColor="#bff7de" />
+                <stop offset="1" stopColor="#6ff0b8" />
+              </linearGradient>
+              <linearGradient id="tk-cab" x1="0" y1="0" x2="1" y2="0.3">
+                <stop offset="0" stopColor="#8ff3c7" />
+                <stop offset="0.5" stopColor="#e9fdf4" />
+                <stop offset="1" stopColor="#ffffff" />
+              </linearGradient>
             </defs>
             <g className="truck-trail">
-              <rect x="-34" y="14" width="26" height="2" rx="1" />
-              <rect x="-24" y="24" width="18" height="2" rx="1" />
-              <rect x="-38" y="34" width="30" height="2" rx="1" />
+              <rect x="-170" y="120" width="140" height="10" rx="5" />
+              <rect x="-120" y="200" width="100" height="10" rx="5" />
+              <rect x="-190" y="280" width="160" height="10" rx="5" />
             </g>
             <g className="truck-body">
               <g className="truck-idle">
                 {/* прицеп */}
-                <rect className="truck-trailer" x="2" y="6" width="100" height="34" rx="3" />
-                <rect x="2" y="30" width="100" height="3" fill="#04ffa3" />
-                <rect x="6" y="10" width="2" height="18" rx="1" fill="#2a3036" />
-                <text x="14" y="24" fill="#04ffa3" fontSize="12" fontWeight="800" letterSpacing="0.5">
-                  GR
+                <rect className="tk-trailer" x="60" y="40" width="1360" height="275" rx="4" />
+                <rect x="60" y="315" width="1360" height="14" fill="#2c3135" />
+                <rect className="tk-green" x="60" y="292" width="1360" height="10" />
+                <g className="tk-arc">
+                  {[359, 490, 621, 1210, 1570].map((x) => (
+                    <path key={x} d={`M${x - 58.3} 358.8 A62 62 0 0 1 ${x + 58.3} 358.8 L${x + 51.7} 361.2 A55 55 0 0 0 ${x - 51.7} 361.2 Z`} />
+                  ))}
+                </g>
+                {/* боковая защита и поднятая опора */}
+                <g fill="#3a4045">
+                  <rect x="700" y="346" width="372" height="5" rx="2" />
+                  <rect x="700" y="364" width="372" height="5" rx="2" />
+                  <rect x="760" y="329" width="5" height="40" />
+                  <rect x="930" y="329" width="5" height="40" />
+                  <rect x="1078" y="329" width="18" height="44" rx="2" />
+                  <rect x="1072" y="393" width="30" height="6" rx="2" />
+                </g>
+                <rect x="1082" y="373" width="10" height="20" fill="#5d656c" />
+                <g className="tk-logo" transform="translate(413 112) scale(0.38) translate(-420 -301)">
+                  <path d="M848,302 L590,302 A169.5,169.5 0 0 0 590,641 L985.0,641 L783.0,462 L670.0,462 L787.4,566 L590,566 A94.5,94.5 0 0 1 590,377 L797,377 Z M884,302 L1153.5,302 A117,117 0 0 1 1153.5,536 L1117,536 L1252,641 L1118,641 L916,462 L1153.5,462 A42.5,42.5 0 0 0 1153.5,377 L834,377 Z" />
+                </g>
+                <text className="tk-text" x="767" y="214" fontSize="84" fontWeight="600">
+                  Logistics
                 </text>
-                <text x="35" y="24" fill="#8b95a1" fontSize="6.5" fontWeight="700" letterSpacing="1.2">
-                  LOGISTICS
-                </text>
-                <rect x="8" y="40" width="94" height="3" fill="#0b0d0e" />
                 {/* тягач */}
-                <rect x="104" y="40" width="40" height="3" fill="#0b0d0e" />
-                <rect className="truck-pipe" x="106" y="4" width="3" height="12" rx="1" fill="#0b0d0e" />
-                <path d="M107 14h26l12 12v14a3 3 0 0 1-3 3h-35z" fill="#04ffa3" />
-                <path d="M127 17h5l9.5 9.5H127z" fill="#0b0d0e" />
-                <path d="M127 17h5l2 2H127z" fill="#ffffff" opacity="0.35" />
-                <path d="M124 17v24" stroke="#00b876" strokeWidth="1" />
-                <rect x="119" y="29" width="4" height="1.6" rx="0.8" fill="#007a4d" />
-                <rect x="140" y="39" width="7" height="4" rx="1" fill="#0b0d0e" />
-                <rect className="truck-light" x="143" y="33" width="3" height="3" rx="1" fill="#ffffff" />
+                <rect className="truck-pipe" x="1412" y="40" width="10" height="60" rx="3" fill="#2c3135" />
+                <rect x="1272" y="330" width="418" height="20" fill="#2c3135" />
+                <rect x="1470" y="350" width="90" height="34" rx="8" fill="#a3aab0" />
+                <path className="tk-cab" d="M1426 360 L1426 40 L1520 40 Q1600 46 1640 62 Q1668 74 1674 100 L1690 230 L1694 360 L1632.9 360 A66 66 0 0 0 1507.1 360 Z" />
+                <path className="tk-green" d="M1426 300 L1694 244 L1694 360 L1632.9 360 A66 66 0 0 0 1507.1 360 L1426 360 Z" />
+                <path d="M1588 106 Q1630 100 1660 106 L1674 214 L1588 214 Z" fill="#3a4a56" />
+                <path d="M1636 356 H1694 V388 Q1694 396 1686 396 H1636 Z" fill="#2c3135" />
+                <rect className="truck-light" x="1682" y="316" width="10" height="16" rx="3" fill="#fff7c2" />
               </g>
             </g>
-            {[22, 38, 114, 136].map((cx) => (
-              <g key={cx} className="truck-wheel" transform={`translate(${cx} 46)`}>
+            {[359, 490, 621, 1210, 1570].map((cx) => (
+              <g key={cx} className="truck-wheel" transform={`translate(${cx} 380)`}>
                 <g className="wheel-spin">
-                  <circle r="8" fill="#0b0d0e" />
-                  <circle r="4.2" fill="#9aa3ad" />
-                  <circle cx="0" cy="-2.4" r="0.9" fill="#1d2125" />
-                  <circle cx="2.1" cy="1.2" r="0.9" fill="#1d2125" />
-                  <circle cx="-2.1" cy="1.2" r="0.9" fill="#1d2125" />
+                  <circle r="50" fill="#1a1d20" />
+                  <circle r="25" fill="#a3aab0" />
+                  <circle r="9" fill="#5d656c" />
+                  <circle cx="0" cy="-16" r="4" fill="#5d656c" />
+                  <circle cx="13.9" cy="8" r="4" fill="#5d656c" />
+                  <circle cx="-13.9" cy="8" r="4" fill="#5d656c" />
                 </g>
               </g>
             ))}
             {/* Фары: свет включается при запуске, заметен в тёмной теме */}
             <g className="truck-beam">
-              <path d="M146 33.2 L232 20 L232 52 L146 36.4 Z" fill="url(#truck-beam)" />
-              <ellipse cx="194" cy="53.5" rx="36" ry="3" fill="url(#truck-spot)" />
-              <circle cx="145" cy="34.5" r="3.2" fill="#fff6d6" opacity="0.7" />
+              <path d="M1694 318 L2150 240 L2150 440 L1694 334 Z" fill="url(#truck-beam)" />
+              <ellipse cx="1960" cy="430" rx="210" ry="16" fill="url(#truck-spot)" />
+              <circle cx="1690" cy="325" r="18" fill="#fff6d6" opacity="0.7" />
             </g>
           </svg>
         </button>
