@@ -435,8 +435,6 @@ export function Hero({
             </p>
           ) : null}
           <div className="hero-alt">
-            <span className="alt-d">{c.blocks.cta.or}</span>
-            <span className="alt-m">{c.blocks.cta.orMobile}</span>
             <Messengers c={c} />
           </div>
         </div>
