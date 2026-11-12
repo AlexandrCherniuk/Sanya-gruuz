@@ -1,0 +1,12 @@
+# Заголовки ответа для Cloudflare Pages. GitHub Pages этот файл не читает.
+
+# Временные адреса *.pages.dev не пускаем в поиск: главный адрес сайта задан в src/site/config.ts.
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+https://:version.:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+# Файлы сборки с хешем в имени не меняются, поэтому браузер может хранить их год.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

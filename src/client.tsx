@@ -4,7 +4,7 @@ import '@fontsource-variable/manrope/wght.css'
 import './styles.css'
 import { hydrateRoot } from 'react-dom/client'
 import { QuoteForm } from './QuoteForm'
-import { languages, type Lang } from './site/config'
+import { BASE, SITE_URL, languages, type Lang } from './site/config'
 import { browserLang, hintCopy, saveLang, savedLang } from './site/langPick'
 
 const isLang = (v?: string): v is Lang => languages.some((l) => l.code === v)
@@ -90,6 +90,15 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeMenus()
 })
 
+// <link rel="alternate"> всегда ведёт на главный адрес сайта (SITE_URL), а копия может лежать
+// по другому пути (/Sanya-gruuz/ на GitHub Pages, / на Cloudflare). Берём тот же путь на этой копии.
+function localPath(href: string) {
+  const root = new URL(SITE_URL).pathname.replace(/\/$/, '')
+  let path = new URL(href).pathname
+  if (root && path.startsWith(`${root}/`)) path = path.slice(root.length)
+  return BASE.replace(/\/$/, '') + path
+}
+
 // Плашка «есть версия на вашем языке». Без автоматического перехода: человек из рекламы
 // или поиска остаётся на своей странице, а Google видит все версии.
 function langHint() {
@@ -110,7 +119,7 @@ function langHint() {
   bar.querySelector('p')!.textContent = t.text
   const go = bar.querySelector('a')!
   go.textContent = t.go
-  go.href = new URL(alt.href).pathname + location.search
+  go.href = localPath(alt.href) + location.search
   go.hreflang = target.hreflang
   go.dataset.lang = want
   const close = bar.querySelector('button')!
