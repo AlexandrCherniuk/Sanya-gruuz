@@ -4,8 +4,12 @@ import '@fontsource-variable/manrope/wght.css'
 import './styles.css'
 import { hydrateRoot } from 'react-dom/client'
 import { QuoteForm } from './QuoteForm'
+import { initAnalytics } from './analytics'
 import { languages, type Lang } from './site/config'
 import { saveLang } from './site/langPick'
+
+// Аналитика на каждой странице, а не только там, где есть форма.
+initAnalytics()
 
 const isLang = (v?: string): v is Lang => languages.some((l) => l.code === v)
 

@@ -1,14 +1,17 @@
-// Отслеживание отправки заявки как конверсии Google Ads.
-// ID тега и метка конверсии приходят из переменных репозитория при сборке
-// (VITE_GADS_ID, VITE_GADS_LEAD_LABEL). Пока их нет, тег не грузится.
+// Google Analytics 4 на всех страницах + заявка как конверсия (GA4 и Google Ads).
+// GA4 ID не секрет, вшит по умолчанию (можно перебить VITE_GA4_ID).
+// Google Ads: VITE_GADS_ID и VITE_GADS_LEAD_LABEL. Пока их нет, работает только GA4.
 
+const DEFAULT_GA4_ID = 'G-8FVN3BS7SM'
+const ga4Id = (import.meta.env.VITE_GA4_ID ?? DEFAULT_GA4_ID).trim()
 const adsId = import.meta.env.VITE_GADS_ID?.trim()
 const leadLabel = import.meta.env.VITE_GADS_LEAD_LABEL?.trim()
+const tagIds = [ga4Id, adsId].filter((id): id is string => Boolean(id))
 
 let started = false
 
 export function initAnalytics() {
-  if (started || !adsId || typeof window === 'undefined') return
+  if (started || !tagIds.length || typeof window === 'undefined') return
   started = true
 
   window.dataLayer = window.dataLayer || []
@@ -18,11 +21,11 @@ export function initAnalytics() {
     window.dataLayer!.push(arguments)
   }
   window.gtag('js', new Date())
-  window.gtag('config', adsId)
+  for (const id of tagIds) window.gtag('config', id)
 
   const script = document.createElement('script')
   script.async = true
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(adsId)}`
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(tagIds[0])}`
   document.head.appendChild(script)
 }
 
@@ -43,9 +46,9 @@ export function trackLead(done?: () => void) {
   // Для Google Tag Manager, если позже подключат его вместо gtag.
   window.dataLayer.push({ event: 'lead_submit' })
 
-  if (!window.gtag || !adsId) return finish()
+  if (!window.gtag || !tagIds.length) return finish()
   window.gtag('event', 'generate_lead', { method: 'quote_form' })
-  if (leadLabel) {
+  if (adsId && leadLabel) {
     window.gtag('event', 'conversion', { send_to: `${adsId}/${leadLabel}`, event_callback: finish })
     window.setTimeout(finish, 1000)
   } else {
