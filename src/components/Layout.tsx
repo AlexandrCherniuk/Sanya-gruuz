@@ -956,6 +956,9 @@ export function Footer({ lang, c }: Ctx) {
           © 2024–{year} GR Logistics. {c.ui.rights}
         </p>
         <p>{c.ui.footerNote}</p>
+        <button type="button" className="ftr-ck" data-cookie-settings>
+          Cookie
+        </button>
       </div>
     </footer>
   )

@@ -1,6 +1,9 @@
 // Google Analytics 4 на всех страницах + заявка как конверсия (GA4 и Google Ads).
 // GA4 ID не секрет, вшит по умолчанию (можно перебить VITE_GA4_ID).
 // Google Ads: VITE_GADS_ID и VITE_GADS_LEAD_LABEL. Пока их нет, работает только GA4.
+// Теги грузятся только после согласия на cookie (см. consent.ts).
+
+import { onConsentGranted } from './consent'
 
 const DEFAULT_GA4_ID = 'G-8FVN3BS7SM'
 const ga4Id = (import.meta.env.VITE_GA4_ID ?? DEFAULT_GA4_ID).trim()
@@ -13,13 +16,23 @@ let started = false
 export function initAnalytics() {
   if (started || !tagIds.length || typeof window === 'undefined') return
   started = true
+  onConsentGranted(loadTags)
+}
 
+function loadTags() {
   window.dataLayer = window.dataLayer || []
   window.gtag = function gtag() {
     // gtag ждёт именно объект arguments
     // eslint-disable-next-line prefer-rest-params
     window.dataLayer!.push(arguments)
   }
+  // Consent Mode v2: согласие уже дано, говорим об этом Google до config.
+  window.gtag('consent', 'default', {
+    ad_storage: 'granted',
+    ad_user_data: 'granted',
+    ad_personalization: 'granted',
+    analytics_storage: 'granted',
+  })
   window.gtag('js', new Date())
   for (const id of tagIds) window.gtag('config', id)
 
