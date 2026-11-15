@@ -2280,3 +2280,49 @@ ol {
 :root:not([data-theme='dark']) .truck-beam {
   display: none;
 }
+
+/* ——— Баннер cookie (src/consent.ts) ——— */
+.ck {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 60;
+  max-width: 420px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 14%);
+  color: var(--ink);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+.ck p {
+  margin: 0 0 12px;
+}
+.ck-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.ftr-ck {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+@media (max-width: 640px) {
+  .ck {
+    left: 12px;
+    right: 12px;
+    bottom: calc(76px + env(safe-area-inset-bottom));
+    max-width: none;
+  }
+  .ck-actions .btn {
+    flex: 1;
+  }
+}

@@ -4,8 +4,14 @@ import '@fontsource-variable/manrope/wght.css'
 import './styles.css'
 import { hydrateRoot } from 'react-dom/client'
 import { QuoteForm } from './QuoteForm'
+import { initAnalytics } from './analytics'
+import { initConsent } from './consent'
 import { languages, type Lang } from './site/config'
 import { saveLang } from './site/langPick'
+
+// Аналитика на каждой странице, но только после согласия на cookie.
+initAnalytics()
+initConsent()
 
 const isLang = (v?: string): v is Lang => languages.some((l) => l.code === v)
 
